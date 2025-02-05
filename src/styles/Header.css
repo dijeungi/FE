@@ -1,0 +1,99 @@
+.container {width: 70%; margin: 0 auto; }
+
+/* header */
+.main-nav {
+    /*border: 1px solid black;*/
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: auto;
+    font-size: 15px;
+}
+
+.main-nav .logo img{width: 110px; margin: 3px 0 0 10px;}
+.main-nav ul {display: flex;}
+.main-nav ul li {padding: 30px 16px; list-style-type: none;}
+.main-nav ul li a {padding-bottom: 2px;color: #262626; text-decoration-line: none;}
+.main-nav ul li a:hover {border-bottom: 2px solid #262626;}
+.main-nav ul li a.login:hover {border-bottom: none;}
+.main-nav ul.main-menu {flex: 1; margin-left: 20px;}
+
+/* 검색창 스타일 */
+.search-box {
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+    position: relative;
+}
+
+.search-input-container {
+    display: flex;
+    align-items: center;
+    border-bottom: 2px solid #ccc;
+    padding: 4px 0;
+}
+
+.search-box input {
+    padding: 8px;
+    border: none;
+    border-bottom: 2px solid #ccc;
+    font-size: 14px;
+    width: 200px;
+    outline: none;
+    transition: border-bottom 0.3s ease;
+}
+
+.search-box input.focused {
+    border-bottom: 2px solid #0078d4;
+}
+
+.search-box .search-button {
+    padding: 8px;
+    background: none;
+    border: none;
+    color: #0078d4;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 검색 결과창 스타일 */
+.search-results {
+    position: absolute;
+    top: 100%; /* 검색창 아래에 위치 */
+    left: 0;
+    width: 300px; /* 결과창 너비 */
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+    z-index: 1000; /* 다른 요소 위에 표시 */
+}
+
+.search-results h4 {
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: #333;
+}
+
+.search-results ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.search-results ul li {
+    padding: 8px 0;
+    font-size: 14px;
+    color: #555;
+    cursor: pointer;
+}
+
+.search-results ul li:hover {
+    background-color: #f5f5f5;
+}
+
+/*.main-nav ul.right-menu i {margin-left: 3px; font-size: 16px;}*/
+.main-nav .menu-btn {display: none; cursor: pointer;}
