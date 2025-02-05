@@ -44,14 +44,14 @@
 }
 
 .search-box input.focused {
-    border-bottom: 2px solid #0078d4;
+    border-bottom: 2px solid #FF7B14;
 }
 
 .search-box .search-button {
     padding: 8px;
     background: none;
     border: none;
-    color: #0078d4;
+    color: #FF7B14;
     cursor: pointer;
     display: flex;
     align-items: center;
