@@ -3,7 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import './App.css'
 
 import Header from "./components/Header";
-import MainScreen from "./components/MainScreen";
+import MainPages from "./pages/MainPages";
 
 function App() {
 
@@ -13,7 +13,7 @@ function App() {
             <Header/>
 
             <Routes>
-                <Route path="/" element={<MainScreen />} />
+                <Route path="/" element={<MainPages />} />
             </Routes>
 
         </div>

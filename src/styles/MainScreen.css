@@ -1,20 +1,11 @@
-#app {
+#app, html, body {
     height: 100%;
-}
-
-html,
-body {
-    position: relative;
-    height: 100%;
-}
-
-body {
-    background: transparent;
+    margin: 0;
+    padding: 0;
     font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
     font-size: 14px;
     color: #000;
-    margin: 0;
-    padding: 0;
+    background: transparent;
 }
 
 .swiper {
@@ -24,10 +15,7 @@ body {
 
 .swiper-slide {
     text-align: center;
-    font-size: 18px;
     background: #fff;
-
-    /* Center slide text vertically */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -85,8 +73,6 @@ body {
     font-size: 14px;
 }
 
-/*pagination*/
-
 .main-screen-container {
     display: flex;
     justify-content: center;
@@ -94,35 +80,28 @@ body {
     height: 520px;
     width: auto;
     background: white;
-    border: 1px solid black;
+    /*border: 1px solid black;*/
 }
 
 .swiper {
     height: 520px;
-    width: 1600px;
-    max-height: 520px;
-    min-height: auto;
-    max-width: 1600px;
-    min-width: auto;
-
+    width: auto;
     margin: 0 auto;
     position: relative;
-
-    border: 1px solid red;
 }
 
 .custom-pagination {
     position: absolute;
     bottom: 2.5rem;
-    left: 10rem;
+    left: 29rem;
     z-index: 10;
     display: flex;
     gap: 10px;
 }
 
 .pagination-item {
-    width: 52px;
-    height: 52px;
+    width: 55px;
+    height: 68px;
     cursor: pointer;
     transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
     opacity: 0.5;
@@ -136,14 +115,29 @@ body {
     border: 2px solid transparent;
 }
 
-.pagination-item:hover {
+.pagination-item:hover, .pagination-item.active {
     transform: scale(1.1);
     border: 2px solid white;
     opacity: 1;
 }
 
-.pagination-item.active {
-    transform: scale(1.1);
-    border: 2px solid white;
-    opacity: 1;
+@media (max-width: 1680px) {
+    .custom-pagination {
+        left: 23rem;
+    }
+}
+
+@media (max-width: 1440px) {
+    .custom-pagination {
+        left: 14rem;
+    }
+}
+
+@media (max-width: 1024px) {
+    .swiper {
+        height: 400px;
+    }
+    .custom-pagination {
+        left: 8rem;
+    }
 }
