@@ -84,3 +84,66 @@ body {
     color: white;
     font-size: 14px;
 }
+
+/*pagination*/
+
+.main-screen-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 520px;
+    width: auto;
+    background: white;
+    border: 1px solid black;
+}
+
+.swiper {
+    height: 520px;
+    width: 1600px;
+    max-height: 520px;
+    min-height: auto;
+    max-width: 1600px;
+    min-width: auto;
+
+    margin: 0 auto;
+    position: relative;
+
+    border: 1px solid red;
+}
+
+.custom-pagination {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 10rem;
+    z-index: 10;
+    display: flex;
+    gap: 10px;
+}
+
+.pagination-item {
+    width: 52px;
+    height: 52px;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
+    opacity: 0.5;
+}
+
+.pagination-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 5px;
+    border: 2px solid transparent;
+}
+
+.pagination-item:hover {
+    transform: scale(1.1);
+    border: 2px solid white;
+    opacity: 1;
+}
+
+.pagination-item.active {
+    transform: scale(1.1);
+    border: 2px solid white;
+    opacity: 1;
+}

@@ -39,8 +39,8 @@ export default function Header() {
 
                 {/* Main Menu */}
                 <ul className="main-menu">
-                    <li><Link to="/">공지사항</Link></li>
-                    <li><Link to="/">지역별</Link></li>
+                    <li><Link to="/announcement">공지사항</Link></li>
+                    <li><Link to="/">공연장</Link></li>
                     <li><Link to="/">랭킹</Link></li>
                 </ul>
 
