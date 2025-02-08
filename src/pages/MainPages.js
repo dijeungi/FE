@@ -3,15 +3,15 @@ import "../styles/Main/MainPages.css";
 import {useNavigate} from "react-router-dom";
 
 const categories = [
-    { name: "Category 1", image: "https://via.placeholder.com/300", link: "/category1" },
-    { name: "Category 2", image: "https://via.placeholder.com/300", link: "/category1" },
-    { name: "Category 3", image: "https://via.placeholder.com/300", link: "/category1" },
-    { name: "Category 4", image: "https://via.placeholder.com/300", link: "/category1" },
-    { name: "Category 5", image: "https://via.placeholder.com/300", link: "/category1" },
-    { name: "Category 6", image: "https://via.placeholder.com/300", link: "/category1" },
-    { name: "Category 7", image: "https://via.placeholder.com/300", link: "/category1" },
-    { name: "Category 8", image: "https://via.placeholder.com/300", link: "/category1" },
-    { name: "Category 9", image: "https://via.placeholder.com/300", link: "/category1" },
+    { name: "뮤지컬", image: "https://via.placeholder.com/300", link: "/category1" },
+    { name: "콘서트", image: "https://via.placeholder.com/300", link: "/category1" },
+    { name: " ", image: "https://via.placeholder.com/300", link: "/category1" },
+    { name: " ", image: "https://via.placeholder.com/300", link: "/category1" },
+    { name: " ", image: "https://via.placeholder.com/300", link: "/category1" },
+    { name: " ", image: "https://via.placeholder.com/300", link: "/category1" },
+    { name: " ", image: "https://via.placeholder.com/300", link: "/category1" },
+    { name: " ", image: "https://via.placeholder.com/300", link: "/category1" },
+    { name: " ", image: "https://via.placeholder.com/300", link: "/category1" },
 ]
 
 export default function MainPages() {
@@ -35,9 +35,6 @@ export default function MainPages() {
                     </div>
                 ))}
             </div>
-
-
-
 
         </div>
     );
