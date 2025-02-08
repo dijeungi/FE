@@ -1,13 +1,14 @@
-import '../styles/Header.css';
+// src/components/Header.js
 
-import React, { useState } from 'react';
+import '../styles/Header.css';
+import { useState } from 'react';
 
 import SearchIcon from '@mui/icons-material/Search';
-import { Link } from 'react-router-dom'; // Link 컴포넌트 import
+import { Link } from 'react-router-dom';
 
 export default function Header() {
-    const [isSearchFocused, setIsSearchFocused] = useState(false); // 검색창 포커스 상태
-    const [searchTerm, setSearchTerm] = useState(''); // 검색어 상태
+    const [isSearchFocused, setIsSearchFocused] = useState(false);
+    const [searchTerm, setSearchTerm] = useState('');
 
     // 검색창 포커스 핸들러
     const handleSearchFocus = () => {

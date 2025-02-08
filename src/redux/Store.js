@@ -1,3 +1,5 @@
+// src/redux/Store.js
+
 import { configureStore } from '@reduxjs/toolkit';
 import loginSlice from './LoginSlice';
 

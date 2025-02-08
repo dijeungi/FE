@@ -1,0 +1,11 @@
+.floating-image {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.floating-image img {
+    width: 15rem;
+    height: auto;
+}

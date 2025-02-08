@@ -2,8 +2,10 @@
 
 import '../styles/Main/MainBanner.css';
 import { useState, useRef, useCallback, useEffect } from 'react';
+
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, EffectFade } from 'swiper/modules';
+
 import 'swiper/css';
 import 'swiper/css/effect-fade';
 import 'swiper/css/navigation';

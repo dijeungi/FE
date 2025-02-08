@@ -1,3 +1,5 @@
+// src/redux/LoginSlice.js
+
 import { createSlice } from '@reduxjs/toolkit';
 
 // 초기 상태 정의

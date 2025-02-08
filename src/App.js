@@ -5,6 +5,7 @@ import './App.css'
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import MainPages from "./pages/MainPages";
+import Kakao from './components/Kakao';
 
 function App() {
 
@@ -15,8 +16,8 @@ function App() {
                 <Route path="/" element={<MainPages />} />
             </Routes>
 
+            <Kakao />
             <Footer/>
-
         </div>
     );
 }
