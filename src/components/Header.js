@@ -1,108 +1,90 @@
-// src/components/Header.js
-
+import React, { useState, useEffect } from 'react';
 import '../styles/Header.css';
-import { useState } from 'react';
 
-import SearchIcon from '@mui/icons-material/Search';
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
+import LoginIcon from '@mui/icons-material/Login';
+import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
+import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
+import ManageSearchIcon from '@mui/icons-material/ManageSearch';
 
 export default function Header() {
-    const [isSearchFocused, setIsSearchFocused] = useState(false);
-    const [searchTerm, setSearchTerm] = useState('');
+    const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
 
-    // 검색창 포커스 핸들러
-    const handleSearchFocus = () => {
-        setIsSearchFocused(true);
-    };
-
-    // 검색창 포커스 아웃 핸들러
-    const handleSearchBlur = () => {
-        setIsSearchFocused(false);
-    };
-
-    // 검색어 입력 핸들러
-    const handleSearchChange = (e) => {
-        setSearchTerm(e.target.value);
-    };
+    useEffect(() => {
+        const handleResize = () => setViewportWidth(window.innerWidth);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     return (
-        <div className="container">
-            <nav className="main-nav">
-
-                {/*사이드 바 추후 추가*/}
-
-                <div className="logo">
-                    <Link to="/">
-                        <img src="//tkfile.yes24.com/imgNew/common/pf-logoN.png"
-                             alt="Microsoft Logo" />
-                    </Link>
-                </div>
-
-                {/* Main Menu */}
-                <ul className="main-menu">
-                    <li><Link to="/announcement">공지사항</Link></li>
-                    <li><Link to="/">공연장</Link></li>
-                    <li><Link to="/">랭킹</Link></li>
-                </ul>
-
-                {/* 검색창 추가 */}
-                <div className="search-box">
-                    <input
-                        type="text"
-                        placeholder="검색어를 입력하세요"
-                        onFocus={handleSearchFocus}
-                        onBlur={handleSearchBlur}
-                        onChange={handleSearchChange}
-                        value={searchTerm}
-                        className={isSearchFocused ? 'focused' : ''}
-                    />
-                    <button className="search-button">
-                        <SearchIcon />
-                    </button>
-
-                    {/* 검색창 하단에 표시될 내용 */}
-                    {isSearchFocused && (
-                        <div className="search-results">
-                            <div className="recent-searches">
-                                <h3>최근 검색어</h3>
-                                <ul>
-                                    <li>검색어 1</li>
-                                    <li>검색어 2</li>
-                                    <li>검색어 3</li>
-                                </ul>
-                            </div>
-                            <div className="recent-works">
-                                <h3>최근 본 작품</h3>
-                                <ul>
-                                    <li>작품 1</li>
-                                    <li>작품 2</li>
-                                    <li>작품 3</li>
-                                </ul>
-                            </div>
-                            <div className="real-time-searches">
-                                <h3>실시간 검색어</h3>
-                                <ul>
-                                    <li>실시간 검색어 1</li>
-                                    <li>실시간 검색어 2</li>
-                                    <li>실시간 검색어 3</li>
-                                </ul>
-                            </div>
+        <header className="header">
+            <div className="header_topNavContainer">
+                <div className="header_topNav">
+                    <div className="header_logo_navGroup">
+                        <div className="header_logo">
+                            <Link to="/">
+                                <img src="//tkfile.yes24.com/imgNew/common/pf-logoN.png" alt="로고" />
+                            </Link>
                         </div>
-                    )}
+                        <nav className="header_mainMenu">
+                            <ul className="header_nav_list">
+                                <li className="header_nav_item">
+                                    <Link to="/" className="header_nav_item_link" aria-current="true">공연/전시</Link>
+                                    <Link to="/" className="header_nav_item_link" aria-current="false">스포츠</Link>
+                                    <Link to="/" className="header_nav_item_link" aria-current="false">여행</Link>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <div className="header_userMenu">
+                        <Link to="/" className="header_userMenuItem" title="로그인">
+                            <LoginIcon className="header_icon" />
+                            <span>로그인</span>
+                        </Link>
+                        <Link to="/" className="header_userMenuItem" title="회원가입">
+                            <PersonAddAltIcon className="header_icon" />
+                            <span>회원가입</span>
+                        </Link>
+                        <Link to="/" className="header_userMenuItem" title="마이페이지">
+                            <PersonOutlineIcon className="header_icon" />
+                            <span>마이페이지</span>
+                        </Link>
+                    </div>
+
                 </div>
 
-                {/* Right Menu */}
-                <ul className="right-menu">
-                    <li><Link to="/sitemap" className="sitemap fas fa-chevron-down">Microsoft 전체</Link></li>
-                    <li><Link to="/search" className="search fas fa-search fa-rotate-90">검색</Link></li>
-                    <li><Link to="/cart" className="cart fas fa-shopping-cart">카트</Link></li>
-                    <li><Link to="/login" className="login far fa-user-circle large">로그인</Link></li>
-                </ul>
+            </div>
 
-                <div className="main-btn">
-                    <i className="fas fa-bars fa-2x"></i>
+            <div className="header_mainNav">
+                <div className="header_mainNavContainer">
+                    <nav className="header_nav">
+                        <ul className="header_navList">
+                            <li className="header_navItem first_nav_item">
+                                <Link to="/" className="header_navLink header_nav_Link_First">공지사항</Link>
+                            </li>
+                            <li className="header_navItem">
+                                <Link to="/" className="header_navLink">티켓오픈</Link>
+                            </li>
+                            <li className="header_navItem">
+                                <Link to="/" className="header_navLink">공연장</Link>
+                            </li>
+                            <li className="header_navItem">
+                                <Link to="/" className="header_navLink">이벤트</Link>
+                            </li>
+                            <li className="header_navItem">
+                                <Link to="/" className="header_navLink">랭킹</Link>
+                            </li>
+                        </ul>
+                        <div className="header_searchBar">
+                            <input type="text" placeholder="검색어를 입력하세요" />
+                            <ManageSearchIcon className="header_searchIcon" />
+                        </div>
+                    </nav>
                 </div>
-            </nav>
-        </div>
+            </div>
+
+
+
+        </header>
     );
 }
