@@ -1,5 +1,5 @@
-// src/components/MainTicketOpen.js
-import "../../styles/Main/TicketOpen.css";
+// src/components/Main/TodayRecommend.js
+import "../../styles/Main/TodayRecommend.css";
 
 import "swiper/css";
 import "swiper/css/pagination";
@@ -52,7 +52,7 @@ const TicketOpen = () => {
     return (
         <section className="ticketOpen_section ticketOpen_notice">
             <div className="ticketOpen_header">
-                <h2 className="ticketOpen_title">티켓오픈 🌟</h2>
+                <h2 className="ticketOpen_title">오늘의 추천 📌</h2>
                 <Link to="/" className="ticketOpen_btn_all">전체보기</Link>
             </div>
 

@@ -1,5 +1,5 @@
 // src/components/MainTicketOpen.js
-import "../../styles/Main/TicketOpen.css";
+import "../../styles/Main/RegionRanking.css";
 
 import "swiper/css";
 import "swiper/css/pagination";
@@ -48,11 +48,11 @@ const tickets = [
     }
 ];
 
-const TicketOpen = () => {
+const RegionRanking = () => {
     return (
         <section className="ticketOpen_section ticketOpen_notice">
             <div className="ticketOpen_header">
-                <h2 className="ticketOpen_title">티켓오픈 🌟</h2>
+                <h2 className="ticketOpen_title">지역별 랭킹 🏞</h2>
                 <Link to="/" className="ticketOpen_btn_all">전체보기</Link>
             </div>
 
@@ -62,7 +62,6 @@ const TicketOpen = () => {
                 loop={true}
                 rewind={true}
                 slidesPreView={5}
-                // slidesPerView="auto"
                 spaceBetween={30}
 
                 autoplay={{
@@ -87,11 +86,12 @@ const TicketOpen = () => {
                     },
                 }}
             >
-                {tickets.map((ticket) => (
+                {tickets.map((ticket, index) => (
                     <SwiperSlide key={ticket.id}>
                         <div className="ticketOpen_imgbox">
-                            <img src={ticket.image} alt={ticket.title} className="ticketOpen_item_image" />
+                            <img src={ticket.image} alt={ticket.title} className="ticketOpen_item_image"/>
                         </div>
+                        <div className="regionRanking_rankingNumber">{index + 1}</div>
                         <div className="ticketOpen_info">
                             <h3 className="ticketOpen_item_title">{ticket.title}</h3>
                             <p className="ticketOpen_item_date">{ticket.date}</p>
@@ -103,4 +103,4 @@ const TicketOpen = () => {
     );
 };
 
-export default TicketOpen;
+export default RegionRanking;
