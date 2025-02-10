@@ -1,65 +1,117 @@
-import React from "react";
+// src/components/MainTicketOpen.js
 import "../../styles/Main/TicketOpen.css";
 
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination, Navigation } from "swiper/modules";
+import {Swiper, SwiperSlide} from "swiper/react";
+import {Pagination, Navigation, Autoplay} from "swiper/modules";
+import {Link} from "react-router-dom";
 
 const tickets = [
     {
         id: 1,
-        image: "https://via.placeholder.com/200x300", // 임시 이미지 URL
+        image: "//image.toast.com/aaaaab/ticketlink/TKL_9/M(2)(1).jpg",
         title: "뮤지컬 <미아 파밀리아>",
         date: "02.10(월) 11:00"
     },
     {
         id: 2,
-        image: "https://via.placeholder.com/200x300",
+        image: "//image.toast.com/aaaaab/ticketlink/TKL_3/IMG_8725.jpeg",
         title: "[대구] 2025 김장훈 전국투어",
         date: "02.11(화) 11:00"
     },
     {
         id: 3,
-        image: "https://via.placeholder.com/200x300",
+        image: "//image.toast.com/aaaaab/ticketlink/TKL_3/2025_VANISHING_POSTER_ORIGINAL(1).jpg",
         title: "뮤지컬 <배니싱> 3차 티켓 오픈",
         date: "02.14(금) 14:00"
     },
     {
         id: 4,
-        image: "https://via.placeholder.com/200x300",
+        image: "//image.toast.com/aaaaab/ticketlink/TKL_5/GUN_OPEN.jpg",
         title: "[단독판매] 2025 Guns N' Roses",
         date: "02.27(목) 20:00"
+    },
+    {
+        id: 5,
+        image: "https://image.toast.com/aaaaab/ticketlink/TKL_2/%EC%84%B1%EB%82%A8.jpg",
+        title: "<3월의 봄> 정훈희 x 송창식 with 함춘호 콘서트",
+        date: "02.27(목) 20:00"
+    },
+    {
+        id: 6,
+        image: "https://image.toast.com/aaaaab/ticketlink/TKL_8/s0206.jpg",
+        title: "[단독판매] 2025 Guns N' Roses",
+        date: "02.27(목) 20:00"
+    },
+    {
+        id: 7,
+        image: "https://image.toast.com/aaaaab/ticketlink/TKL_8/s0206.jpg",
+        title: "공룡애니멀쇼",
+        date: "02.12(수) 09:00"
+    },
+    {
+        id: 8,
+        image: "https://image.toast.com/aaaaab/ticketlink/TKL_6/j_0206.jpg",
+        title: "[광주] 잠골버스&순순희 화이트데이 콘서트",
+        date: "02.10(월) 18:00"
     }
 ];
 
 const TicketOpen = () => {
     return (
-        <div className="w-full">
-            <h2 className="text-2xl font-bold mb-4">티켓 오픈</h2>
+        <section className="ticketOpen_section ticketOpen_notice">
+            <div className="ticketOpen_header">
+                <h2 className="ticketOpen_title">티켓오픈</h2>
+                <Link to="/" className="ticketOpen_btn_all">전체보기</Link>
+            </div>
+
             <Swiper
-                slidesPerView={4}
-                spaceBetween={20}
-                pagination={{ clickable: true }}
-                navigation={true}
-                modules={[Pagination, Navigation]}
-                className="mySwiper"
+                className="ticketOpen_swiper type_col5"
+                modules={[Autoplay, Pagination]}
+                loop={true}
+                rewind={true}
+                slidesPreView={5}
+                // slidesPerView="auto"  // 자동으로 슬라이드 크기 맞춤
+                spaceBetween={10}     // 슬라이드 간 간격
+
+                autoplay={{
+                    delay: 5000,
+                    disableOnInteraction: false,
+                }}
+                breakpoints={{
+                    1280: {
+                        slidesPerView: 3,
+                    },
+                    1440: {
+                        slidesPerView: 3,
+                    },
+                    1680: {
+                        slidesPerView: 4,
+                    },
+                    1920: {
+                        slidesPerView: 5,
+                    },
+                    2560: {
+                        slidesPerView: 6,
+                    },
+                }}
             >
                 {tickets.map((ticket) => (
                     <SwiperSlide key={ticket.id}>
-                        <div className="ticket-card">
-                            <img src={ticket.image} alt={ticket.title} className="ticket-image" />
-                            <div className="ticket-info">
-                                <h3 className="ticket-title">{ticket.title}</h3>
-                                <p className="ticket-date">{ticket.date}</p>
-                            </div>
+                        <div className="ticketOpen_imgbox">
+                            <img src={ticket.image} alt={ticket.title} className="ticketOpen_item_image" />
+                        </div>
+                        <div className="ticketOpen_info">
+                            <h3 className="ticketOpen_item_title">{ticket.title}</h3>
+                            <p className="ticketOpen_item_date">{ticket.date}</p>
                         </div>
                     </SwiperSlide>
                 ))}
             </Swiper>
-        </div>
+        </section>
     );
 };
 

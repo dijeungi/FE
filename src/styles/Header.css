@@ -136,7 +136,8 @@
 
 .header_searchBar {
     position: relative;
-    width: 240px;
+    width: 210px;
+    left: -1.8%;
 }
 
 .header_searchBar input {

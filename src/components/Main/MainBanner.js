@@ -96,46 +96,40 @@ export default function MainBanner() {
     }, []);
 
     // 커스텀 페이지 네이션 설정
+    // 커스텀 페이지 네이션 설정
     useEffect(() => {
         if (!paginationRef.current) return;
 
-        const paginationItems = paginationRef.current.querySelectorAll('.pagination-item');
+        const paginationItems = paginationRef.current.querySelectorAll('.mainbaner_banner_pagination_item');
+
+        const handleMouseEnter = (index) => {
+            if (swiperRef.current) {
+                swiperRef.current.autoplay.stop();
+                swiperRef.current.slideTo(index, 500);
+                setActiveIndex(index);
+            }
+        };
+
+        const handleMouseLeave = () => {
+            if (swiperRef.current) {
+                swiperRef.current.autoplay.start();
+            }
+        };
 
         paginationItems.forEach((item, index) => {
-            item.addEventListener('mouseenter', () => {
-                if (swiperRef.current) {
-                    swiperRef.current.autoplay.stop();
-                    swiperRef.current.params.speed = 0;
-                    swiperRef.current.slideTo(index, 500, false);
-                    setActiveIndex(index);
-                    setTimeout(() => {
-                        swiperRef.current.params.speed = 500;
-                    }, 50);
-                }
-            });
-
-            item.addEventListener('mouseleave', () => {
-                if (swiperRef.current) {
-                    swiperRef.current.autoplay.start();
-                }
-            });
-
-            item.addEventListener('click', () => {
-                window.location.href = paginationImages[index];
-            });
+            item.addEventListener('mouseenter', () => handleMouseEnter(index));
+            item.addEventListener('mouseleave', handleMouseLeave);
         });
 
+        // Cleanup 이벤트 리스너
         return () => {
-            paginationItems.forEach(item => {
-                item.removeEventListener('mouseenter', () => {
-                });
-                item.removeEventListener('mouseleave', () => {
-                });
-                item.removeEventListener('click', () => {
-                });
+            paginationItems.forEach((item) => {
+                item.removeEventListener('mouseenter', () => handleMouseEnter);
+                item.removeEventListener('mouseleave', handleMouseLeave);
             });
         };
-    }, []);
+    }, [paginationRef, swiperRef]);
+
 
     return (
         <Swiper
