@@ -6,6 +6,8 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import MainPages from "./pages/MainPages";
 import Kakao from './components/Kakao';
+import LoginPage from "./pages/Login";
+import JoinForm from "./pages/Join";
 
 function App() {
 
@@ -14,6 +16,11 @@ function App() {
             <Header/>
             <Routes>
                 <Route path="/" element={<MainPages />} />
+
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/register" element={<JoinForm />} />
+
+                {/*<Route path="/login" element={< />} />*/}
             </Routes>
 
             <Kakao />

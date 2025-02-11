@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import '../styles/Header.css';
+import '../styles/Components/Header.css';
 
 import { Link } from "react-router-dom";
 import LoginIcon from '@mui/icons-material/Login';
@@ -37,15 +37,15 @@ export default function Header() {
                         </nav>
                     </div>
                     <div className="header_userMenu">
-                        <Link to="/" className="header_userMenuItem" title="로그인">
+                        <Link to="/login" className="header_userMenuItem" title="로그인">
                             <LoginIcon className="header_icon" />
                             <span>로그인</span>
                         </Link>
-                        <Link to="/" className="header_userMenuItem" title="회원가입">
+                        <Link to="/register" className="header_userMenuItem" title="회원가입">
                             <PersonAddAltIcon className="header_icon" />
                             <span>회원가입</span>
                         </Link>
-                        <Link to="/" className="header_userMenuItem" title="마이페이지">
+                        <Link to="/mypage" className="header_userMenuItem" title="마이페이지">
                             <PersonOutlineIcon className="header_icon" />
                             <span>마이페이지</span>
                         </Link>

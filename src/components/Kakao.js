@@ -1,6 +1,6 @@
 // src/components/Kakao.js
 
-import '../styles/Kakao.css';
+import '../styles/Components/Kakao.css';
 import KakaoImg from '../img/kakao.png';
 
 const FloatingImage = ({ onClick }) => (

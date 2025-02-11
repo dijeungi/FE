@@ -1,4 +1,4 @@
-// src/components/MainTicketOpen.js
+// src/components/Main/RegionRanking.js
 import "../../styles/Main/RegionRanking.css";
 
 import "swiper/css";

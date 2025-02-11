@@ -1,5 +1,5 @@
-// src/components/MainTicketOpen.js
-import "../../styles/Main/TicketOpen.css";
+// src/components/Main/WeekExhibition.js
+import "../../styles/Main/WeekExhibition.css";
 
 import "swiper/css";
 import "swiper/css/pagination";
@@ -48,21 +48,22 @@ const tickets = [
     }
 ];
 
-const TicketOpen = () => {
+const WeekExhibition = () => {
     return (
-        <section className="ticketOpen_section ticketOpen_notice">
-            <div className="ticketOpen_header">
-                <h2 className="ticketOpen_title">티켓오픈 🌟</h2>
-                <Link to="/" className="ticketOpen_btn_all">전체보기</Link>
+        <section className="weekExhibition_section weekExhibition_notice">
+            <div className="weekExhibition_header">
+                <h2 className="weekExhibition_title">이번주 전시 📆 | 수정필요</h2>
+                <Link to="/" className="weekExhibition_btn_all">전체보기</Link>
             </div>
 
             <Swiper
-                className="ticketOpen_swiper type_col5"
+                className="weekExhibition_swiper type_col5"
                 modules={[Autoplay, Pagination]}
                 loop={true}
                 rewind={true}
-                slidesPerView={5}
+                slidesPreView={3}
                 spaceBetween={30}
+
                 autoplay={{
                     delay: 3000,
                     disableOnInteraction: false,
@@ -85,14 +86,14 @@ const TicketOpen = () => {
                     },
                 }}
             >
-                {tickets.map((ticket) => (
+                {tickets.map((ticket, index) => (
                     <SwiperSlide key={ticket.id}>
-                        <div className="ticketOpen_imgbox">
-                            <img src={ticket.image} alt={ticket.title} className="ticketOpen_item_image" />
+                        <div className="weekExhibition_imgbox">
+                            <img src={ticket.image} alt={ticket.title} className="weekExhibition_item_image"/>
                         </div>
-                        <div className="ticketOpen_info">
-                            <h3 className="ticketOpen_item_title">{ticket.title}</h3>
-                            <p className="ticketOpen_item_date">{ticket.date}</p>
+                        <div className="weekExhibition_info">
+                            <h3 className="weekExhibition_item_title">{ticket.title}</h3>
+                            <p className="weekExhibition_item_date">{ticket.date}</p>
                         </div>
                     </SwiperSlide>
                 ))}
@@ -101,4 +102,4 @@ const TicketOpen = () => {
     );
 };
 
-export default TicketOpen;
+export default WeekExhibition;

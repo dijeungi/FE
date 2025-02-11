@@ -1,11 +1,19 @@
+.main-banner-container {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
 .hero_banner {
     position: relative;
     height: 560px;
     background: #f5f6f9;
+
 }
 
 .swiper-wrapper {
     transform: translate3d(0, 0, 0);
+
 }
 
 .hero_banner .swiper-slide {
@@ -20,6 +28,7 @@
 
 .hero_banner_wrap {
     height: 100%;
+    width: 100%;
 }
 
 .hero_banner_imgbox {

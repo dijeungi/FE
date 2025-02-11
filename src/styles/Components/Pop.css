@@ -1,0 +1,120 @@
+.pop {
+    position: fixed;
+    bottom: 15rem;
+    left: 30px;
+    background: #fff;
+    z-index: 30;
+    border: 1px solid #ddd;
+}
+
+.pop_wrap {
+    overflow: hidden;
+}
+
+.pop_left {
+    float: left;
+}
+
+.pop_left ul {
+    width: 460px;
+    margin-top: 10px;
+}
+
+.pop_left ul li {
+    float: left;
+    width: 140px;
+    height: 195px;
+    margin: 0 0 10px 10px;
+}
+
+.pop_left ul li a {
+    display: block;
+    position: relative;
+    border: 1px solid #ddd;
+    width: 140px;
+    height: 195px;
+}
+
+.pop_left ul li a img {
+    display: block;
+    width: 140px;
+    height: 195px;
+}
+
+.pop_left ul li a div {
+    position: absolute;
+    bottom: 0;
+    left: 0px;
+    width: 100%;
+    height: 40px;
+    background: rgba(0, 0, 0, 0.8);
+    text-align: center;
+}
+
+.pop_left ul li a div p:first-child {
+    color: #fff;
+    margin-top: 6px;
+}
+.pop_left ul li a div p {
+    font-size: 12px;
+    line-height: 16px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.pop_left ul li a div p:last-child {
+    color: #e2782a;
+}
+
+.pop_right {
+    background: #f6f6f6;
+    border-left: 1px solid #ddd;
+    padding: 10px;
+    padding-bottom: 2px;
+    float: left;
+}
+
+.pop_bottom {
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    boorder-top: 1px solid #ddd;
+    background: #f6f6f6;
+    position: relative;
+}
+
+.pop_bottom input {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background: #f6f6f6;
+    border: 1px solid #999;
+    vertical-align: middle;
+    margin-left: 16px;
+}
+
+.pop_bottom label {
+    font-size: 12px;
+    color: #333;
+    padding-left: 7px;
+    vertical-align: middle;
+}
+
+.pop_bottom a {
+    display: block;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 11px;
+    height: 11px;
+    background: url(http://tkfile.yes24.com/imgNew/common/popclose.png) no-repeat center center;
+    padding: 10px;
+}
+
+a {
+    font-size: 0;
+    text-decoration: none;
+    ourline: none;
+    color: inherit;
+}

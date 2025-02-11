@@ -8,8 +8,8 @@ export default function MainPages() {
     // const navigate = useNavigate();
 
     return (
-        <article className="category_panel_wrap">
-            <section className="category_panel_subWrap">
+        <section className="category_panel_wrap">
+            <div className="category_panel_subWrap">
                 <div className="category_panel_contents">
                     <div className="category_miniBanner">
 
@@ -60,7 +60,7 @@ export default function MainPages() {
 
                     </div>
                 </div>
-            </section>
-        </article>
+            </div>
+        </section>
     );
 }

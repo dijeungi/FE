@@ -8,6 +8,7 @@ import { Autoplay, EffectFade } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/effect-fade';
 import 'swiper/css/navigation';
+import {Link} from "react-router-dom";
 
 // 슬라이드 이미지 데이터 및 배경색
 const images = [
@@ -114,7 +115,7 @@ export default function MainBanner() {
         >
             {images.map((item, index) => (
                 <SwiperSlide key={index}>
-                    <a href="https://www.ticketlink.co.kr/product/54441" className="hero_banner_link">
+                    <Link to="https://www.ticketlink.co.kr/product/54441" className="hero_banner_link">
                         <div
                             className="hero_banner_wrap"
                             style={{ background: item.backgroundColor }}
@@ -123,7 +124,7 @@ export default function MainBanner() {
                                 <img src={item.src} alt={`Slide ${index + 1}`} className="hero_banner_img" />
                             </div>
                         </div>
-                    </a>
+                    </Link>
                 </SwiperSlide>
             ))}
 
@@ -148,3 +149,5 @@ export default function MainBanner() {
         </Swiper>
     );
 }
+
+//1111111111111111
