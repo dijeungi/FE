@@ -1,4 +1,4 @@
-// src/components/Main/RegionRanking.js
+// src/components/Main/Ranking.js
 import "../../styles/Main/RegionRanking.css";
 
 import "swiper/css";
@@ -48,11 +48,11 @@ const tickets = [
     }
 ];
 
-const RegionRanking = () => {
+const Ranking = () => {
     return (
         <section className="ticketOpen_section ticketOpen_notice">
             <div className="ticketOpen_header">
-                <h2 className="ticketOpen_title">지역별 랭킹 🏞</h2>
+                <h2 className="ticketOpen_title">인기순위 🌟</h2>
                 <Link to="/" className="ticketOpen_btn_all">전체보기</Link>
             </div>
 
@@ -103,4 +103,4 @@ const RegionRanking = () => {
     );
 };
 
-export default RegionRanking;
+export default Ranking;

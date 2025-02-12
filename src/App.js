@@ -8,6 +8,7 @@ import MainPages from "./pages/MainPages";
 import Kakao from './components/Kakao';
 import LoginPage from "./pages/Login";
 import JoinForm from "./pages/Join";
+import Ranking from "./pages/RankingPages";
 
 function App() {
 
@@ -20,7 +21,10 @@ function App() {
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/register" element={<JoinForm />} />
 
-                {/*<Route path="/login" element={< />} />*/}
+                <Route path="/ranking" element={<Ranking />}/>
+
+                {/*<Route path="/register/Team" element={<Join-Team />} />*/}
+                {/*<Route path="loginSearch" element={< />} />*/}
             </Routes>
 
             <Kakao />

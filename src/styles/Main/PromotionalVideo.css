@@ -1,0 +1,42 @@
+.CategoryVideo_Container {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.CategoryVideo_Title {
+    font-size: 24px;
+    line-height: 32px;
+    letter-spacing: -0.05em;
+    font-weight: 500;
+    color: #242428;
+    flex: 1 1;
+}
+
+.CategoryVideo_Title h2 {
+    display: block;
+    font-size: 1.5em;
+    margin-block-start: 0.83em;
+    margin-block-end: 0.83em;
+    margin-inline-start: 0;
+    margin-inline-end: 0;
+    font-weight: bold;
+    unicode-bidi: isolate;
+}
+
+.CategoryVideo_Category {
+
+}
+
+.CategoryVideo_Menu {
+
+}
+
+.CategoryVideo_Wrapper {
+
+}
+.CategoryVideo_Button {
+
+}
+

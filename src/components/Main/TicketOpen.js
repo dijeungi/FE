@@ -81,7 +81,7 @@ const TicketOpen = () => {
                         slidesPerView: 5,
                     },
                     2560: {
-                        slidesPerView: 5,
+                        slidesPerVjiew: 5,
                     },
                 }}
             >

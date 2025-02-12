@@ -72,7 +72,7 @@ export default function Header() {
                                 <Link to="/" className="header_navLink">이벤트</Link>
                             </li>
                             <li className="header_navItem">
-                                <Link to="/" className="header_navLink">랭킹</Link>
+                                <Link to="/ranking" className="header_navLink">랭킹</Link>
                             </li>
                         </ul>
                         <div className="header_searchBar">

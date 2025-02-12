@@ -1,13 +1,11 @@
 // src/components/Main/MainPages.js
 
-import "../styles/Main/MainPages.css";
-
 import TicketOpen from "../components/Main/TicketOpen";
 import MainBanner from "../components/Main/MainBanner";
-import Category from "../components/Main/Category";
+import Category from "../components/Main/MiniBanner";
 import SubBanner from "../components/Main/SubBanner";
-import RegionRanking from "../components/Main/RegionRanking";
-import WeekExhibition from "../components/Main/WeekExhibition";
+import Ranking from "../components/Main/Ranking";
+import CCPlay from "../components/Main/PromotionalVideo";
 import Pop from "../components/Pop";
 import Video from "../components/Main/Video";
 
@@ -18,11 +16,11 @@ export default function MainPages() {
             <Pop/>
             <MainBanner/>
             <Category/>
-            <TicketOpen/>
+            <Ranking/>
             <SubBanner/>
-            <RegionRanking/>
-            <WeekExhibition/>
+            <TicketOpen/>
             <Video/>
+            <CCPlay/>
         </div>
     );
 }

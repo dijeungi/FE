@@ -1,0 +1,33 @@
+.MiniBanner_Container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: calc(100% - 80px);
+    max-width: 1120px;
+    margin: 40px auto 0;
+    scroll-snap-align: start;
+    scroll-margin-top: 50px;
+}
+
+.MiniBanner_UL {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 25px;
+}
+
+.MiniBanner_UL li {
+    overflow: hidden;
+    border-radius: 6px;
+}
+
+.MiniBanner_UL img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.2s ease;
+}
+
+.MiniBanner_UL img:hover {
+    transform: scale(1.03);
+}

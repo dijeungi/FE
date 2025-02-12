@@ -31,11 +31,11 @@ function LoginPage() {
             </button>
 
             <div className="Login-links">
-                <Link to="/loginSearch" className="Login-link">아이디 찾기</Link>
+                <Link to="/register/SearchId" className="Login-link"><span>아이디 찾기</span></Link>
                 <span>|</span>
-                <Link to="/passwordReset" className="Login-link">비밀번호 찾기</Link>
+                <Link to="/register/SearchPw" className="Login-link">비밀번호 찾기</Link>
                 <span>|</span>
-                <Link to="/register" className="Login-link">회원가입</Link>
+                <Link to="/register/Join0" className="Login-link">회원가입</Link>
             </div>
 
             <div className="Login-social-icons">

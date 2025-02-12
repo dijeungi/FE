@@ -1,52 +1,50 @@
-.main-banner-container {
-    width: 100%;
-    position: relative;
-    overflow: hidden;
-}
+/*.main-banner-container {*/
+/*    width: 100%;*/
+/*    position: relative;*/
+/*    overflow: hidden;*/
+/*}*/
 
-.hero_banner {
-    position: relative;
-    height: 560px;
-    background: #f5f6f9;
+/*.hero_banner {*/
+/*    position: relative;*/
+/*    height: 560px;*/
+/*    background: #f5f6f9;*/
+/*}*/
 
-}
+/*.swiper-wrapper {*/
+/*    transform: translate3d(0, 0, 0);*/
+/*}*/
 
-.swiper-wrapper {
-    transform: translate3d(0, 0, 0);
+/*.hero_banner .swiper-slide {*/
+/*    overflow: hidden;*/
+/*}*/
 
-}
-
-.hero_banner .swiper-slide {
-    overflow: hidden;
-}
-
-.hero_banner_link {
+.MainBanner_Link {
     display: block;
     position: relative;
     height: 560px;
 }
 
-.hero_banner_wrap {
-    height: 100%;
-    width: 100%;
-}
+/*.hero_banner_wrap {*/
+/*    height: 100%;*/
+/*    width: 100%;*/
+/*}*/
 
-.hero_banner_imgbox {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 1920px;
-    height: 560px;
-    transform: translate(-50%, -50%);
-}
+/*.hero_banner_imgbox {*/
+/*    position: absolute;*/
+/*    top: 50%;*/
+/*    left: 50%;*/
+/*    width: 1920px;*/
+/*    height: 560px;*/
+/*    transform: translate(-50%, -50%);*/
+/*}*/
 
-.hero_banner_img {
+.MainBanner_Img {
     width: 100%;
     height: 100%;
 }
 
 /*=============================================*/
-.autoplay-progress {
+.MainBanner_Autoplay {
     position: absolute;
     right: 21%;
     bottom: 16px;
@@ -60,7 +58,7 @@
     color: #FF7B14;
 }
 
-.autoplay-progress svg {
+.MainBanner_Autoplay svg {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -71,17 +69,17 @@
     transform: rotate(-90deg);
 }
 
-.autoplay-progress svg circle.progress {
+.MainBanner_Autoplay svg circle.progress {
     stroke: #FF7B14;
     stroke-dashoffset: calc(125.6px * (1 - var(--progress)));
 }
 
-.autoplay-progress svg circle.background {
+.MainBanner_Autoplay svg circle.background {
     stroke: #fff;
     stroke-dashoffset: 0;
 }
 
-.autoplay-progress span {
+.MainBanner_Autoplay span {
     color: white;
     font-size: 14px;
 }
