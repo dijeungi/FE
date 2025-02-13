@@ -1,5 +1,5 @@
-// src/components/Main/WeekExhibition.js
-import "../../styles/Main/WeekExhibition.css";
+// src/components/Main/Ranking.js
+import "../../styles/Main/RegionRanking.css";
 
 import "swiper/css";
 import "swiper/css/pagination";
@@ -48,20 +48,20 @@ const tickets = [
     }
 ];
 
-const WeekExhibition = () => {
+const Ranking = () => {
     return (
-        <section className="weekExhibition_section weekExhibition_notice">
-            <div className="weekExhibition_header">
-                <h2 className="weekExhibition_title">이번주 전시 📆 | 수정필요</h2>
-                <Link to="/" className="weekExhibition_btn_all">전체보기</Link>
+        <section className="ticketOpen_section ticketOpen_notice">
+            <div className="ticketOpen_header">
+                <h2 className="ticketOpen_title">인기순위 🌟</h2>
+                <Link to="/" className="ticketOpen_btn_all">전체보기</Link>
             </div>
 
             <Swiper
-                className="weekExhibition_swiper type_col5"
+                className="ticketOpen_swiper type_col5"
                 modules={[Autoplay, Pagination]}
                 loop={true}
                 rewind={true}
-                slidesPreView={3}
+                slidesPreView={5}
                 spaceBetween={30}
 
                 autoplay={{
@@ -88,12 +88,13 @@ const WeekExhibition = () => {
             >
                 {tickets.map((ticket, index) => (
                     <SwiperSlide key={ticket.id}>
-                        <div className="weekExhibition_imgbox">
-                            <img src={ticket.image} alt={ticket.title} className="weekExhibition_item_image"/>
+                        <div className="ticketOpen_imgbox">
+                            <img src={ticket.image} alt={ticket.title} className="ticketOpen_item_image"/>
                         </div>
-                        <div className="weekExhibition_info">
-                            <h3 className="weekExhibition_item_title">{ticket.title}</h3>
-                            <p className="weekExhibition_item_date">{ticket.date}</p>
+                        <div className="regionRanking_rankingNumber">{index + 1}</div>
+                        <div className="ticketOpen_info">
+                            <h3 className="ticketOpen_item_title">{ticket.title}</h3>
+                            <p className="ticketOpen_item_date">{ticket.date}</p>
                         </div>
                     </SwiperSlide>
                 ))}
@@ -102,4 +103,4 @@ const WeekExhibition = () => {
     );
 };
 
-export default WeekExhibition;
+export default Ranking;

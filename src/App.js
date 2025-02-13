@@ -11,7 +11,7 @@ import JoinForm from "./pages/Join";
 import KakaoRedirectPage from "./pages/KakaoRedirectPage";
 import NaverRedirectPage from "./pages/NaverRedirectPage";
 import GoogleRedirectPage from "./pages/GoogleRedirectPage";
-
+import Ranking from "./pages/RankingPages";
 function App() {
 
     return (
@@ -25,6 +25,8 @@ function App() {
                 <Route path="/member/kakao" element={<KakaoRedirectPage />} />
                 <Route path="/member/naver" element={<NaverRedirectPage />} />
                 <Route path="/member/google" element={<GoogleRedirectPage />} />
+                <Route path="/ranking" element={<Ranking />}/>
+
                 {/*<Route path="/login" element={< />} />*/}
             </Routes>
 
