@@ -1,6 +1,6 @@
 .pop {
     position: fixed;
-    bottom: 15rem;
+    bottom: 5rem;
     left: 30px;
     background: #fff;
     z-index: 30;
@@ -110,4 +110,5 @@
     height: 11px;
     background: url(http://tkfile.yes24.com/imgNew/common/popclose.png) no-repeat center center;
     padding: 10px;
+    font-size: 0;
 }

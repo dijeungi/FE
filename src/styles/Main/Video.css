@@ -5,6 +5,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: 80px;
 }
 
 .video_wrap {
@@ -43,7 +44,6 @@
     z-index: 20;
     position: relative;
 }
-
 
 .video_con {
     width: 50%;

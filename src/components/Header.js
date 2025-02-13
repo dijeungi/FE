@@ -83,7 +83,9 @@ export default function Header() {
                 </div>
             </div>
 
-
+            <div className="header_viewportInfo">
+                현재 해상도: {viewportWidth}px
+            </div>
 
         </header>
     );

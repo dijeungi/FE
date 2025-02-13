@@ -1,11 +1,7 @@
 import "../../styles/Main/PromotionalVideo.css";
-// import "../../styles/1.css";
-// import "../../styles/2.css";
-// import "../../styles/3.css";
 
 import {Swiper, SwiperSlide} from "swiper/react";
-import React, {useState, useRef} from "react";
-import {Autoplay, Pagination} from "swiper/modules";
+import {Pagination} from "swiper/modules";
 
 const fakeData = [
     {
