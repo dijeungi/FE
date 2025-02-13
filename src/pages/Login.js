@@ -4,9 +4,72 @@ import Loginicon1 from '../img/kakao_icon.png'
 import Loginicon2 from '../img/naver_icon.png'
 import Loginicon3 from '../img/apple_icon.png'
 import LoginIcon from "@mui/icons-material/Login";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
+import {useDispatch} from "react-redux";
+import Swal from 'sweetalert2';
+import {login} from "../redux/LoginSlice";
+import {loginPost} from "../api/LoginApi";
+import {getKakaoLoginLink} from "../api/KakaoApi";
+import {getNaverLoginLink} from "../api/NaverApi";
+import {getGoogleLoginLink} from "../api/GoogleApi";
 
-function LoginPage() {
+const LoginPage = () => {
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const [loginForm, setLoginForm] = useState({
+        id: '',
+        password: '',
+    });
+
+    const handleChange = (e) => {
+        const {name, value} = e.target;
+
+        setLoginForm((prev) => ({
+            ...prev,
+            [name]: value,
+        }));
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await loginPost(loginForm.email, loginForm.password);
+            console.log('로그인 성공:', response);
+
+            dispatch(login(response));
+            Swal.fire({
+                title: '로그인 성공',
+                text: '로그인 되었습니다.',
+                icon: 'success',
+                confirmButtonText: '확인',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    navigate('/');
+                }
+            });
+        } catch (error) {
+            console.error('로그인 실패:', error);
+            Swal.fire({
+                title: '로그인 실패',
+                text: '로그인에 실패했습니다. 이메일과 비밀번호를 확인해주세요.',
+                icon: 'error',
+                confirmButtonText: '확인',
+            });
+        }
+    };
+
+    const handleKakaoLogin = () => {
+        const link = getKakaoLoginLink();
+        window.location.href = link;
+    };
+    const handleNaverLogin = () => {
+        const link = getNaverLoginLink();
+        window.location.href = link;
+    };
+    const handleGoogleLogin = () => {
+        const link = getGoogleLoginLink();
+        window.location.href = link;
+    };
     return (
         <div className="Login-container">
             <div className="Login-logo">logo</div>
@@ -31,11 +94,11 @@ function LoginPage() {
             </button>
 
             <div className="Login-links">
-                <Link to="/register/SearchId" className="Login-link"><span>아이디 찾기</span></Link>
+                <Link to="/loginSearch" className="Login-link">아이디 찾기</Link>
                 <span>|</span>
-                <Link to="/register/SearchPw" className="Login-link">비밀번호 찾기</Link>
+                <Link to="/passwordReset" className="Login-link">비밀번호 찾기</Link>
                 <span>|</span>
-                <Link to="/register/Join0" className="Login-link">회원가입</Link>
+                <Link to="/register" className="Login-link">회원가입</Link>
             </div>
 
             <div className="Login-social-icons">
