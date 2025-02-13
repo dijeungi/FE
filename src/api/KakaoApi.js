@@ -2,7 +2,7 @@
 
 import axios from 'axios';
 
-import { API_SERVER_HOST, FRONT_HOST } from '../config/ApiConfig';
+import { API_SERVER_HOST, FRONT_HOST,B} from '../config/ApiConfig';
 
 const rest_api_key = process.env.REACT_APP_KAKAO_REST_API_KEY;
 const client_secret = process.env.REACT_APP_KAKAO_CLIENT_SECRET;
