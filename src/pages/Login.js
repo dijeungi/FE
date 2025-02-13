@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import '../styles/Login/Login.css';
 import Loginicon1 from '../img/kakao_icon.png'
 import Loginicon2 from '../img/naver_icon.png'
-import Loginicon3 from '../img/apple_icon.png'
+import Loginicon3 from '../img/google_icon.png'
 import LoginIcon from "@mui/icons-material/Login";
 import {Link, useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
@@ -102,9 +102,9 @@ const LoginPage = () => {
             </div>
 
             <div className="Login-social-icons">
-                <img src={Loginicon1} alt="KakaoTalk" className="Login-icon"/>
-                <img src={Loginicon2} alt="Naver" className="Login-icon"/>
-                <img src={Loginicon3} alt="Apple" className="Login-icon"/>
+                <img src={Loginicon1} alt="KakaoTalk" className="Login-icon" onClick={handleKakaoLogin}/>
+                <img src={Loginicon2} alt="Naver" className="Login-icon" onClick={handleNaverLogin}/>
+                <img src={Loginicon3} alt="Google" className="Login-icon" onClick={handleGoogleLogin}/>
             </div>
         </div>
     );
