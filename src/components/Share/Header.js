@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import '../styles/Components/Header.css';
+import '../../styles/Components/Header.css';
 
 import { Link } from "react-router-dom";
 import LoginIcon from '@mui/icons-material/Login';
@@ -26,15 +26,15 @@ export default function Header() {
                                 <img src="//tkfile.yes24.com/imgNew/common/pf-logoN.png" alt="로고" />
                             </Link>
                         </div>
-                        <nav className="header_mainMenu">
-                            <ul className="header_nav_list">
-                                <li className="header_nav_item">
-                                    <Link to="/" className="header_nav_item_link" aria-current="true">공연/전시</Link>
-                                    <Link to="/" className="header_nav_item_link" aria-current="false">스포츠</Link>
-                                    <Link to="/" className="header_nav_item_link" aria-current="false">여행</Link>
-                                </li>
-                            </ul>
-                        </nav>
+                        {/*<nav className="header_mainMenu">*/}
+                        {/*    <ul className="header_nav_list">*/}
+                        {/*        <li className="header_nav_item">*/}
+                        {/*            <Link to="/" className="header_nav_item_link" aria-current="true">공연/전시</Link>*/}
+                        {/*            <Link to="/" className="header_nav_item_link" aria-current="false">스포츠</Link>*/}
+                        {/*            <Link to="/" className="header_nav_item_link" aria-current="false">여행</Link>*/}
+                        {/*        </li>*/}
+                        {/*    </ul>*/}
+                        {/*</nav>*/}
                     </div>
                     <div className="header_userMenu">
                         <Link to="/login" className="header_userMenuItem" title="로그인">

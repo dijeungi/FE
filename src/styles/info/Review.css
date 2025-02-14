@@ -1,0 +1,141 @@
+.Information2Box{
+    width: 848px;
+    margin: 0 auto;
+    margin-top: 50px;
+    margin-bottom: 200px;
+}
+.Information2linkBtns{
+    display: flex;
+    gap: 20px;
+}
+.Information2linkBtns button{
+    border: none;
+    background-color: #fff;
+}
+.Information2linkBtnBox{
+    border-bottom: 2px solid #ccc;
+    padding-bottom: 10px;
+}
+.Information2linkBtnBox li{
+    position: relative;
+}
+.Information2linkBtnBox li:nth-child(2)::after{
+    content: '';
+    display: block;
+    position: absolute;
+    top: 30px;
+    border-bottom: 3px solid #000;
+    width: 100%;
+}
+.Information2Box h2{
+    margin-top: 30px;
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+.Information2Box p{
+    margin: 10px 0;
+}
+
+.Information2Contain p{
+    font-size: 16px;
+    margin: 0;
+}
+.Information2Contain em{
+    font-style: normal;
+}
+.Information2-flex{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+.Information2-flex .SearchBtn{
+    background-image: url(../../img/Information2SearchBtn.png);
+    width: 24px;
+    height: 24px;
+    background-color: #fff;
+}
+.Information2-flex select{
+    background-color: #fff;
+    border: none;
+}
+.Information2Submit{
+    background-color: #000;
+    color: #fff;
+    padding: 5px 20px;
+}
+.Information2Contain strong{
+    margin-top: 20px;
+    margin-bottom: 10px;
+    display: block;
+}
+.Information2-br{
+    border: 1px solid #ccc;
+}
+.Information2-flex select{
+    border-right: 1px solid #ccc;
+    height: 32px;
+}
+.Information2Contain{
+    border-bottom:  2px solid #ccc;
+    padding-bottom: 10px;
+}
+.Information2Array{
+    display: flex;
+    gap: 20px;
+    justify-content: flex-end;
+    margin-top: 20px;
+
+}
+.Information2Array button{
+    background-color: #fff;
+    border: none;
+}
+.InformationBoxTop{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+.Information2star{
+    width: 17px;
+    height: 17px;
+}
+.InformationBoxTop>div:nth-child(1){
+    display: flex;
+    gap: 5px;
+}
+.InformationBoxTop>div:nth-child(2){
+    display: flex;
+    gap: 10px;
+}
+.InformationBoxTop>div em{
+    font-style: normal;
+}
+.InformationBoxTop>div strong,
+.InformationBoxTop>div b{
+    font-weight: normal;
+}
+.InformationBox{
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 20px;
+    height: 224px;
+    display: flex;
+    flex-direction: column;
+}
+.InformationBox{
+    margin-top: 10px;
+}
+
+.Information2linkBtns li button{
+    color: #777;
+}
+.Information2linkBtns li span{
+    color: #777;
+}
+
+.Information2linkBtns li:nth-child(2) button{
+    color: #000;
+}
+.Information2linkBtns li:nth-child(2) span{
+    color: #000;
+}

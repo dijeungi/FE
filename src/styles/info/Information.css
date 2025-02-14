@@ -1,0 +1,68 @@
+.Information-h1{
+    font-size: 30px;
+}
+.Information-wrap{
+    width: 1120px;
+    margin: 0 auto;
+    margin-top: 50px;
+    margin-bottom: 200px;
+}
+.information-box{
+    display: flex;
+    gap: 20px;
+    margin: 20px 0;
+}
+.information-box th{
+    width: 88px;
+    text-align: left;
+}
+.information-box tr{
+    height: 40px;
+}
+.information-btn1{
+    width: 140px;
+    height: 58px;
+    background-color: #000;
+    color: #fff;
+}
+.Information-ticket{
+    width: 304px;
+    display: flex;
+    justify-content: space-between
+
+}
+.Information-img{
+    width: 304px;
+}
+.Information-ticket1{
+    width: 155px;
+    display: flex;
+    justify-content: space-between;
+}
+.Information-ticket2{
+    width: 66px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center
+}
+.Information-wrap em{
+    font-style: normal;
+}
+.information-red-text{
+    color: red
+}
+.Information-wrap th{
+    font-size: 16px;
+}
+.Information-wrap td{
+    font-size: 16px;
+    width: 30rem;
+}
+.Casting-box{
+    display: flex;
+    text-align: center;
+}
+.Casting-box span{
+    display: block;
+    font-weight: bold;
+}

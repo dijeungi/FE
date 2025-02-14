@@ -2,16 +2,18 @@ import { Route, Routes } from 'react-router-dom';
 
 import './App.css'
 
-import Header from "./components/Header";
-import Footer from "./components/Footer";
+import Header from "./components/Share/Header";
+import Footer from "./components/Share/Footer";
 import MainPages from "./pages/MainPages";
-import Kakao from './components/Kakao';
+import Kakao from './components/Share/Kakao';
 import LoginPage from "./pages/Login";
 import JoinForm from "./pages/Join";
 import KakaoRedirectPage from "./pages/KakaoRedirectPage";
 import NaverRedirectPage from "./pages/NaverRedirectPage";
 import GoogleRedirectPage from "./pages/GoogleRedirectPage";
 import Ranking from "./pages/RankingPages";
+import Information from "./components/info/Information";
+import InfoDetailPage from "./pages/InfoDetailPage";
 function App() {
 
     return (
@@ -27,7 +29,8 @@ function App() {
                 <Route path="/member/google" element={<GoogleRedirectPage />} />
                 <Route path="/ranking" element={<Ranking />}/>
 
-                {/*<Route path="/login" element={< />} />*/}
+                <Route path="/infoDetail/:festivalId" element={<InfoDetailPage />} />
+
             </Routes>
 
             <Kakao />
