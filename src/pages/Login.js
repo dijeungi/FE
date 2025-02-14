@@ -12,6 +12,10 @@ import {loginPost} from "../api/LoginApi";
 import {getKakaoLoginLink} from "../api/KakaoApi";
 import {getNaverLoginLink} from "../api/NaverApi";
 import {getGoogleLoginLink} from "../api/GoogleApi";
+// import {ReservationPopup} from "../ReservationPopup";
+import {Button} from "@mui/material";
+
+
 
 const LoginPage = () => {
     const navigate = useNavigate();
@@ -20,6 +24,8 @@ const LoginPage = () => {
         id: '',
         password: '',
     });
+
+    const [isOpen, setIsOpen] = useState(false);
 
     const handleChange = (e) => {
         const {name, value} = e.target;
@@ -106,6 +112,16 @@ const LoginPage = () => {
                 <img src={Loginicon2} alt="Naver" className="Login-icon" onClick={handleNaverLogin}/>
                 <img src={Loginicon3} alt="Google" className="Login-icon" onClick={handleGoogleLogin}/>
             </div>
+            {/*<button className="Reservation" onClick={() => setIsOpen(true)}>*/}
+            {/*    예매하기*/}
+            {/*</button>*/}
+
+            {/*{isOpen && (*/}
+            {/*    <ReservationPopup onClose={() => setIsOpen(false)}>*/}
+            {/*        <h2>새 창에서 렌더링된 컴포넌트</h2>*/}
+            {/*        <button onClick={() => setIsOpen(false)}>닫기</button>*/}
+            {/*    </ReservationPopup>*/}
+            {/*)}*/}
         </div>
     );
 }
