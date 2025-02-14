@@ -1,0 +1,50 @@
+.Information1Box{
+    width: 1120px;
+    margin: 0 auto;
+    margin-top: 50px;
+    margin-bottom: 200px;
+}
+.Information1linkBtns{
+    display: flex;
+    gap: 20px;
+}
+.Information1linkBtns button{
+    border: none;
+    background-color: #fff;
+}
+.Information1linkBtnBox{
+    border-bottom: 2px solid #ccc;
+    padding-bottom: 10px;
+}
+.Information1linkBtnBox li{
+    position: relative;
+}
+.Information1linkBtnBox li:nth-child(1)::after{
+    content: '';
+    display: block;
+    position: absolute;
+    top: 30px;
+    border-bottom: 3px solid #000;
+    width: 100%;
+}
+.Information1Box h2{
+    margin-top: 30px;
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+.Information1Box p{
+    margin: 10px 0;
+}
+.Information1linkBtns li button{
+    color: #777;
+}
+.Information1linkBtns li span{
+    color: #777;
+}
+
+.Information1linkBtns li:nth-child(1) button{
+    color: #000;
+}
+.Information1linkBtns li:nth-child(1) span{
+    color: #000;
+}

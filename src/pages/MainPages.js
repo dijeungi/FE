@@ -6,7 +6,7 @@ import Category from "../components/Main/MiniBanner";
 import SubBanner from "../components/Main/SubBanner";
 import Ranking from "../components/Main/Ranking";
 import CCPlay from "../components/Main/PromotionalVideo";
-import Pop from "../components/Pop";
+import Pop from "../components/Share/Pop";
 import Video from "../components/Main/Video";
 
 export default function MainPages() {

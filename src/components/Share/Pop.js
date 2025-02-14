@@ -1,5 +1,5 @@
 // src/components/Pop.js
-import '../styles/Components/Pop.css';
+import '../../styles/Components/Pop.css';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'; // React Router 사용
 

@@ -64,14 +64,15 @@ const TicketOpen = () => {
                 {tickets.map((ticket) => (
                     <SwiperSlide key={ticket.id}>
                         <div className="ticketOpen_imgbox">
-                            <img src={ticket.image} alt={ticket.title} className="ticketOpen_item_image" />
+                            <img src={ticket.postImage} alt={ticket.festivalName} className="ticketOpen_item_image" />
                         </div>
                         <div className="ticketOpen_info">
-                            <h3 className="ticketOpen_item_title">{ticket.title}</h3>
-                            <p className="ticketOpen_item_date">{ticket.date}</p>
+                            <h3 className="ticketOpen_item_title">{ticket.festivalName}</h3>
+                            <p className="ticketOpen_item_date">{ticket.fromDate} ~ {ticket.toDate}</p>
                         </div>
                     </SwiperSlide>
                 ))}
+
             </Swiper>
         </section>
     );

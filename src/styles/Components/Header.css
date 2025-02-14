@@ -24,23 +24,23 @@
     cursor: pointer;
 }
 
-.header_nav_item {
-    display: flex;
-    gap: 20px;
-}
+/*.header_nav_item {*/
+/*    display: flex;*/
+/*    gap: 20px;*/
+/*}*/
 
-.header_nav_item_link[aria-current=true] {
-    color: #242428;
-}
+/*.header_nav_item_link[aria-current=true] {*/
+/*    color: #242428;*/
+/*}*/
 
-.header_nav_item_link {
-    font-size: 26px;
-    font-weight: 700;
-    line-height: 34px;
-    letter-spacing: -0.04em;
-    color: #a7acb6;
-    text-decoration: none;
-}
+/*.header_nav_item_link {*/
+/*    font-size: 26px;*/
+/*    font-weight: 700;*/
+/*    line-height: 34px;*/
+/*    letter-spacing: -0.04em;*/
+/*    color: #a7acb6;*/
+/*    text-decoration: none;*/
+/*}*/
 
 .header_userMenu {
     margin-left: auto;
