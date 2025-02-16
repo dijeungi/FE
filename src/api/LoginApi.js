@@ -3,19 +3,15 @@
 import axios from 'axios';
 import axiosInstance from './AxiosInstance';
 
-import { API_SERVER_HOST } from '../config/ApiConfig';
+import {API_SERVER_HOST} from '../config/ApiConfig';
 
 const host = `${API_SERVER_HOST}/api/member`;
 
 // 로그인
-export const loginPost = async (email, password) => {
-    const response = await axios.post(
-        `${host}/login`,
-        { email, password },
-        {
-            withCredentials: true,
-        },
-    );
+export const loginPost = async (id, password) => {
+    const response = await axios.post(`${host}/login`, {id, password}, {
+        withCredentials: true,
+    },);
     console.log(response.data);
     return response.data;
 };
@@ -27,19 +23,17 @@ export const logoutPost = async () => {
 };
 
 // 회원가입
-export const signupPost = async (name, email, password, phone) => {
-    const response = await axios.post(`${host}/join`, {
-        name,
-        email,
-        password,
-        phone,
+export const signupPost = async (id, name, email, password, phone,mailYn) => {
+    const response = await axios.post(`${host}/join/member`, {
+        id, name, email, password, phone,mailYn
+
     });
     return response.data;
 };
 
 // 회원가입, 이메일 중록 확인 요청
 export const checkEmailPost = async (email) => {
-    const response = await axiosInstance.post(`/member/checkEmail`, { email });
+    const response = await axiosInstance.post(`/member/checkEmail`, {email});
     return response.data;
 };
 

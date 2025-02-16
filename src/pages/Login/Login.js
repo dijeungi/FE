@@ -28,18 +28,16 @@ const LoginPage = () => {
     const [isOpen, setIsOpen] = useState(false);
 
     const handleChange = (e) => {
-        const {name, value} = e.target;
-
+        const { name, value } = e.target;
         setLoginForm((prev) => ({
             ...prev,
             [name]: value,
         }));
     };
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await loginPost(loginForm.email, loginForm.password);
+            const response = await loginPost(loginForm.id, loginForm.password);
             console.log('로그인 성공:', response);
 
             dispatch(login(response));
@@ -81,13 +79,19 @@ const LoginPage = () => {
             <div className="Login-logo">logo</div>
             <input
                 type="text"
+                name="id"
                 placeholder="아이디"
                 className="Login-input1 Login-input"
+                value={loginForm.id}
+                onChange={handleChange}
             />
             <input
                 type="password"
+                name="password"
                 placeholder="비밀번호"
                 className="Login-input2 Login-input"
+                value={loginForm.password}
+                onChange={handleChange}
             />
             <div className="Login-keep-logged-in">
                 <label for="chk">
@@ -95,7 +99,7 @@ const LoginPage = () => {
                     <span class="Login-text">로그인 상태 유지</span>
                 </label>
             </div>
-            <button className="Login-button">
+            <button className="Login-button" onClick={handleSubmit}>
                 로그인
             </button>
 
