@@ -22,3 +22,9 @@ export const getInfoDetails = async (festivalId) => {
     const response = await axiosInstance.get(`/festival/detail?festivalId=${festivalId}`);
     return response.data;
 }
+
+// Casting List
+export const getCastingList = async (festivalId) => {
+    const response = await axiosInstance.get(`/festival/casting-list?festivalId=${festivalId}`);
+    return response.data;
+}

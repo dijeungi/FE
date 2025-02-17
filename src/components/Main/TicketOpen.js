@@ -36,7 +36,7 @@ const TicketOpen = () => {
     return (
         <section className="ticketOpen_section ticketOpen_notice">
             <div className="ticketOpen_header">
-                <h2 className="ticketOpen_title">티켓오픈 🌟</h2>
+                <h2 className="ticketOpen_title">티켓오픈 🎉</h2>
                 <Link to="/" className="ticketOpen_btn_all">
                     전체보기
                 </Link>
@@ -54,9 +54,9 @@ const TicketOpen = () => {
                     disableOnInteraction: false,
                 }}
                 breakpoints={{
-                    1280: { slidesPerView: 3 },
-                    1440: { slidesPerView: 3 },
-                    1680: { slidesPerView: 4 },
+                    1280: { slidesPerView: 4 },
+                    1440: { slidesPerView: 5 },
+                    1680: { slidesPerView: 5 },
                     1920: { slidesPerView: 5 },
                     2560: { slidesPerView: 5 },
                 }}

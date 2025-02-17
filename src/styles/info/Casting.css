@@ -1,0 +1,92 @@
+.Casting_Title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    width: 100%;
+}
+
+.Casting_Wrap {
+    position: relative;
+    width: 62.5%;
+}
+
+.Casting_List {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    margin-top: 1rem;
+    padding: 0;
+
+}
+
+.Casting_Item {
+    flex: 0 0 calc(20% - 0.5rem);
+    margin: 0 0.5rem 1.5rem 0;
+    text-align: center;
+}
+
+.Casting_Item:nth-child(5n) {
+    margin-right: 0;
+}
+
+.Casting_Profile {
+    overflow: hidden;
+    display: block;
+    width: 7rem;
+    height: 7rem;
+    margin: 0 auto 0.8rem;
+    border-radius: 50%;
+    background-color: #f0f0f0;
+}
+
+.Casting_Image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.Casting_Info {
+    font-size: 17.5px;
+    width: 100%;
+}
+
+.Casting_Actor {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight: bold;
+    color: #000;
+    line-height: 1.5rem;
+}
+
+.Casting_Name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #666;
+    line-height: 130%;
+}
+
+.Casting_ToggleButton {
+    /*position: absolute;*/
+    /*top: -0.4rem;*/
+    right: 0;
+    padding: 0 1rem;
+    font-size: 1rem;
+    color: #000;
+    border-radius: 0.6rem;
+    border: 0.1rem solid #b6bdc7;
+}
+
+.Casting_ToggleButton::before {
+    display: inline-block;
+}
+
+.Casting_ToggleButton:after {
+    background-position: 0 0;
+}
+
+a[role="button"] {
+    cursor: pointer;
+    outline-offset: -1px;
+}

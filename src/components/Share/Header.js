@@ -80,11 +80,11 @@ export default function Header() {
                             <ManageSearchIcon className="header_searchIcon" />
                         </div>
                     </nav>
+                    {/*테스트*/}
+                    <div className="header_viewportInfo">
+                        {viewportWidth}px
+                    </div>
                 </div>
-            </div>
-
-            <div className="header_viewportInfo">
-                현재 해상도: {viewportWidth}px
             </div>
 
         </header>

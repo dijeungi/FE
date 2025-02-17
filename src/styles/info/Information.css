@@ -1,68 +1,483 @@
-.Information-h1{
-    font-size: 30px;
-}
-.Information-wrap{
+.Information_Container {
     width: 1120px;
-    margin: 0 auto;
-    margin-top: 50px;
-    margin-bottom: 200px;
+    margin: 3rem auto;
 }
-.information-box{
+
+.Information_Wrap {
+    position: relative;
     display: flex;
-    gap: 20px;
-    margin: 20px 0;
+    justify-content: space-between;
 }
-.information-box th{
-    width: 88px;
-    text-align: left;
+
+.Information_Top {
+    position: relative;
+    font-size: 0;
 }
-.information-box tr{
-    height: 40px;
+
+.Information_TopHeader {
+    margin-top: .4rem;
+    margin-bottom: 1.2rem;
 }
-.information-btn1{
-    width: 140px;
-    height: 58px;
-    background-color: #000;
-    color: #fff;
+
+.Information_BadgeList {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: 8px;
+    width: 100%;
+    margin-bottom: 0.9rem;
 }
-.Information-ticket{
-    width: 304px;
+
+.Information_BadgePopup {
+    padding: 0 2px 0 6px;
+    border-radius: 6px;
+    background: rgba(41, 41, 45, 0.05);
     display: flex;
-    justify-content: space-between
+    height: 22px;
+    justify-content: center;
+    align-items: center;
+    color: rgba(41, 41, 45, 0.8);
+    font-size: 11px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 150%;
+}
+
+.Information_BadgeList a[role="button"] {
+    cursor: pointer;
+    outline-offset: -1px;
+}
+
+.Information_Title {
+    display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    color: #222;
+    font-size: 2rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 150%;
+}
+
+.Information_Rating {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 0.5rem;
+    color: #666;
+}
+
+.Information_TagText {
+    display: inline-block;
+    font-size: 0.9rem;
+    vertical-align: middle;
+}
+
+.Information_RatingValue {
+    font-size: 1.2rem;
+    bottom: 2px;
+}
+
+
+.Information_RatingScore {
+    display: inline-block;
+    font-size: 15px;
+    margin-left: 0.4rem;
+    vertical-align: middle;
+    line-height: 143%;
+}
+
+.Information_Left {
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+    max-width: 1400px;
+}
+
+.Information_PosterBox {
+    flex: 0 0 300px;
+}
+
+
+.Information_PosterBoxTop {
+    background-image: url('//openimage.interpark.com/ticket-desktop/pages/product/noImage_logo.png');
+    background-repeat: no-repeat;
+    background-color: #f0f0f0;
+    background-position: 50% 50%;
+    position: relative;
+    height: 420px;
+}
+
+.Information_PosterBoxImage {
+    display: block;
+    width: 100%;
+    border: 0.1rem solid #dadee3;
+    box-sizing: border-box;
+}
+
+.Information_PosterBoxBottom {
+    margin-top: 0.5rem;
+    font-size: 0;
+}
+
+.Information_PosterBoxBottom:after {
+    display: block;
+    clear: both;
+    content: '';
+}
+
+.Information_CastHeart {
+    float: left;
+    margin-top: 0.2rem;
+    font-size: 0;
+}
+
+.Information_CastWrap {
+    display: inline-block;
+    position: relative;
+}
+
+.Information_CastBtn {
+    position: relative;
+    display: inline-block;
+    font-size: 1rem;
+    font-weight: inherit;
+    line-height: 2.4rem;
+    outline-style: none;
+    cursor: pointer;
+}
+
+.Information_CastBtn a {
+    color: inherit;
+}
+
+.Information_HeartOn {
+    font-size: 1.2rem;
+    position: relative;
+    bottom: -2px;
+    color: red;
+    margin-right: 10px;
+}
+
+
+.Information_HeartOff {
+    font-size: 1.2rem;
+    position: relative;
+    bottom: -2px;
+    margin-right: 10px;
+}
+
+.Information_HoverCast {
+    width: 25rem;
+    z-index: 50;
+    position: absolute;
+    top: 2.5rem;
+    left: 0;
+    display: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.Information_CastWrap:hover .Information_HoverCast {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+}
+
+.Information_PopupWrap {
+    position: relative;
+    font-size: 1.4rem;
+    background-color: #fff;
+    border: 0.1rem solid #ccc;
+    border-radius: 1rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+    box-sizing: border-box;
+    padding: 1rem;
+}
+
+.Information_PopupHead {
 
 }
-.Information-img{
-    width: 304px;
+
+.Information_PopupTitle {
+    cursor: text;
+    display: block;
+    margin-bottom: 0.4rem;
+    color: #000;
+    font-weight: bold;
+    font-size: 1rem;
 }
-.Information-ticket1{
-    width: 155px;
+
+.Information_PopupBody {
+    margin-top: 1rem;
+    color: #666;
+    font-weight: normal;
+    font-size: 1rem;
+
+    line-height: 160%;
+    cursor: text;
+}
+
+.Information_CastNum {
+    display: inline-block;
+    margin-left: 0.5rem;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.Information_Share {
+    float: right;
+}
+
+.Information_ShareList {
     display: flex;
-    justify-content: space-between;
 }
-.Information-ticket2{
-    width: 66px;
+
+.Information_ShareItem {
     display: flex;
-    justify-content: space-between;
-    align-items: center
+    justify-content: center;
+    align-items: center;
 }
-.Information-wrap em{
-    font-style: normal;
+
+.Information_Link {
+    display: block;
+    width: 100%;
+    height: 100%;
 }
-.information-red-text{
-    color: red
+
+a {
+    margin: 0;
+    padding: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    background: transparent;
+    text-decoration: none;
 }
-.Information-wrap th{
-    font-size: 16px;
+
+/*a:-webkit-any-link {*/
+/*    cursor: pointer;*/
+/*}*/
+
+.Information_Info {
+    display: inline-block;
+    width: 20rem;
+    margin-top: 0.4rem;
+    margin-left: 2rem;
+    vertical-align: top;
 }
-.Information-wrap td{
-    font-size: 16px;
-    width: 30rem;
+
+.Information_Info:first-child {
+    margin-top: 0;
 }
-.Casting-box{
+
+.Information_InfoItem {
+    margin-top: 1rem;
+    padding-left: 2rem;
+    font-size: 0;
     display: flex;
+}
+
+
+.Information_InfoLabel {
+    display: inline-block;
+    width: 9rem;
+
+    color: #000;
+    font-size: 1rem;
+    font-weight: normal;
+    line-height: 160%;
+    vertical-align: top;
+    box-sizing: border-box;
+}
+
+.Information_InfoText {
+    position: relative;
+    max-width: 41.5rem;
+    color: #000;
+    font-size: 1.6rem;
+    line-height: 160%;
+}
+
+.Information_InfoDesc {
+    position: relative;
+    max-width: 41.5rem;
+    color: #000;
+    font-size: 1rem;
+    line-height: 160%;
+}
+
+.Information_InfoWrap {
+    position: relative;
+    margin-right: 8px;
+    color: #000;
+    font-size: 1rem;
+    line-height: 160%;
+    vertical-align: middle;
+    text-align: left;
+    font-weight: inherit;
+}
+
+.Calendar_Container {
+    position: sticky;
+    width: 40%;
+    height: auto;
+    margin: 1rem 0 0 2rem;
+    z-index: 5;
+}
+
+.Calendar_Main {
+    width: 25rem;
+    margin: 0 auto;
+    border: 0.1rem solid #b6bdc7;
+    border-radius: 1.5rem;
+}
+
+.Calendar_SideWrap {
+    position: relative;
+    padding-bottom: 1.4rem;
+    border-top: 0.1rem solid #dadee3;
+    box-sizing: border-box;
+}
+
+.Calendar_SideWrap:first-child {
+    border-top: none;
+    padding-top: 0.5rem;
+}
+
+.Calendar_SideHeader {
+    padding: 1.5rem 2rem 0;
+    box-sizing: border-box;
+}
+
+.Calendar_SideTitle {
+    font-size: 1rem;
+    font-weight: bold;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.Calendar_Content {
+    padding: 0 2rem;
+    overflow: hidden;
+    max-height: 33rem;
+    transition: max-height 0.4s;
+}
+
+.Calendar_SideCalendar {
+    margin: 1.8rem 0 1rem;
+}
+
+.react-calendar__navigation {
+    width: 16.8rem;
+    margin: 0 auto 1rem;
+    position: relative;
+    overflow: hidden;
     text-align: center;
 }
-.Casting-box span{
-    display: block;
+
+.react-calendar__navigation button {
+    border: none;
+    box-shadow: none;
+    outline: none;
+    background: none;
+    cursor: pointer;
+
+    font-size: 1.2rem;
+    font-weight: 550;
+}
+
+.react-calendar__navigation__label {
+    pointer-events: none;
+    cursor: default;
+    margin: 0 20px;
+    font-size: 1rem;
+    font-weight: 550;
+}
+
+.react-calendar__month-view__weekdays {
+    text-align: center;
+    font-size: 1rem !important;;
+    color: #666;
+    cursor: default;
+    line-height: 3rem;
+    height: 2.8rem;
+    margin-bottom: 5px;
+    border-radius: 50px;
+    background: #f4f6f9;
+}
+
+.react-calendar__month-view__days button {
+    border: none;
+    box-shadow: none;
+    outline: none;
+    background: none;
+    /*cursor: pointer;*/
+}
+
+.weekend {
+    color: red !important;
+}
+
+.react-calendar__month-view__days .past-sunday {
+    color: #F8C4C4 !important;
+}
+
+
+.react-calendar__tile {
+    width: 14.2% !important;
+    height: 0;
+    padding-bottom: 14.2%;
+    position: relative;
+}
+
+.react-calendar__tile > * {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.hidden-date {
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.past-date {
+    color: #bbb;
+    pointer-events: none;
+    cursor: default;
+    background-color: #f2f2f2;
+}
+
+.future-date,
+.future-sunday {
+    cursor: pointer;
+}
+
+.future-sunday {
+    color: red !important;
+    cursor: pointer;
+}
+
+.selected-date {
+    background-color: #4CAF50 !important;
+    color: white !important;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     font-weight: bold;
+}
+
+.future-sunday-disabled {
+    background-color: rgba(255, 99, 71, 0.5); /* 토마토색 배경 */
+    color: #F8C4C4 ;
+    font-weight: bold;
+}
+
+.future-disabled {
+    color: #ccc;
+    pointer-events: none;
 }
