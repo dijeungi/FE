@@ -20,8 +20,19 @@ const Information = ({festivalData = {}}) => {
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [activeStartDate, setActiveStartDate] = useState(new Date());
 
+    // api 대체 임시데이터
+    const [selectedTimes, setSelectedTimes] = useState(["13:00", "15:00", "17:00", "19:00", "21:00", "23:00", "01:00"]);
+
     const handleDateChange = (date) => {
         setSelectedDate(date);
+    };
+
+    // 선택된 시간을 저장하는 상태
+    const [selectedTime, setSelectedTime] = useState(null);
+
+    // 같은 버튼 클릭 시 해제
+    const handleTimeClick = (time) => {
+        setSelectedTime((prevSelected) => (prevSelected === time ? null : time));
     };
 
     const isPrevDisabled = () => {
@@ -77,14 +88,14 @@ const Information = ({festivalData = {}}) => {
                             <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12"
                                  fill="none">
                                 <path d="M4.53506 3L7.5 5.98237L4.5 9" stroke="#29292D" strokeOpacity="0.8"
-                                      strokeWidth="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                      strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
                             </svg>
                         </a>
                         <a className="badgeItem Information_BadgePopup" role="button">예매대기
                             <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12"
                                  fill="none">
                                 <path d="M4.53506 3L7.5 5.98237L4.5 9" stroke="#29292D" strokeOpacity="0.8"
-                                      strokeWidth="1.5" strokeLinecap="Round" stroke-linejoin="round"></path>
+                                      strokeWidth="1.5" strokeLinecap="Round" strokeLinejoin="round"></path>
                             </svg>
                         </a>
 
@@ -158,7 +169,7 @@ const Information = ({festivalData = {}}) => {
                                             />
                                         </IconButton>
                                     </li>
-                                    ㄴ
+
                                     <li className="Information_ShareItem">
                                         <IconButton
                                             aria-label="kakao"
@@ -203,6 +214,7 @@ const Information = ({festivalData = {}}) => {
                                 <p className="Information_InfoDesc">{salePrice.toLocaleString()}원</p>
                             </div>
                         </li>
+
                     </ul>
                 </div>
 
@@ -264,10 +276,36 @@ const Information = ({festivalData = {}}) => {
                         </div>
 
                         <div className="Calendar_SideWrap Calendar_WrapMiddle Calendar_SideToogle">
+                            <div className="Calendar_SideHeader">
+                                <h4 className="Calendar_SideTitle">회차</h4>
+                                <div className="Calendar_SeletedData">
+                                    {/*api로 가져올 시간 표시 <span>으로 */}
+                                </div>
+                            </div>
+                            <div className="Calendar_Content">
+                                <div className="Calendar_SideTimeTable">
+                                    <ul className="Calendar_TimeTableList">
+                                        {selectedTimes.map((time, index) => (
+                                            <li key={index} className="Calendar_TimeTableItem">
+                                                <button
+                                                    className={`Calendar_TimeTableLabel ${selectedTime === time ? 'selected' : ''}`}
+                                                    onClick={() => handleTimeClick(time)}
+                                                    role="button"
+                                                >
+                                                    {`${index + 1}회 ${time}`}
+                                                </button>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            </div>
 
                         </div>
-                        <div className="Calendar_SideWrap Calendar_WrapBottom">
 
+                        <div className="Calendar_SideWrap Calendar_WrapBottom">
+                            <div className="Calendar_SideHeader">
+                                <p className="Calendar_SideSubTitle">* 예매 후 변경 및 환불은 규정에 따라 진행되며<br/>공연 24시간 전까지만 가능합니다.<br/><br/>모바일 티켓을 사용하면 빠른 입장이 가능합니다.</p>
+                            </div>
                         </div>
                     </div>
                 </div>

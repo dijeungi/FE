@@ -152,7 +152,7 @@ export default function MainBanner() {
                 spaceBetween={30}
                 fadeEffect={{ crossFade: true }}
                 autoplay={{
-                    delay: 1000,
+                    delay: 5000,
                     disableOnInteraction: false
                 }}
                 onInit={(swiper) => (swiperRef.current = swiper)}

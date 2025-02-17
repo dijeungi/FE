@@ -47,7 +47,7 @@
 /*=============================================*/
 .MainBanner_Autoplay {
     position: absolute;
-    right: 21%;
+    left: 50%;
     bottom: 16px;
     z-index: 10;
     width: 48px;
@@ -57,7 +57,58 @@
     justify-content: center;
     font-weight: bold;
     color: #FF7B14;
+    transform: translateX(510px); /* 원하는 위치로 미세 조정 */
 }
+
+/* 반응형 (더 큰 해상도에서 조정 가능) */
+@media (max-width: 1440px) {
+    .MainBanner_Autoplay {
+        transform: translateX(500px);
+    }
+}
+
+@media (max-width: 1280px) {
+    .MainBanner_Autoplay {
+        transform: translateX(400px);
+    }
+}
+
+@media (max-width: 1024px) {
+    .MainBanner_Autoplay {
+        transform: translateX(300px);
+    }
+}
+
+/*@media (max-width: 1440px) {*/
+/*    .MainBanner_Autoplay {*/
+/*        right: 11%;*/
+/*    }*/
+/*}*/
+
+/*@media (max-width: 1680px) {*/
+/*    .MainBanner_Autoplay {*/
+/*        right: 17%;*/
+/*    }*/
+/*}*/
+
+/*@media (max-width: 1680px) {*/
+/*    .MainBanner_Autoplay {*/
+/*        right: 17%;*/
+/*    }*/
+/*}*/
+
+/*@media (width: 1920px) {*/
+/*    .MainBanner_Autoplay {*/
+/*        right: 21%;*/
+/*    }*/
+/*}*/
+
+
+/*@media (width: 2560px) {*/
+/*    .MainBanner_Autoplay {*/
+/*        right: 28.5%;*/
+/*    }*/
+/*}*/
 
 .MainBanner_Autoplay svg {
     position: absolute;

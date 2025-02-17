@@ -4,9 +4,9 @@ import { useParams } from 'react-router-dom';
 // components
 import Information from '../components/info/Information';
 import UseInfo from '../components/info/UseInfo';
-import Review from '../components/info/Review';
-import Expectation from '../components/info/Expectation';
-import Qna from '../components/info/Qna';
+// import Review from '../components/info/Review';
+// import Expectation from '../components/info/Expectation';
+// import Qna from '../components/info/Qna';
 import Tabs from '../components/info/Tabs';
 import Casting from '../components/info/Casting';
 
@@ -49,9 +49,9 @@ const InfoDetailPage = () => {
 
     const tabContent = {
         UseInfo: <UseInfo />,
-        Review: <Review />,
-        Expectation: <Expectation />,
-        Qna: <Qna />,
+        // Review: <Review />,
+        // Expectation: <Expectation />,
+        // Qna: <Qna />,
     };
 
     return (
