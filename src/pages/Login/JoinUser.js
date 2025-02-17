@@ -3,9 +3,16 @@ import '../../styles/Login/JoinUser.css';
 import {useNavigate} from "react-router-dom";
 import Swal from "sweetalert2";
 import {signupPost} from "../../api/LoginApi";
+import {auth} from "../../config/FirebaseConfig";
+import {RecaptchaVerifier, signInWithPhoneNumber} from "firebase/auth";
+
 
 const JoinUser = () => {
     const navigate = useNavigate();
+    const [phoneNumber, setPhoneNumber] = useState("");
+    const [otp, setOtp] = useState("");
+    const [confirmation, setConfirmation] = useState(null);
+
     const [formData, setFormData] = useState({
         id:'',
         email: '',
@@ -85,7 +92,84 @@ const JoinUser = () => {
         }
     };
 
-  return (
+    const setupRecaptcha = () => {
+        if (!window.recaptchaVerifier) {
+            console.log("🔹 reCAPTCHA 설정 시작");
+            window.recaptchaVerifier = new RecaptchaVerifier(auth,
+                "recaptcha-container",
+                {
+                    size: "invisible",
+                    callback: (response) => {
+                        console.log("✅ reCAPTCHA 인증 성공:", response);
+                    },
+                    "expired-callback": () => {
+                        console.log("⚠️ reCAPTCHA 인증이 만료되었습니다. 다시 시도하세요.");
+                    },
+                },
+                auth
+            );
+
+            window.recaptchaVerifier.render().then((widgetId) => {
+                console.log("✅ reCAPTCHA 위젯 ID:", widgetId);
+            });
+        } else {
+            console.log("⚠️ reCAPTCHA가 이미 설정됨");
+        }
+    };
+
+    const sendOtp = async () => {
+        try {
+            setupRecaptcha();
+            const appVerifier = window.recaptchaVerifier;
+
+            const confirmationResult = await signInWithPhoneNumber(
+                auth,
+                "+82" + phoneNumber.replace("-", "").substring(1),
+                appVerifier
+            );
+            setConfirmation(confirmationResult);
+            alert("OTP 전송 완료!");
+            console.log("✅ OTP 전송 성공:", confirmationResult);
+        } catch (error) {
+            console.error("❌ OTP 전송 실패:", error);
+            if (error.code === "auth/invalid-app-credential") {
+                alert("앱 자격 증명이 유효하지 않습니다. Firebase 설정을 확인하세요.");
+            } else {
+                alert("OTP 전송 실패: " + error.message);
+            }
+        }
+    };
+
+
+    const verifyOtp = async () => {
+        try {
+            if (!confirmation) {
+                alert("OTP 인증이 먼저 필요합니다.");
+                return;
+            }
+
+            const result = await confirmation.confirm(otp);
+            const idToken = await result.user.getIdToken();
+            console.log("✅ Firebase ID 토큰:", idToken);
+
+            const response = await fetch("http://127.0.0.1:8080/api/firebase/auth/verify-token", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({token: idToken})
+            });
+
+            const data = await response.text();
+            console.log(data);
+            alert(data);
+        } catch (error) {
+            console.error("❌ OTP 인증 실패:", error);
+            alert("OTP 인증 실패: " + error.message);
+        }
+    };
+
+    return (
     <form class="Join-form" onSubmit={handleSubmit}>
       <h2 class="Join-h2">회원가입</h2>
       <div class="Join-form-box">
@@ -123,35 +207,54 @@ const JoinUser = () => {
                onChange={handleChange}
         />
       </div>
-        <div class="Join-form-box">
-            <label>이메일</label>
-            <input type="text"
-                   name="email"
-                   value={formData.email}
-                   onChange={handleChange}
-            />
-            <select onChange={handleEmailChange}>
-                <option>직접입력</option>
-                <option value="@naver.com">@naver.com</option>
-                <option value="@gmail.com">@gmail.com</option>
-                <option value="@daum.net">@daum.net</option>
+      <div class="Join-form-box">
+        <label>이메일</label>
+          <input type="text"
+                 name="email"
+                 value={formData.email}
+                 onChange={handleChange}
+          />
+          <select onChange={handleEmailChange}>
+              <option>직접입력</option>
+              <option value="@naver.com">@naver.com</option>
+              <option value="@gmail.com">@gmail.com</option>
+              <option value="@daum.net">@daum.net</option>
 
-            </select>
-        </div>
-        <div class="Join-form-box">
-            <label>휴대폰</label>
-            <input type="text"
-                   name="phone"
-                   value={formData.phone}
-                   onChange={handleChange}
-            />
-            <button type="button" class="Join-btn1">인증번호 받기</button>
+          </select>
+      </div>
+      <div class="Join-form-box">
+        <label>휴대폰</label>
+        <input type="text"
+               name="phone"
+               value={formData.phone}
+               onChange={handleChange}
+        />
+        <button type="button"
+                class="Join-btn1"
+                onClick={sendOtp}>
+            인증번호 받기
+        </button>
+          {confirmation && (
+              <>
+                  <input
+                      type="text"
+                      placeholder="OTP 입력"
+                      value={otp}
+                      onChange={(e) => setOtp(e.target.value)}
+                  />
+                  <button type="button" onClick={verifyOtp}>
+                      인증번호 확인
+                  </button>
+              </>
+          )}
+          <div id="recaptcha-container"></div>
       </div>
       <div class="Join-form-box2">
           <input type="checkbox"
                  name="receiveInfo"
                  value={formData.mailYn}
-                 onChange={handleChange}/>
+                 onChange={handleChange}
+          />
           <label>SMS, 이메일로 상품 및 이벤트 정보를 받겠습니다. (선택)</label>
       </div>
       <div class="Join-form-box2">
