@@ -2,8 +2,7 @@ import React, {useState} from 'react';
 import '../../styles/Login/Login.css';
 import Loginicon1 from '../../img/kakao_icon.png'
 import Loginicon2 from '../../img/naver_icon.png'
-import Loginicon3 from '../../img/apple_icon.png'
-import LoginIcon from "@mui/icons-material/Login";
+import Loginicon3 from '../../img/google.png'
 import {Link, useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import Swal from 'sweetalert2';
@@ -12,10 +11,6 @@ import {loginPost} from "../../api/LoginApi";
 import {getKakaoLoginLink} from "../../api/KakaoApi";
 import {getNaverLoginLink} from "../../api/NaverApi";
 import {getGoogleLoginLink} from "../../api/GoogleApi";
-// import {ReservationPopup} from "../ReservationPopup";
-import {Button} from "@mui/material";
-
-
 
 const LoginPage = () => {
     const navigate = useNavigate();

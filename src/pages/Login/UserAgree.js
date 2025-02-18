@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import '../../styles/Login/UserAgree.css';
-import Agree1 from '../../img/Agree_arrow.png'
 import {Link} from "react-router-dom";
 
 const UserAgree = () => {
@@ -12,17 +11,17 @@ const UserAgree = () => {
         <div className="Agree-row1">
           <input type='checkbox'/>
           <label>[필수] 이용약관 </label>
-          <img src={Agree1}/> 
+          {/*<img src={Agree1}/>*/}
         </div>
         <div className="Agree-row1">
           <input type='checkbox'/>
           <label>[필수] 전자금융거래 이용약관 </label>
-          <img src={Agree1}/> 
+          {/*<img src={Agree1}/>*/}
         </div>
         <div className="Agree-row1">
           <input type='checkbox'/>
           <label>[필수] 개인정보 수집동의서 </label>
-          <img src={Agree1}/> 
+          {/*<img src={Agree1}/>*/}
         </div>
       </div>
       <div className='Agree-box'>
@@ -30,12 +29,12 @@ const UserAgree = () => {
         <div className="Agree-row2">
           <input type='checkbox'/>
           <label>[선택] 개인정보 수집동의서  </label>
-          <img src={Agree1}/> 
+          {/*<img src={Agree1}/> */}
         </div>
         <div className="Agree-row2">
           <input type='checkbox'/>
           <label>[선택] 위치기반서비스 이용약관</label>
-          <img src={Agree1}/> 
+          {/*<img src={Agree1}/> */}
         </div>
       </div>
       <Link to="/register/JoinUser" ><input type="submit" value="다음단계" className='Agree-submit'/></Link>

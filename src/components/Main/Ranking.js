@@ -54,11 +54,10 @@ const Ranking = () => {
                 slidesPerView={5}
                 spaceBetween={30}
                 autoplay={{
-                    delay: 3000,
+                    delay: 5000,
                     disableOnInteraction: false,
                 }}
                 breakpoints={{
-                    1280: { slidesPerView: 4 },
                     1440: { slidesPerView: 5 },
                     1680: { slidesPerView: 5 },
                     1920: { slidesPerView: 5 },

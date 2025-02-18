@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import '../../styles/Login/TeamAgree.css';
-import Agree1 from '../../img/Agree_arrow.png'
 import {Link} from "react-router-dom";
 
 const TeamAgree = () => {
