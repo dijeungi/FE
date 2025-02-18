@@ -1,17 +1,32 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import '../../styles/Login/JoinUser.css';
 import {useNavigate} from "react-router-dom";
 import Swal from "sweetalert2";
 import {signupPost} from "../../api/LoginApi";
+import {getCategoryList} from "../../api/CommonApi";
 import {auth} from "../../config/FirebaseConfig";
 import {RecaptchaVerifier, signInWithPhoneNumber} from "firebase/auth";
 
 
 const JoinUser = () => {
     const navigate = useNavigate();
-    const [phoneNumber, setPhoneNumber] = useState("");
+    // const [phoneNumber, setPhoneNumber] = useState("");
     const [otp, setOtp] = useState("");
     const [confirmation, setConfirmation] = useState(null);
+    const [category,setCategory] = useState([]);
+
+    useEffect(() => {
+        const executeCategory = async() => {
+            try {
+                const response = await getCategoryList("CT");
+                setCategory(response || []);
+            } catch (error) {
+                console.error("category failed");
+                setCategory([]);
+            }
+        };
+        executeCategory();
+    },[]);
 
     const [formData, setFormData] = useState({
         id:'',
@@ -22,6 +37,9 @@ const JoinUser = () => {
         phone: '',
         selectedEmail: '',
         mailYn: 'N',
+        favorite1: '',
+        favorite2: '',
+        favorite3: '',
     });
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -38,6 +56,57 @@ const JoinUser = () => {
             email : email+value,
         }));
         formData.email = email;
+    };
+    const handleFavoriteChange1 = (e) => {
+        const favorite1 = e.target.value;
+        console.log("category:", category);
+        console.log("favorite1:", favorite1);
+        console.log("category id 리스트:", category.map(item => item.id));
+        console.log("비교 결과:", category.some(item => String(item.id).trim() === String(favorite1).trim()));
+
+
+        const  value  =  category.find(item => String(item.id).trim() === String(favorite1).trim());
+
+        setFormData((prev) => ({
+            ...prev,
+            favorite1 : value.name,
+        }));
+        formData.favorite1 = favorite1;
+    };
+    const handleFavoriteChange2 = (e) => {
+        const favorite2 = e.target.value;
+        console.log("category:", category);
+        console.log("favorite1:", favorite2);
+        console.log("category id 리스트:", category.map(item => item.id));
+        console.log("비교 결과:", category.some(item => String(item.id).trim() === String(favorite2).trim()));
+
+        const   value  = category.find(item => item.id.toString() === favorite2);
+        setFormData((prev) => ({
+            ...prev,
+            favorite2 : value.name,
+        }));
+        formData.favorite2 = favorite2;
+    };
+    const handleFavoriteChange3 = (e) => {
+
+        const favorite3 = e.target.value;
+        console.log("category:", category);
+        console.log("favorite1:", favorite3);
+        console.log("category id 리스트:", category.map(item => item.id));
+        console.log("비교 결과:", category.some(item => String(item.id).trim() === String(favorite3).trim()));
+        const   value  = category.find(item => item.id.toString() === favorite3);
+        setFormData((prev) => ({
+            ...prev,
+            favorite3 : value.name,
+        }));
+        formData.favorite3 = favorite3;
+    };
+    const handleFavoriteChange = (e) => {
+        const { name, value } = e.target;
+        setFormData((prev) => ({
+            ...prev,
+            [name]: value,
+        }));
     };
 
     const validateCheck = () => {
@@ -69,7 +138,10 @@ const JoinUser = () => {
                 formData.email,
                 formData.password,
                 formData.phone,
-                formData.mailYn
+                formData.mailYn,
+                formData.favorite1,
+                formData.favorite2,
+                formData.favorite3
             );
             Swal.fire({
                 title: '회원가입 성공',
@@ -122,9 +194,10 @@ const JoinUser = () => {
             setupRecaptcha();
             const appVerifier = window.recaptchaVerifier;
 
+
             const confirmationResult = await signInWithPhoneNumber(
                 auth,
-                "+82" + phoneNumber.replace("-", "").substring(1),
+                "+82" + formData.phone.substring(1,10),
                 appVerifier
             );
             setConfirmation(confirmationResult);
@@ -170,103 +243,159 @@ const JoinUser = () => {
     };
 
     return (
-    <form class="Join-form" onSubmit={handleSubmit}>
-      <h2 class="Join-h2">회원가입</h2>
-      <div class="Join-form-box">
-        <label>아이디</label>
-        <input type="text"
-               name="id"
-               placeholder='6~20자 영문, 숫자'
-               value={formData.id}
-               onChange={handleChange}
-        />
-      </div>
-      <div class="Join-form-box">
-        <label>비밀번호 </label>
-        <input type="password"
-               name="password"
-               placeholder='8~12자 영문, 숫자, 특수 문자'
-               value={formData.password}
-               onChange={handleChange}
-        />
-      </div>
-      <div class="Join-form-box">
-        <label>비밀번호 확인</label>
-        <input type="password"
-               name="confirmPassword"
-               placeholder='8~12자 영문, 숫자, 특수 문자'
-               value={formData.confirmPassword}
-               onChange={handleChange}
-        />
-      </div>
-      <div class="Join-form-box">
-        <label>이름</label>
-        <input type="text"
-               name="name"
-               value={formData.name}
-               onChange={handleChange}
-        />
-      </div>
-      <div class="Join-form-box">
-        <label>이메일</label>
-          <input type="text"
-                 name="email"
-                 value={formData.email}
-                 onChange={handleChange}
-          />
-          <select onChange={handleEmailChange}>
-              <option>직접입력</option>
-              <option value="@naver.com">@naver.com</option>
-              <option value="@gmail.com">@gmail.com</option>
-              <option value="@daum.net">@daum.net</option>
+        <form class="Join-form" onSubmit={handleSubmit}>
+            <h2 class="Join-h2">회원가입</h2>
+            <div className="Join-form-box">
+                <label>아이디</label>
+                <input type="text"
+                       name="id"
+                       placeholder='6~20자 영문, 숫자'
+                       value={formData.id}
+                       onChange={handleChange}
+                />
+            </div>
+            <div className="Join-form-box">
+                <label>비밀번호 </label>
+                <input type="password"
+                       name="password"
+                       placeholder='8~12자 영문, 숫자, 특수 문자'
+                       value={formData.password}
+                       onChange={handleChange}
+                />
+            </div>
+            <div className="Join-form-box">
+                <label>비밀번호 확인</label>
+                <input type="password"
+                       name="confirmPassword"
+                       placeholder='8~12자 영문, 숫자, 특수 문자'
+                       value={formData.confirmPassword}
+                       onChange={handleChange}
+                />
+            </div>
+            <div className="Join-form-box">
+                <label>이름</label>
+                <input type="text"
+                       name="name"
+                       value={formData.name}
+                       onChange={handleChange}
+                />
+            </div>
+            <div className="Join-form-box">
+                <label>이메일</label>
+                <input type="text"
+                       name="email"
+                       value={formData.email}
+                       onChange={handleChange}
+                />
+                <select onChange={handleEmailChange}>
+                    <option>직접입력</option>
+                    <option value="@naver.com">@naver.com</option>
+                    <option value="@gmail.com">@gmail.com</option>
+                    <option value="@daum.net">@daum.net</option>
 
-          </select>
-      </div>
-      <div class="Join-form-box">
-        <label>휴대폰</label>
-        <input type="text"
-               name="phone"
-               value={formData.phone}
-               onChange={handleChange}
-        />
-        <button type="button"
-                class="Join-btn1"
-                onClick={sendOtp}>
-            인증번호 받기
-        </button>
-          {confirmation && (
-              <>
-                  <input
-                      type="text"
-                      placeholder="OTP 입력"
-                      value={otp}
-                      onChange={(e) => setOtp(e.target.value)}
-                  />
-                  <button type="button" onClick={verifyOtp}>
-                      인증번호 확인
-                  </button>
-              </>
-          )}
-          <div id="recaptcha-container"></div>
-      </div>
-      <div class="Join-form-box2">
-          <input type="checkbox"
-                 name="receiveInfo"
-                 value={formData.mailYn}
-                 onChange={handleChange}
-          />
-          <label>SMS, 이메일로 상품 및 이벤트 정보를 받겠습니다. (선택)</label>
-      </div>
-      <div class="Join-form-box2">
-          <input type="checkbox" name="under14"/>          
-          <label>14세 미만입니다.</label>
-      </div>
-      <div class="Join-form-box3">
-          <p>만 14세 미만 회원은 법정대리인(부모님) 동의를 받은 경우만 회원가입이 가능합니다.</p>
-      </div>
-      <button type="submit" class="Join-submit">가입완료</button>
-    </form>
-  );
+                </select>
+            </div>
+            <div className="Join-form-box">
+                <label>휴대폰</label>
+                <input type="text"
+                       name="phone"
+                       value={formData.phone}
+                       onChange={handleChange}
+                />
+                <button type="button"
+                        class="Join-btn1"
+                        onClick={sendOtp}>
+                    인증번호 받기
+                </button>
+                {confirmation && (
+                    <>
+                        <input
+                            type="text"
+                            placeholder="OTP 입력"
+                            value={otp}
+                            onChange={(e) => setOtp(e.target.value)}
+                        />
+                        <button type="button" onClick={verifyOtp}>
+                            인증번호 확인
+                        </button>
+                    </>
+                )}
+                <div id="recaptcha-container"></div>
+            </div>
+            <br/>
+                    <div className="Join-form-box-header">
+
+                    <label>좋아하는 장르</label>
+                    </div>
+            <div className={"Join-form-box"}>
+                <label>1순위</label>
+                <input type="text"
+                       name="favorite1"
+                       value={formData.favorite1}
+                       onChange={handleChange}
+                />
+                <select onChange={handleFavoriteChange1}>
+                    {category?.map((category_value,index) => (
+                        <option key={index} value={category_value.id}>
+                            {category_value.name}
+                        </option>
+                    ))}
+                </select>
+            </div>
+
+            <div className={"Join-form-box"}>
+                <label>2순위</label>
+                <input type="text"
+                       name="favorite2"
+                       value={formData.favorite2}
+                       onChange={handleChange}
+                />
+                <select onChange={handleFavoriteChange2}>
+                    {category?.map((category_value,index) => (
+                        <option key={index} value={category_value.id}>
+                            {category_value.name}
+                        </option>
+                    ))}
+
+                </select>
+
+            </div>
+            <div className={"Join-form-box"}>
+                <label>3순위</label>
+                <input type="text"
+                       name="favorite3"
+                       value={formData.favorite3}
+                       onChange={handleChange}
+                />
+                <select onChange={handleFavoriteChange3}>
+                    {category?.map((category_value,index) => (
+                        <option key={index} value={category_value.id}>
+                            {category_value.name}
+                        </option>
+                    ))}
+
+                </select>
+            </div>
+
+
+            <div className="Join-form-box2">
+                <input type="checkbox"
+                       name="receiveInfo"
+                       value={formData.mailYn}
+                       onChange={handleChange}
+                />
+                <label>SMS, 이메일로 상품 및 이벤트 정보를 받겠습니다. (선택)</label>
+            </div>
+                <div className="Join-form-box2">
+                    <input type="checkbox" name="under14"/>
+                    <label>14세 미만입니다.</label>
+                </div>
+                <div className="Join-form-box3">
+                    <p>만 14세 미만 회원은 법정대리인(부모님) 동의를 받은 경우만 회원가입이 가능합니다.</p>
+                </div>
+                <button type="submit" class="Join-submit">가입완료</button>
+        </form>
+);
 };
 
 export default JoinUser;

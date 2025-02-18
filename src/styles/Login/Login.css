@@ -70,6 +70,23 @@
     display: flex;
     align-items: flex-end;
 }
+.Join-form-box-category{
+    border-bottom: 1px solid #ccc;
+    height: 200px;
+    display: flex;
+    align-items: flex-end;
+}
+.Join-form-box-header{
+
+    height: 20px;
+    /*align-items: flex-end;*/
+    text-align: center;
+
+    display: block;
+}
+
+
+
 input{
     border: none;
 }
