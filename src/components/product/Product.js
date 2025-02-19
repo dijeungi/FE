@@ -167,23 +167,25 @@ const Product = () => {
     const handleReservationClick = () => {
         if (!selectedDate || !selectedTime) return;
 
-        // ✅ 한국 시간(KST) 기준으로 변환
         const formattedDate = selectedDate.toLocaleDateString("ko-KR", {
             year: "numeric",
             month: "2-digit",
             day: "2-digit"
         }).replace(/\./g, "").replace(/\s/g, "-");
 
+        const posterUrl = festivalData.postImage ? encodeURIComponent(festivalData.postImage) : "";
+
         const queryParams = new URLSearchParams({
             festivalId,
             festivalName: encodeURIComponent(festivalData.festivalName || "정보 없음"),
-            selectedDate: formattedDate, // ✅ toISOString() 대신 KST 변환 사용
+            selectedDate: formattedDate,
             selectedTime: selectedTime || "정보 없음",
-            salePrice: festivalData.salePrice || 0
+            salePrice: festivalData.salePrice || 0,
+            poster: posterUrl
         }).toString();
 
-        const width = 600;
-        const height = 700;
+        const width = 1120;
+        const height = 635;
         const left = (window.screen.width - width) / 2;
         const top = (window.screen.height - height) / 2;
 
@@ -195,7 +197,7 @@ const Product = () => {
 
         if (reservationWindow) {
             reservationWindow.focus();
-
+            // ✅ 창 크기 강제 적용
             setTimeout(() => {
                 reservationWindow.resizeTo(width, height);
             }, 500);
