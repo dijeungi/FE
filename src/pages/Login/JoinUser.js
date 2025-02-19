@@ -10,7 +10,7 @@ import {RecaptchaVerifier, signInWithPhoneNumber} from "firebase/auth";
 
 const JoinUser = () => {
     const navigate = useNavigate();
-    // const [phoneNumber, setPhoneNumber] = useState("");
+    // const [phoneNumber, setPhoneNumber] = useState("");git
     const [otp, setOtp] = useState("");
     const [confirmation, setConfirmation] = useState(null);
     const [category,setCategory] = useState([]);
