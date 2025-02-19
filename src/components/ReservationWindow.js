@@ -1,33 +1,48 @@
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
-import "../styles/Components/ReservationWindow.css"; // 스타일 적용
+import { loadTossPayments } from '@tosspayments/payment-sdk';
+import "../styles/Components/ReservationWindow.css";
 
 const ReservationWindow = () => {
     const location = useLocation();
     const params = new URLSearchParams(location.search);
 
-    // ✅ URL에서 가져온 데이터
-    // const festivalId = params.get("festivalId") || "정보 없음";
     const festivalName = decodeURIComponent(params.get("festivalName")) || "정보 없음";
     const selectedDate = params.get("selectedDate") || "정보 없음";
     const selectedTime = params.get("selectedTime") || "정보 없음";
-    const salePrice = Number(params.get("salePrice")) || 0;
+    const salePrice = Number(params.get("salePrice")) || 1000;
     const poster = decodeURIComponent(params.get("poster")) || "";
 
-    // 좌석 데이터 생성
     const rows = "ABCDEFG".split("");
     const seatsPerRow = 10;
-
-    // 선택된 좌석 상태 관리
     const [selectedSeats, setSelectedSeats] = useState([]);
+    // const [tossPayments, setTossPayments] = useState(null);
 
-    // 좌석 클릭 이벤트 핸들러
     const handleSeatClick = (seat) => {
         setSelectedSeats((prevSelected) =>
             prevSelected.includes(seat)
                 ? prevSelected.filter((s) => s !== seat)
                 : [...prevSelected, seat]
         );
+    };
+
+    const handlePayment = async () => {
+        try {
+            const tossPayments = await loadTossPayments("test_ck_O6BYq7GWPVvPRjx6BQL8NE5vbo1d");
+
+            await tossPayments.requestPayment("카드", {
+                orderId: `order_${new Date().getTime()}_${Math.random().toString(36).substr(2, 9)}`,
+                amount: 1000, // 최소 1000원 이상
+                orderName: "공연 티켓",
+                customerName: "고객 이름",
+                successUrl: `${window.location.origin}/payment/success`,
+                failUrl: `${window.location.origin}/payment/fail`,
+            });
+
+        } catch (error) {
+            console.error("결제 오류:", error);
+            alert(`결제 실패: ${error.message}`);
+        }
     };
 
     return (
@@ -53,7 +68,7 @@ const ReservationWindow = () => {
                     {rows.map((row) => (
                         <div key={row} className="seat-row">
                             {Array.from({ length: seatsPerRow }, (_, i) => {
-                                const seat = `${row}${i + 1}`; // 🔥 여기서 1부터 시작하도록 변경
+                                const seat = `${row}${i + 1}`;
                                 return (
                                     <button
                                         key={seat}
@@ -72,8 +87,8 @@ const ReservationWindow = () => {
                     <strong>선택한 좌석:</strong> {selectedSeats.length > 0 ? selectedSeats.join(", ") : "없음"}
                 </p>
 
-                <button className="reservation-button" disabled={selectedSeats.length === 0}>
-                    예매 완료
+                <button className="reservation-button" disabled={selectedSeats.length === 0} onClick={handlePayment}>
+                    예매 완료 (결제)
                 </button>
             </div>
         </div>

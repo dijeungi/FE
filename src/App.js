@@ -24,6 +24,8 @@ import FindAccountPassword from "./pages/Login/FindAccountPassword";
 import FindAccountPasswordDetail from "./pages/Login/FindAccountPasswordDetail";
 
 import ReservationWindow from "./components/ReservationWindow";
+import PaymentSuccess from "./components/payments/PaymentSuccess";
+import PaymentFail from "./components/payments/PaymentFail";
 
 function App() {
     const location = useLocation();
@@ -60,6 +62,10 @@ function App() {
                 <Route path="/account/findId" element={<FindAccountId />} />
                 <Route path="/account/findPassword" element={<FindAccountPassword />} />
                 <Route path="/account/findPassword/detail" element={<FindAccountPasswordDetail />} />
+
+                {/*토스페이먼츠*/}
+                <Route path="/payment/success" element={<PaymentSuccess />} />
+                <Route path="/payment/fail" element={<PaymentFail />} />
             </Routes>
 
             {/* ✅ 예매 페이지가 아닐 때만 Footer 표시 */}
