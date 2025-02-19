@@ -126,6 +126,7 @@ const Product = () => {
     const handleDateChange = async (date) => {
         setSelectedDate(date);
         setSelectedTime(null);
+
         try {
             const formattedDate = date.toLocaleDateString("ko-KR", {
                 year: "numeric",
@@ -136,18 +137,30 @@ const Product = () => {
             console.log("📌 API 요청 날짜:", formattedDate);
 
             let timeData = await getFestivalDetailTimeDate(festivalId, formattedDate);
-            timeData = timeData.map(item => ({
+            console.log("✅ API 응답 데이터:", timeData); // 🔥 확인용 로그 추가
+
+            // 🔥 `timeData.timeDTOS`가 배열인지 확인 후 변환
+            if (!timeData || !Array.isArray(timeData.timeDTOS)) {
+                console.error("❌ timeDTOS가 배열이 아님!", timeData);
+                setFestivalTimeData([]); // 안전한 기본값 설정
+                return;
+            }
+
+            // ✅ `timeDTOS` 배열에서 시간 데이터 추출 및 변환
+            const formattedTimeData = timeData.timeDTOS.map(item => ({
                 ...item,
-                time: item.time.slice(0, 5) // "HH:MM:SS" -> "HH:MM"
+                time: item.time.slice(0, 5) // "HH:MM:SS" → "HH:MM"
             }));
 
-            console.log("📌 수정된 공연 시간 데이터:", timeData);
-            setFestivalTimeData(timeData);
+            console.log("📌 수정된 공연 시간 데이터:", formattedTimeData);
+            setFestivalTimeData(formattedTimeData);
         } catch (error) {
             console.error("❌ 공연 시간 데이터 불러오기 실패:", error);
-            setFestivalTimeData([]);
+            setFestivalTimeData([]); // 에러 발생 시 빈 배열 설정
         }
     };
+
+
 
     // 공연 시간이 없을 경우 빈 배열 처리
     const selectedTimes = festivalTimeData || [];
