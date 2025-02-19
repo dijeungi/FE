@@ -1,0 +1,121 @@
+.KakaoMap_PopupContainer {
+    display: block;
+
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    text-align: center;
+    z-index: 300;
+}
+
+.KakaoMap_Wrap {
+    top: 10rem;
+
+    width: 45rem;
+    max-height: 50rem;
+    overflow-y: auto;
+
+    position: relative;
+    displaY: inline-block;
+    vertical-align: middle;
+    min-height: 150px;
+    background: #fff;
+    z-index: 10;
+
+    font-size: 1.4rem;
+    border: 0.1rem solid #ccc;
+    border-radius: 1rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+    box-sizing: border-box;
+}
+
+.KakaoMap_Head {
+    overflow: hidden;
+    height: 3.5rem;
+    padding: 0 1.5rem;
+    line-height: 3.5rem;
+    text-align: left;
+    border-bottom: 0.1rem solid #dde4ec;
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+}
+
+.KakaoMap_Title {
+    font-size: 16px;
+    font-weight: bold;
+    color: #000;
+}
+
+.KakaoMap_CloseBtn {
+    background-image: url(//openimage.interpark.com/ticket-desktop/pages/product/icon_close.png);
+    position: absolute;
+    top: -0.3rem;
+    right: 0.5rem;
+    width: 4rem;
+    height: 4rem;
+    background-size: 1.2rem 1.2rem;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    border: 0;
+    cursor: pointer;
+}
+
+.KakaoMap_CloseBtn .blind {
+    position: absolute;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    margin: -0.1rem;
+    width: 0.1rem;
+    height: 0.1rem;
+}
+
+.KakaoMap_Body {
+    text-align: left;
+    overflow: hidden;
+}
+
+.KakaoMap_PlaceWrap {
+    text-align: left;
+    padding: 0.8rem 1.5rem 1.5rem 1.85rem;
+}
+
+.KakaoMap_PlaceTitle {
+    display: inline-block;
+    margin-bottom: 0.8rem;
+    font-size: 0;
+}
+
+.KakaoMap_PlaceName {
+    display: inline-block;
+    max-width: 55rem;
+    margin-right: 0.2rem;
+    font-size: 16px;
+    font-weight: bold;
+    color: #000;
+}
+
+.KakaoMap_PlaceInfo {
+    color: #666;
+    font-size: 16px;
+    max-width: 66rem;
+}
+
+.KakaoMap_PlaceInfo p {
+    display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    line-height: 160%;
+}
+
+.KakaoMap_PlaceMap {
+    overflow: hidden;
+    margin-top: 2.3rem;
+    width: 660px;
+    height: 440px;
+    border: 0.1px solid #ccc;
+}

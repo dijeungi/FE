@@ -36,7 +36,7 @@ const Ranking = () => {
     if (error) return <p>티켓 판매순위: {error.message}</p>;
 
     const handleSlideClick = (festivalId) => {
-        navigate(`/infodetail/${festivalId}`);
+        navigate(`/product/${festivalId}`);
     };
 
     return (
