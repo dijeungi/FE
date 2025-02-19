@@ -30,9 +30,11 @@ const ReservationWindow = () => {
         try {
             const tossPayments = await loadTossPayments("test_ck_O6BYq7GWPVvPRjx6BQL8NE5vbo1d");
 
+            const totalAmount = salePrice * selectedSeats.length;
+
             await tossPayments.requestPayment("카드", {
                 orderId: `order_${new Date().getTime()}_${Math.random().toString(36).substr(2, 9)}`,
-                amount: 1000, // 최소 1000원 이상
+                amount: totalAmount,
                 orderName: "공연 티켓",
                 customerName: "고객 이름",
                 successUrl: `${window.location.origin}/payment/success`,
