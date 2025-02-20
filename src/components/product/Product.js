@@ -193,8 +193,8 @@ const Product = () => {
             poster: posterUrl
         }).toString();
 
-        const width = 1120;
-        const height = 635;
+        const width = 980;
+        const height = 745;
         const left = (window.screen.width - width) / 2;
         const top = (window.screen.height - height) / 2;
 
@@ -206,12 +206,20 @@ const Product = () => {
 
         if (reservationWindow) {
             reservationWindow.focus();
-            // ✅ 창 크기 강제 적용
-            setTimeout(() => {
-                reservationWindow.resizeTo(width, height);
-            }, 500);
+
+            // 창 크기 조정을 막기 위해 반복적으로 크기를 강제 고정
+            const interval = setInterval(() => {
+                if (reservationWindow.closed) {
+                    clearInterval(interval);
+                } else {
+                    reservationWindow.resizeTo(width, height);
+                    // reservationWindow.moveTo(left, top);
+                }
+            }, 100); // 100ms마다 크기 고정
         }
     };
+
+
 
 
 

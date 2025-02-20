@@ -23,18 +23,31 @@ import FindAccountId from "./pages/Login/FindAccountId";
 import FindAccountPassword from "./pages/Login/FindAccountPassword";
 import FindAccountPasswordDetail from "./pages/Login/FindAccountPasswordDetail";
 
-import ReservationWindow from "./components/ReservationWindow";
+import ReservationWindow from "./components/Share/ReservationWindow";
 import PaymentSuccess from "./components/payments/PaymentSuccess";
 import PaymentFail from "./components/payments/PaymentFail";
 import ScrollToTop from "./components/ScrollToTop";
+import {useEffect, useState} from "react";
+import LoadingSpinner from "./components/LoadingSpinner";
+import KakaoChannelButton from "./components/Share/KakaoChatButton";
 
 function App() {
     const location = useLocation();
     const isReservationPage = location.pathname.startsWith("/reservation");
 
+    // loading
+    const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        setLoading(true);
+        const timer = setTimeout(() => setLoading(false), 500);
+        return () => clearTimeout(timer);
+    }, [location.pathname]);
+
     return (
         <div className="App">
             {/* ✅ 예매 페이지가 아닐 때만 Header 표시 */}
+            {loading && <LoadingSpinner />}
             {!isReservationPage && <Header />}
             <ScrollToTop />
             <Routes>
@@ -68,6 +81,8 @@ function App() {
                 <Route path="/payment/success" element={<PaymentSuccess />} />
                 <Route path="/payment/fail" element={<PaymentFail />} />
             </Routes>
+
+            {location.pathname === "/" && <KakaoChannelButton/>}
 
             {/* ✅ 예매 페이지가 아닐 때만 Footer 표시 */}
             {!isReservationPage && <Footer />}

@@ -1,30 +1,27 @@
-// src/redux/LoginSlice.js
-
 import { createSlice } from '@reduxjs/toolkit';
+import { getAccessTokenCookie, removeAccessTokenCookie } from '../utils/Cookie';
 
-// 초기 상태 정의
 const initState = {
     id: '',
     roles: [],
-    accessToken: '',
+    accessToken: getAccessTokenCookie() || '',
 };
 
-// createSlice를 사용한 슬라이스 생성
 const loginSlice = createSlice({
     name: 'loginSlice',
     initialState: initState,
     reducers: {
         login: (state, action) => {
-            console.log('login: {}', action.payload);
-            const payload = action.payload; // id, roles, accessToken으로 구성
+            console.log('login:', action.payload);
+            const payload = action.payload; // { id, roles, accessToken }
             return { ...payload };
         },
         logout: (state) => {
-            // accessToken 삭제
+            removeAccessTokenCookie(); // 쿠키 삭제
             return { ...initState };
         },
         setAccessToken: (state, action) => {
-            console.log('setAccessToken: accessToken', action.payload);
+            console.log('setAccessToken:', action.payload);
             state.accessToken = action.payload;
         },
     },

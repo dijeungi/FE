@@ -14,7 +14,7 @@ export const DetailProvider = ({ festivalId, children }) => {
     const [isLiked, setIsLiked] = useState(false);
     const [totalStar, setTotalStar] = useState(0);
     const [festivalData, setFestivalData] = useState(null);
-    const [festivalTimeData, setFestivalTimeData] = useState(null);
+    // const [festivalTimeData, setFestivalTimeData] = useState(null);
     const [castingList, setCastingList] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);

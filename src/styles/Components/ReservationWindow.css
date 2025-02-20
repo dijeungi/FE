@@ -6,7 +6,7 @@
 
 .Reservation_Poster {
     width: 300px;
-    margin: auto;
+    margin: auto 10px auto 15px;
     padding: 20px;
     border-radius: 10px;
     background: #fff;
@@ -16,7 +16,7 @@
 
 .Reservation_SeatWrap {
     width: 650px;
-    margin: 15px auto auto 0;
+    margin: 15px 15px 15px 10px;
     padding: 20px;
     border-radius: 10px;
     background: #fff;

@@ -30,9 +30,6 @@ const TicketOpen = () => {
         fetchTickets();
     }, []);
 
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error loading tickets: {error.message}</p>;
-
     return (
         <section className="ticketOpen_section ticketOpen_notice">
             <div className="ticketOpen_header">

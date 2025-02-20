@@ -16,14 +16,11 @@ const KakaoRedirectPage = () => {
     const authCode = searchParams.get('code');
 
     useEffect(() => {
-        // 카카오 로그인 처리
         getAccessToken(authCode).then((accessToken) => {
             console.log('getAccessToken: ', accessToken);
-            // 카카오 사용자 정보 요청
             getMemberWithAccessToken(accessToken)
                 .then((memberInfo) => {
                     console.log('memberInfo: ', memberInfo);
-                    // dispatch를 이용하여 login action을 호출
                     dispatch(login(memberInfo));
 
                     if (memberInfo) {
@@ -32,11 +29,11 @@ const KakaoRedirectPage = () => {
                             text: '카카오 계정으로 로그인되었습니다.',
                             icon: 'success',
                             confirmButtonText: '확인',
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                navigate('/');
-                            }
+                            timer: 1500,
+                            showConfirmButton: false,
                         });
+
+                        navigate('/');
                     }
                 })
                 .catch((error) => {
@@ -53,10 +50,11 @@ const KakaoRedirectPage = () => {
         });
     }, [authCode]);
 
+
     return (
-        <div>
-            <div>Kakao Login Redirect</div>
-        </div>
+            // <div>Kakao Login Redirect</div>
+        <>
+        </>
     );
 };
 

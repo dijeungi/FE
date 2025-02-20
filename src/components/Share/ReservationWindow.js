@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { loadTossPayments } from '@tosspayments/payment-sdk';
-import "../styles/Components/ReservationWindow.css";
+import "../../styles/Components/ReservationWindow.css";
 
 const ReservationWindow = () => {
     const location = useLocation();
@@ -51,7 +51,6 @@ const ReservationWindow = () => {
             alert(`결제 실패: ${error.message}`);
         }
     };
-
 
     return (
         <div className="Reservation_Container">
