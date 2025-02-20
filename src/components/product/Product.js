@@ -34,7 +34,9 @@ const Product = () => {
     const [selectedTime, setSelectedTime] = useState(null);
     const [festivalTimeData, setFestivalTimeData] = useState([]);
 
-    const mapRef = useRef(null); // useRef 사용
+    const mapRef = useRef(null);
+    const markerRef = useRef(null);
+
     const [isMapLoaded, setIsMapLoaded] = useState(false);
 
     useEffect(() => {
@@ -62,6 +64,7 @@ const Product = () => {
     const {
         festivalName = "정보 없음",
         placeName = "정보 없음",
+        placeAddress = "정보 없음",
         ranking = "정보 없음",
         fromDate = "정보 없음",
         toDate = "정보 없음",
@@ -77,44 +80,80 @@ const Product = () => {
 
     // 지도 열기/닫기 토글
     const toggleMap = () => {
-        setIsMapOpen((prevState) => {
-            const newState = !prevState;
-            console.log("📌 isMapOpen 상태 변경:", newState);
-            return newState;
-        });
+        setIsMapOpen((prevState) => !prevState);
     };
 
     useEffect(() => {
-        console.log("📌 변경된 isMapOpen 상태:", isMapOpen);
-
-        if (!isMapOpen) {
-            console.log("📌 지도 닫기 - KakaoMap을 숨깁니다.");
+        if (!isMapOpen || !window.kakao || !window.kakao.maps) return;
+        if (!mapRef.current) {
+            console.warn("❌ mapRef가 렌더링되지 않음");
             return;
         }
 
-        console.log("📌 지도 열기 - KakaoMap을 렌더링합니다.");
-        console.log("📌 지도 로딩 시작");
+        const map = new kakao.maps.Map(mapRef.current, {
+            center: new kakao.maps.LatLng(37.5665, 126.9780), // 기본 좌표 (서울시청)
+            level: 3,
+        });
 
-        setTimeout(() => {
-            if (!mapRef.current) {
-                console.warn("❌ mapRef가 렌더링되지 않음 (setTimeout 후에도 null)");
-                return;
-            }
+        // 📌 1. 줌 컨트롤 추가
+        const zoomControl = new kakao.maps.ZoomControl();
+        map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT); // 우측에 배치
 
-            if (!window.kakao || !window.kakao.maps) {
-                console.error("❌ Kakao Maps API가 로드되지 않음");
-                return;
-            }
+        // 📌 2. 지도 타입 컨트롤 추가 (일반지도 <-> 스카이뷰 전환)
+        const mapTypeControl = new kakao.maps.MapTypeControl();
+        map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT); // 우측 상단에 배치
 
-            // 지도 생성
-            const map = new window.kakao.maps.Map(mapRef.current, {
-                center: new window.kakao.maps.LatLng(33.450701, 126.570667),
-                level: 3,
+        if (!regionName || regionName.trim() === "" || regionName === "정보 없음") {
+            console.warn("⚠️ 유효한 주소가 없습니다. 기본 위치(서울시청)로 설정합니다.");
+
+            // 기본 마커 추가 (서울시청)
+            const defaultCoords = new kakao.maps.LatLng(37.5665, 126.9780);
+            map.setCenter(defaultCoords);
+            if (markerRef.current) markerRef.current.setMap(null);
+
+            const marker = new kakao.maps.Marker({
+                position: defaultCoords,
+                map: map,
             });
+            markerRef.current = marker;
 
-            console.log("✅ Kakao Map 생성 완료", map);
-        }, 100); // 100ms 지연 후 실행
-    }, [isMapOpen]);
+            return;
+        }
+
+        const geocoder = new kakao.maps.services.Geocoder();
+        console.log("📌 검색할 주소:", regionName);
+
+        geocoder.addressSearch(regionName, (result, status) => {
+            console.log("📌 Kakao Geocoder 응답:", result, status);
+
+            if (status === kakao.maps.services.Status.OK && result.length > 0) {
+                const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+                map.setCenter(coords);
+
+                if (markerRef.current) markerRef.current.setMap(null);
+                const marker = new kakao.maps.Marker({
+                    position: coords,
+                    map: map,
+                });
+                markerRef.current = marker;
+
+            } else {
+                console.error(`❌ 주소 변환 실패: 상태 코드 - ${status}. 기본 위치(서울시청)로 이동합니다.`);
+
+                // 기본 마커 추가 (서울시청)
+                const defaultCoords = new kakao.maps.LatLng(37.5665, 126.9780);
+                map.setCenter(defaultCoords);
+                if (markerRef.current) markerRef.current.setMap(null);
+
+                const marker = new kakao.maps.Marker({
+                    position: defaultCoords,
+                    map: map,
+                });
+                markerRef.current = marker;
+            }
+        });
+    }, [isMapOpen, regionName]);
+
 
     const handleDateChange = async (date) => {
         setSelectedDate(date);
@@ -332,7 +371,7 @@ const Product = () => {
                                 <li className="Information_InfoItem">
                                     <strong className="Information_InfoLabel">장소</strong>
                                     <p className="Information_InfoDesc clickable-text" onClick={toggleMap}>
-                                        {regionName}
+                                        {regionName}<span>(지도보기)</span>
                                     </p>
                                 </li>
                                 <li className="Information_InfoItem">
@@ -486,12 +525,11 @@ const Product = () => {
                         <div className="KakaoMap_Body">
                             <div className="KakaoMap_PlaceWrap">
                                 <div className="KakaoMap_PlaceTitle">
-                                    <span className="KakaoMap_PlaceName">API Title</span>
+                                    <span className="KakaoMap_PlaceName">{regionName}</span>
                                 </div>
                                 <div className="KakaoMap_PlaceInfo">
-                                    <p>전화번호 : <span>API 연락처</span></p>
+                                    <p>전화번호 : <span>"공연정보" 에서 확인해주세요.</span></p>
                                     <p>주소 : <span>API 주소</span></p>
-                                    <p>홈페이지 : <span>API 홈페이지</span></p>
                                 </div>
                                 <div className="KakaoMap_PlaceMap">
                                     <div id="map" ref={mapRef} tabIndex="0" style={{ width: '660px', height: '440px' }}></div>
