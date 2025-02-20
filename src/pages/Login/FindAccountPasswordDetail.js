@@ -8,7 +8,7 @@ function FindAccountPasswordDetail() {
         <>
            <div className="SearchPw2-wrap">
             <h1>비밀번호 찾기</h1>
-            <div class="SearchPw2-h2_box">
+            <div className="SearchPw2-h2_box">
                 <div><Link to="/account/findId"><h2 className='SearchPw2-h2-1'>아이디 찾기</h2></Link></div>
                 <div><Link to="/account/findPassword"><h2 className='SearchPw2-h2-2'>비밀번호 찾기</h2></Link></div>
             </div>

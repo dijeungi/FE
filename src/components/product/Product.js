@@ -30,7 +30,7 @@ const { kakao } = window;
 const Product = () => {
     const { festivalId, festivalData, totalStar, isLiked } = useDetailContext();
     const [isMapOpen, setIsMapOpen] = useState(false);
-    const [selectedDate, setSelectedDate] = useState(null);
+    const [selectedDate, setSelectedDate] = useState(new Date());
     const [selectedTime, setSelectedTime] = useState(null);
     const [festivalTimeData, setFestivalTimeData] = useState([]);
 
@@ -87,16 +87,12 @@ const Product = () => {
     useEffect(() => {
         console.log("📌 변경된 isMapOpen 상태:", isMapOpen);
 
-        if (isMapOpen) {
-            console.log("📌 지도 열기 - KakaoMap을 렌더링합니다.");
-        } else {
+        if (!isMapOpen) {
             console.log("📌 지도 닫기 - KakaoMap을 숨깁니다.");
+            return;
         }
-    }, [isMapOpen]);
 
-    useEffect(() => {
-        if (!isMapOpen) return; // 지도 닫힌 상태면 실행하지 않음
-
+        console.log("📌 지도 열기 - KakaoMap을 렌더링합니다.");
         console.log("📌 지도 로딩 시작");
 
         setTimeout(() => {
@@ -120,9 +116,6 @@ const Product = () => {
         }, 100); // 100ms 지연 후 실행
     }, [isMapOpen]);
 
-    if (!festivalData) return <p>공연 정보를 찾을 수 없습니다.</p>;
-
-    // 공연 시간 데이터 API 호출
     const handleDateChange = async (date) => {
         setSelectedDate(date);
         setSelectedTime(null);
@@ -137,16 +130,14 @@ const Product = () => {
             console.log("📌 API 요청 날짜:", formattedDate);
 
             let timeData = await getFestivalDetailTimeDate(festivalId, formattedDate);
-            console.log("✅ API 응답 데이터:", timeData); // 🔥 확인용 로그 추가
+            console.log("✅ API 응답 데이터:", timeData);
 
-            // 🔥 `timeData.timeDTOS`가 배열인지 확인 후 변환
             if (!timeData || !Array.isArray(timeData.timeDTOS)) {
                 console.error("❌ timeDTOS가 배열이 아님!", timeData);
                 setFestivalTimeData([]); // 안전한 기본값 설정
                 return;
             }
 
-            // ✅ `timeDTOS` 배열에서 시간 데이터 추출 및 변환
             const formattedTimeData = timeData.timeDTOS.map(item => ({
                 ...item,
                 time: item.time.slice(0, 5) // "HH:MM:SS" → "HH:MM"
@@ -156,14 +147,19 @@ const Product = () => {
             setFestivalTimeData(formattedTimeData);
         } catch (error) {
             console.error("❌ 공연 시간 데이터 불러오기 실패:", error);
-            setFestivalTimeData([]); // 에러 발생 시 빈 배열 설정
+            setFestivalTimeData([]);
         }
     };
 
+    useEffect(() => {
+        if (selectedDate) {
+            handleDateChange(selectedDate);
+        }
+    }, [selectedDate]);
 
 
-    // 공연 시간이 없을 경우 빈 배열 처리
-    const selectedTimes = festivalTimeData || [];
+    // 선택한 공연시간
+    const selectedTimes = festivalTimeData;
 
     // 공연 시간 클릭 핸들러
     const handleTimeClick = (time) => {
@@ -366,7 +362,7 @@ const Product = () => {
                     <div className="Calendar_Sticky">
                         <div className="Calendar_Main">
 
-                            <div className="Calendar_SideWrap Calendar_WrapTop Calendar_SideToogle">
+                            <div className="">
                                 <div className="Calendar_SideHeader">
                                     <h4 className="Calendar_SideTitle">관람일</h4>
                                 </div>
@@ -420,7 +416,7 @@ const Product = () => {
                                 </div>
                             </div>
 
-                            <div className="Calendar_SideWrap Calendar_WrapMiddle Calendar_SideToogle">
+                            <div className="Calendar_SideWrap">
                                 <div className="Calendar_SideHeader">
                                     <h4 className="Calendar_SideTitle">회차</h4>
                                 </div>

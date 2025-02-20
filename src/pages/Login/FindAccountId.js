@@ -6,9 +6,9 @@ import {Link} from "react-router-dom";
 function FindAccountId() {
     return (
         <>
-           <div class="SearchId-wrap">
+           <div className="SearchId-wrap">
             <h1>계정 찾기</h1>
-            <div class="SearchId-h2_box">
+            <div className="SearchId-h2_box">
                 <div><Link to="/account/findId"><h2 className='SearchId-h2-1'>아이디 찾기</h2></Link></div>
                 <div><Link to="/account/findPassword"><h2 className='SearchId-h2-2'>비밀번호 찾기</h2></Link></div>
             </div>

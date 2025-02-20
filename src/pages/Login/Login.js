@@ -91,7 +91,7 @@ const LoginPage = () => {
             <div className="Login-keep-logged-in">
                 <label for="chk">
                     <input type="checkbox"/>
-                    <span class="Login-text">로그인 상태 유지</span>
+                    <span className="Login-text">로그인 상태 유지</span>
                 </label>
             </div>
             <button className="Login-button" onClick={handleSubmit}>

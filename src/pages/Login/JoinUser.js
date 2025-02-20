@@ -243,8 +243,8 @@ const JoinUser = () => {
     };
 
     return (
-        <form class="Join-form" onSubmit={handleSubmit}>
-            <h2 class="Join-h2">회원가입</h2>
+        <form className="Join-form" onSubmit={handleSubmit}>
+            <h2 className="Join-h2">회원가입</h2>
             <div className="Join-form-box">
                 <label>아이디</label>
                 <input type="text"
@@ -303,7 +303,7 @@ const JoinUser = () => {
                        onChange={handleChange}
                 />
                 <button type="button"
-                        class="Join-btn1"
+                        className="Join-btn1"
                         onClick={sendOtp}>
                     인증번호 받기
                 </button>
@@ -393,7 +393,7 @@ const JoinUser = () => {
                 <div className="Join-form-box3">
                     <p>만 14세 미만 회원은 법정대리인(부모님) 동의를 받은 경우만 회원가입이 가능합니다.</p>
                 </div>
-                <button type="submit" class="Join-submit">가입완료</button>
+                <button type="submit" className="Join-submit">가입완료</button>
         </form>
 );
 };
