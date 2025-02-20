@@ -89,7 +89,7 @@ const LoginPage = () => {
                 onChange={handleChange}
             />
             <div className="Login-keep-logged-in">
-                <label for="chk">
+                <label htmlFor="chk">
                     <input type="checkbox"/>
                     <span className="Login-text">로그인 상태 유지</span>
                 </label>

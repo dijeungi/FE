@@ -26,6 +26,7 @@ import FindAccountPasswordDetail from "./pages/Login/FindAccountPasswordDetail";
 import ReservationWindow from "./components/ReservationWindow";
 import PaymentSuccess from "./components/payments/PaymentSuccess";
 import PaymentFail from "./components/payments/PaymentFail";
+import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
     const location = useLocation();
@@ -35,7 +36,7 @@ function App() {
         <div className="App">
             {/* ✅ 예매 페이지가 아닐 때만 Header 표시 */}
             {!isReservationPage && <Header />}
-
+            <ScrollToTop />
             <Routes>
                 {/* 메인 페이지 */}
                 <Route path="/" element={<MainPages />} />
