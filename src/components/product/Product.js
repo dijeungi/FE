@@ -28,7 +28,7 @@ const placeNameMap = {
 const { kakao } = window;
 
 const Product = () => {
-    const { festivalId, festivalData, totalStar, isLiked } = useDetailContext();
+    const { festivalId, festivalData, totalStar, isLiked, placeDetailName, placeLocation } = useDetailContext();
     const [isMapOpen, setIsMapOpen] = useState(false);
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [selectedTime, setSelectedTime] = useState(null);
@@ -95,35 +95,25 @@ const Product = () => {
             level: 3,
         });
 
-        // 📌 1. 줌 컨트롤 추가
+        const geocoder = new kakao.maps.services.Geocoder();
+
+        // ✅ 지도 확대/축소 컨트롤 추가
         const zoomControl = new kakao.maps.ZoomControl();
         map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT); // 우측에 배치
 
-        // 📌 2. 지도 타입 컨트롤 추가 (일반지도 <-> 스카이뷰 전환)
+        // ✅ 지도 타입 컨트롤 추가 (일반 지도 ↔ 스카이뷰 전환)
         const mapTypeControl = new kakao.maps.MapTypeControl();
         map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT); // 우측 상단에 배치
 
-        if (!regionName || regionName.trim() === "" || regionName === "정보 없음") {
+        if (!placeLocation || placeLocation.trim() === "") {
             console.warn("⚠️ 유효한 주소가 없습니다. 기본 위치(서울시청)로 설정합니다.");
-
-            // 기본 마커 추가 (서울시청)
-            const defaultCoords = new kakao.maps.LatLng(37.5665, 126.9780);
-            map.setCenter(defaultCoords);
-            if (markerRef.current) markerRef.current.setMap(null);
-
-            const marker = new kakao.maps.Marker({
-                position: defaultCoords,
-                map: map,
-            });
-            markerRef.current = marker;
-
+            map.setCenter(new kakao.maps.LatLng(37.5665, 126.9780));
             return;
         }
 
-        const geocoder = new kakao.maps.services.Geocoder();
-        console.log("📌 검색할 주소:", regionName);
+        console.log("📌 검색할 주소:", placeLocation);
 
-        geocoder.addressSearch(regionName, (result, status) => {
+        geocoder.addressSearch(placeLocation, (result, status) => {
             console.log("📌 Kakao Geocoder 응답:", result, status);
 
             if (status === kakao.maps.services.Status.OK && result.length > 0) {
@@ -139,12 +129,10 @@ const Product = () => {
 
             } else {
                 console.error(`❌ 주소 변환 실패: 상태 코드 - ${status}. 기본 위치(서울시청)로 이동합니다.`);
-
-                // 기본 마커 추가 (서울시청)
                 const defaultCoords = new kakao.maps.LatLng(37.5665, 126.9780);
                 map.setCenter(defaultCoords);
-                if (markerRef.current) markerRef.current.setMap(null);
 
+                if (markerRef.current) markerRef.current.setMap(null);
                 const marker = new kakao.maps.Marker({
                     position: defaultCoords,
                     map: map,
@@ -152,7 +140,8 @@ const Product = () => {
                 markerRef.current = marker;
             }
         });
-    }, [isMapOpen, regionName]);
+    }, [isMapOpen, placeLocation]); // ✅ placeLocation 변경 시 지도 업데이트
+
 
 
     const handleDateChange = async (date) => {
@@ -371,7 +360,7 @@ const Product = () => {
                                 <li className="Information_InfoItem">
                                     <strong className="Information_InfoLabel">장소</strong>
                                     <p className="Information_InfoDesc clickable-text" onClick={toggleMap}>
-                                        {regionName}<span>(지도보기)</span>
+                                        {placeDetailName}<span>(지도보기)</span>
                                     </p>
                                 </li>
                                 <li className="Information_InfoItem">
@@ -525,11 +514,11 @@ const Product = () => {
                         <div className="KakaoMap_Body">
                             <div className="KakaoMap_PlaceWrap">
                                 <div className="KakaoMap_PlaceTitle">
-                                    <span className="KakaoMap_PlaceName">{regionName}</span>
+                                    <span className="KakaoMap_PlaceName">{placeDetailName}</span>
                                 </div>
                                 <div className="KakaoMap_PlaceInfo">
                                     <p>전화번호 : <span>"공연정보" 에서 확인해주세요.</span></p>
-                                    <p>주소 : <span>API 주소</span></p>
+                                    <p>주소 : <span>{placeLocation}</span></p>
                                 </div>
                                 <div className="KakaoMap_PlaceMap">
                                     <div id="map" ref={mapRef} tabIndex="0" style={{ width: '660px', height: '440px' }}></div>
