@@ -7,9 +7,9 @@ const ReservationWindow = () => {
     const location = useLocation();
     const params = new URLSearchParams(location.search);
 
-    const festivalName = decodeURIComponent(params.get("festivalName")) || "정보 없음";
-    const selectedDate = params.get("selectedDate") || "정보 없음";
-    const selectedTime = params.get("selectedTime") || "정보 없음";
+    const festivalName = decodeURIComponent(params.get("festivalName")) || "";
+    const selectedDate = params.get("selectedDate") || "";
+    const selectedTime = params.get("selectedTime") || "";
     const salePrice = Number(params.get("salePrice")) || 1000;
     const poster = decodeURIComponent(params.get("poster")) || "";
 

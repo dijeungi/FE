@@ -62,17 +62,17 @@ const Product = () => {
 
     // festivalData에서 필요한 데이터 추출 (기본값 설정)
     const {
-        festivalName = "정보 없음",
-        placeName = "정보 없음",
-        placeAddress = "정보 없음",
-        ranking = "정보 없음",
-        fromDate = "정보 없음",
-        toDate = "정보 없음",
+        festivalName = "",
+        placeName = "",
+        placeAddress = "",
+        ranking = "",
+        fromDate = "",
+        toDate = "",
         festivalPrice = 0,
         salePrice = 0,
         postImage = "",
-        runningTime = "정보 없음",
-        age = "정보 없음"
+        runningTime = "",
+        age = ""
     } = festivalData || {};
 
     // 장소명 매핑
@@ -214,9 +214,9 @@ const Product = () => {
 
         const queryParams = new URLSearchParams({
             festivalId,
-            festivalName: encodeURIComponent(festivalData.festivalName || "정보 없음"),
+            festivalName: encodeURIComponent(festivalData.festivalName || ""),
             selectedDate: formattedDate,
-            selectedTime: selectedTime || "정보 없음",
+            selectedTime: selectedTime || "",
             salePrice: festivalData.salePrice || 0,
             poster: posterUrl
         }).toString();
@@ -274,7 +274,7 @@ const Product = () => {
                                     </svg>
                                 </a>
                             </div>
-                            <h2 className="Information_Title">{festivalData?.festivalName || "정보 없음"}</h2>
+                            <h2 className="Information_Title">{festivalData?.festivalName}</h2>
 
                             <div className="Information_Rating">
                                 <div className="Information_TagText">

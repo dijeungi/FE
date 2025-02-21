@@ -7,7 +7,7 @@ const Casting = ({ castingList = [] }) => {
     const [showAll, setShowAll] = useState(false);
 
     if (castingList.length === 0) {
-        return <p className="Casting_NoData">캐스팅 정보가 없습니다.</p>;
+        return <p className="Casting_NoData">캐스팅 가 없습니다.</p>;
     }
 
     const displayedList = showAll ? castingList : castingList.slice(0, 5);

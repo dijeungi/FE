@@ -1,3 +1,18 @@
+.regionRanking_rankingNumber {
+    position: absolute;
+    left: -1rem;
+    top: 13.25rem;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 3rem;
+    line-height: 150%;
+    display: flex;
+    align-items: center;
+    color: #fff;
+    text-shadow: 0 4px 4px rgba(0, 0, 0, .2);
+    overflow: hidden;
+}
+
 .ticketOpen_section {
     margin: 0 auto;
     width: 100%;

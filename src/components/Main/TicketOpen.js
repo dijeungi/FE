@@ -1,12 +1,6 @@
-// src/components/MainTicketOpen.js
-import "../../styles/Main/TicketOpen.css";
-import "swiper/css";
-import "swiper/css/pagination";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination, Autoplay } from "swiper/modules";
-import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getTickOpenList } from "../../api/festivalApi";
+import Slide from "./Slide";
 
 const TicketOpen = () => {
     const [tickets, setTickets] = useState([]);
@@ -30,48 +24,16 @@ const TicketOpen = () => {
         fetchTickets();
     }, []);
 
+    if (loading) return <p>서버와 통신 중..</p>;
+    if (error) return <p>티켓 오픈: {error.message}</p>;
+
     return (
-        <section className="ticketOpen_section ticketOpen_notice">
-            <div className="ticketOpen_header">
-                <h2 className="ticketOpen_title">티켓오픈 🎉</h2>
-                <Link to="/" className="ticketOpen_btn_all">
-                    전체보기
-                </Link>
-            </div>
-
-            <Swiper
-                className="ticketOpen_swiper type_col5"
-                modules={[Autoplay, Pagination]}
-                loop={true}
-                rewind={true}
-                slidesPerView={5}
-                spaceBetween={30}
-                autoplay={{
-                    delay: 5000,
-                    disableOnInteraction: false,
-                }}
-                breakpoints={{
-                    1280: { slidesPerView: 4 },
-                    1440: { slidesPerView: 5 },
-                    1680: { slidesPerView: 5 },
-                    1920: { slidesPerView: 5 },
-                    2560: { slidesPerView: 5 },
-                }}
-            >
-                {tickets.map((ticket) => (
-                    <SwiperSlide key={ticket.id}>
-                        <div className="ticketOpen_imgbox">
-                            <img src={ticket.postImage} alt={ticket.festivalName} className="ticketOpen_item_image" />
-                        </div>
-                        <div className="ticketOpen_info">
-                            <h3 className="ticketOpen_item_title">{ticket.festivalName}</h3>
-                            <p className="ticketOpen_item_date">{ticket.fromDate} ~ {ticket.toDate}</p>
-                        </div>
-                    </SwiperSlide>
-                ))}
-
-            </Swiper>
-        </section>
+        <Slide
+            data={tickets}
+            title="티켓오픈 🎉"
+            link="/ticketopen"
+            isRanking={false}
+        />
     );
 };
 
