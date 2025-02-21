@@ -10,6 +10,12 @@
     z-index: 300;
 }
 
+@media (max-width: 1440px) {
+    .KakaoMap_Wrap {
+        top: 3rem !important;
+    }
+}
+
 .KakaoMap_Wrap {
     top: 10rem;
 
