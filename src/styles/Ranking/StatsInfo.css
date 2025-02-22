@@ -1,6 +1,6 @@
 .StatsInfo_Container {
     box-sizing: border-box;
-    padding: 0 3rem;
+    padding: 0.5rem 3rem;
     max-width: 75rem;
     display: flex;
     width: 100%;

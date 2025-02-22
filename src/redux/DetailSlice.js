@@ -24,7 +24,7 @@ export const fetchFestivalDetail = createAsyncThunk(
             const [festivalDetails, likeCountData, likeStatus, totalStarData, castings] = await Promise.all([
                 getProductDetail(festivalId),
                 getLikeCount(festivalId),
-                userId ? getIsLiked(festivalId, userId) : { isLiked: false }, // 로그인 안 했을 경우 기본값
+                userId ? getIsLiked(festivalId, userId) : { isLiked: false },
                 getTotalStar(festivalId),
                 getCastingList(festivalId),
             ]);
