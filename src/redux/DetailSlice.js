@@ -22,6 +22,11 @@ export const fetchFestivalDetail = createAsyncThunk(
     "detail/fetchFestivalDetail",
     async ({ festivalId, userId }, { rejectWithValue }) => {
         try {
+            // festivalId가 유효한지 검사
+            if (!festivalId || festivalId === "undefined") {
+                throw new Error("유효하지 않은 festivalId입니다.");
+            }
+
             const [festivalDetails, likeCountData, likeStatus, totalStarData, castings] = await Promise.all([
                 getProductDetail(festivalId),
                 getLikeCount(festivalId),

@@ -15,9 +15,9 @@ import TeamAgree from "./pages/Login/TeamAgree";
 import KakaoRedirectPage from "./pages/KakaoRedirectPage";
 import NaverRedirectPage from "./pages/NaverRedirectPage";
 import GoogleRedirectPage from "./pages/GoogleRedirectPage";
+import ProductDetailPage from "./pages/ProductDetailPage";
 
 import Ranking from "./pages/RankingPages";
-import ProductDetail from "./pages/ProductDetailPage";
 
 import FindAccountId from "./pages/Login/FindAccountId";
 import FindAccountPassword from "./pages/Login/FindAccountPassword";
@@ -78,7 +78,7 @@ function App() {
 
                 {/* 기타 페이지 */}
                 <Route path="/ranking" element={<Ranking />} />
-                <Route path="/product/:festivalId" element={<ProductDetail />} />
+                <Route path="/product/:festivalId" element={<ProductDetailPage />} />
                 <Route path="/reservation" element={<ReservationWindow />} />
 
                 {/* 계정 찾기 */}

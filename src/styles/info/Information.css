@@ -23,16 +23,16 @@
 }
 
 .Information_TopHeader {
-    margin-top: .4rem;
+    margin-top: 0.4rem;
     margin-bottom: 0.75rem;
 }
 
 .Information_BadgeList {
-        display: inline-flex;
-        align-items: flex-start;
-        gap: 8px;
-        width: 100%;
-        margin-bottom: 0.9rem;
+    display: inline-flex;
+    align-items: flex-start;
+    gap: 8px;
+    width: 100%;
+    margin-bottom: 0.9rem;
 }
 
 .Information_BadgePopup {
@@ -82,7 +82,6 @@
     bottom: 2px;
 }
 
-
 .Information_RatingScore {
     display: inline-block;
     font-size: 15px;
@@ -92,14 +91,13 @@
 }
 
 .Information_Body {
-
 }
 
 /*포스터 크기 width*/
 .Information_PosterBox {
     display: inline-block;
     width: 300px;
-    padding-bottom: 5rem;
+    padding-bottom: 2rem;
 }
 
 /*포스터 크기 height*/
@@ -129,7 +127,7 @@
 .Information_PosterBoxBottom:after {
     display: block;
     clear: both;
-    content: '';
+    content: "";
 }
 
 .Information_CastHeart {
@@ -202,7 +200,6 @@
 }
 
 .Information_PopupHead {
-
 }
 
 .Information_PopupTitle {
@@ -230,7 +227,6 @@
     font-size: 1rem;
     font-weight: bold;
 }
-
 
 .Information_Share {
     float: right;
@@ -265,7 +261,6 @@
     display: flex;
 }
 
-
 .Information_InfoLabel {
     display: inline-block;
     width: 9rem;
@@ -297,7 +292,6 @@
 .Information_InfoDesc span {
     color: #7e7e7e;
     margin-left: 5px;
-
 }
 
 .Information_InfoWrap {

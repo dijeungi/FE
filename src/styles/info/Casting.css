@@ -1,12 +1,22 @@
+.Casting_Section {
+    padding-top: 3rem;
+}
+
+.Casting_Container {
+    display: flex;
+    justify-content: space-between; /* 좌우 끝에 정렬 */
+    align-items: center; /* 세로 가운데 정렬 */
+}
+
 .Casting_Title {
-    font-size: 1.5rem;
+    font-size: 20px;
     font-weight: bold;
     width: 100%;
 }
 
 .Casting_Wrap {
     position: relative;
-    width: 62.5%;
+    width: 100%;
 }
 
 .Casting_List {
@@ -15,7 +25,6 @@
     justify-content: flex-start;
     margin-top: 1rem;
     padding: 0;
-
 }
 
 .Casting_Item {
@@ -31,8 +40,8 @@
 .Casting_Profile {
     overflow: hidden;
     display: block;
-    width: 7rem;
-    height: 7rem;
+    width: 6rem;
+    height: 6rem;
     margin: 0 auto 0.8rem;
     border-radius: 50%;
     background-color: #f0f0f0;
@@ -68,25 +77,35 @@
 }
 
 .Casting_ToggleButton {
-    /*position: absolute;*/
-    /*top: -0.4rem;*/
-    right: 0;
-    padding: 0 1rem;
+    display: block;
+    width: 100%;
+    height: 3rem;
+    line-height: 3rem;
+    color: #666;
     font-size: 1rem;
-    color: #000;
-    border-radius: 0.6rem;
-    border: 0.1rem solid #b6bdc7;
-}
-
-.Casting_ToggleButton::before {
-    display: inline-block;
-}
-
-.Casting_ToggleButton:after {
-    background-position: 0 0;
+    text-align: center;
+    background-color: #f4f6f9;
+    border: 0;
+    border-bottom: 0.1rem solid #dfe5ed;
+    overflow-anchor: none;
 }
 
 a[role="button"] {
     cursor: pointer;
     outline-offset: -1px;
+}
+
+.Casting_InformationImage {
+    padding-top: 2.5rem;
+
+    display: flex;
+    gap: 1rem; /* 이미지들 간의 간격 */
+    flex-wrap: wrap; /* 여러 줄로 이미지가 배치될 수 있게 */
+    justify-content: flex-start; /* 왼쪽 정렬 */
+}
+
+.Casting_InformationImage img {
+    max-width: 100%; /* 부모 컨테이너 너비를 넘지 않게 */
+    height: auto; /* 이미지의 비율을 유지하며 높이는 자동으로 설정 */
+    object-fit: contain; /* 이미지를 비율에 맞게 축소 */
 }
