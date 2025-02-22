@@ -52,7 +52,7 @@ export default function Header() {
     const handleLogout = () => {
         removeRefreshTokenCookie(); // 리프레시 토큰 삭제
         dispatch(logout());
-        // 로그아웃 후 sweetalert2로 알림 표시
+
         Swal.fire({
             icon: "success",
             title: "로그아웃 성공",
