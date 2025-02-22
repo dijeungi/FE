@@ -3,7 +3,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Autoplay } from "swiper/modules";
 import { Link, useNavigate } from "react-router-dom";
 
-import '../../styles/Main/TicketOpen.css'
+import "../../styles/Main/TicketOpen.css";
 
 const Slide = ({ data, title, link, isRanking = false }) => {
     const navigate = useNavigate();
@@ -51,9 +51,7 @@ const Slide = ({ data, title, link, isRanking = false }) => {
                                 style={{ cursor: "pointer" }}
                             />
                         </div>
-                        {isRanking && (
-                            <div className="regionRanking_rankingNumber">{index + 1}</div>
-                        )}
+                        {isRanking && <div className="regionRanking_rankingNumber">{index + 1}</div>}
                         <div className="ticketOpen_info">
                             <h3 className="ticketOpen_item_title">{item.festivalName}</h3>
                             <p className="ticketOpen_item_date">

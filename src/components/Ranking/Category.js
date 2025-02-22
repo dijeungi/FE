@@ -4,14 +4,45 @@ import "../../styles/Ranking/Category.css";
 export default function Category() {
     return (
         <div className="Category_Container">
-            <h2 className="Category_Title">장르별 랭킹</h2>
+            <div className="Category_Title">
+                <h2>장르별 랭킹</h2>
+            </div>
             <menu className="Category_Menu">
-                <button className="Category_Button">로맨틱코미디</button>
-                <button className="Category_Button">코믹</button>
-                <button className="Category_Button">드라마</button>
-                <button className="Category_Button">공포</button>
-                <button className="Category_Button">어린이연극</button>
-                <button className="Category_Button">기타</button>
+                <div className="Category_GroupWrap">
+                    <button className="Category_Button" title="전체">
+                        전체
+                    </button>
+                </div>
+                <div className="Category_GroupWrap">
+                    <button className="Category_Button" title="로맨틱코미디">
+                        로맨틱코미디
+                    </button>
+                </div>
+                <div className="Category_GroupWrap">
+                    <button className="Category_Button" title="코믹">
+                        코믹
+                    </button>
+                </div>
+                <div className="Category_GroupWrap">
+                    <button className="Category_Button" title="드라마">
+                        드라마
+                    </button>
+                </div>
+                <div className="Category_GroupWrap">
+                    <button className="Category_Button" title="공포">
+                        공포
+                    </button>
+                </div>
+                <div className="Category_GroupWrap">
+                    <button className="Category_Button" title="어린이연극">
+                        어린이연극
+                    </button>
+                </div>
+                <div className="Category_GroupWrap">
+                    <button className="Category_Button" title="기타">
+                        기타
+                    </button>
+                </div>
             </menu>
         </div>
     );

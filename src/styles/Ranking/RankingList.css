@@ -1,0 +1,198 @@
+.RankingList_Container {
+    margin-top: 0;
+    padding: 0 3rem;
+    max-width: 75rem;
+    box-sizing: border-box;
+
+    gap: 28px;
+    width: 100%;
+    scroll-snap-align: start;
+    scroll-margin-top: 50px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.RankingList_Wrap {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0;
+    gap: 20px;
+    isolation: isolate;
+    width: 100%;
+}
+
+.RankingList_Panel {
+    align-items: flex-start;
+
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    gap: 20px;
+    isolation: isolate;
+    position: relative;
+    width: 100%;
+}
+
+.RankingList_subWrap {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.RankingList_Top {
+    flex-direction: row;
+    margin-bottom: 20px;
+    gap: 1rem;
+    /* justify-content: space-between; */
+    padding: 0rem 0 3rem;
+    width: 100%;
+    max-width: 75rem;
+
+    box-sizing: border-box;
+    display: flex;
+    align-items: flex-start;
+    height: auto;
+    background-color: #fff;
+}
+
+.RankingList_TopItem {
+    border-top: none;
+    padding-top: 0;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0 1.15rem 0 0;
+    gap: 0.85rem;
+    width: calc((100% - -1rem) / 3);
+    height: auto;
+    border-bottom: none;
+    border-right: 1px solid #eee;
+}
+
+.RankingList_Badge {
+    /* 순위 밑에 과거통계 낼라면 다시 손봐야됨 */
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+    gap: 0.4rem;
+    height: auto;
+    width: unset;
+}
+
+.RankingList_BadgeNumber {
+    width: 0.5rem;
+    height: 1.5rem;
+    font-size: 1.5rem;
+    line-height: 150%;
+    color: #fff;
+
+    position: absolute;
+    left: 0.75rem;
+    top: 0.1rem;
+    z-index: 2;
+    font-style: normal;
+    font-weight: 700;
+}
+
+.RankingList_ImageWrap {
+    position: relative;
+    width: 2.1rem;
+    height: 4.175;
+    font-size: 2rem;
+    line-height: 150%;
+    color: #fff;
+}
+
+.RankingList_ItemInner {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0;
+    gap: 0.85rem;
+    width: 100%;
+
+    display: flex;
+    justify-content: space-around;
+    cursor: pointer;
+    height: 100%;
+    flex: 1 1;
+}
+
+.RankingList_ImageContainer {
+    width: 100%;
+    /* padding-top: 133%; */
+    border-radius: 0.8rem;
+    background: linear-aradient(0deg, rgba(0, 0, 0, 0.04), rgba(0, 0, 0, 0.04));
+}
+
+.RankingList_Info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.2rem;
+    width: 100%;
+    list-style-type: none;
+    padding: 0 0 0 0.2rem;
+    margin-block-end: 5px;
+    margin-block-start: 5px;
+}
+
+.RankingList_ContentsInner {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.2rem;
+    width: 100%;
+
+    position: relative;
+    height: 100%;
+}
+
+.RankingList_MainTitle {
+    display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 1.2rem;
+    line-height: 150%;
+    color: #000;
+    width: 100%;
+}
+.RankingList_Location {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0;
+    width: 100%;
+}
+
+.RankingList_Date {
+    display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: left;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 1.5rem;
+    line-height: 150%;
+    color: #000;
+
+    width: 100%;
+    padding: 0;
+    height: auto;
+    box-sizing: border-box;
+
+    align-items: center;
+}

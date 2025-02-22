@@ -1,13 +1,16 @@
 // src/components/Main/Ranking.js
 import Category from "../components/Ranking/Category";
+import RankingList from "../components/Ranking/RankingList";
 import StatsInfo from "../components/Ranking/StatsInfo";
 
-export default function RankingPages() {
+import "../styles/Ranking/RankingPages.css";
 
+export default function RankingPages() {
     return (
         <div className="RankingPages">
-            <Category/>
-            <StatsInfo/>
+            <Category />
+            <StatsInfo />
+            <RankingList />
         </div>
     );
 }

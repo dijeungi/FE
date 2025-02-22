@@ -1,0 +1,7 @@
+.RankingPages {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+    width: 100%;
+}
