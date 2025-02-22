@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchFestivalDetail } from "../../redux/DetailSlice";
+import { fetchFestivalDetail, setLikeCount, setIsLiked } from "../../redux/DetailSlice";
 import { getFestivalDetailTimeDate } from "../../api/festivalApi";
+import { postLike, deleteLike } from "../../api/likeApi";
 import "../../styles/info/Information.css";
 import "../../styles/info/Calendar.css";
 import "../../styles/info/KakaoMap.css";
@@ -10,16 +11,20 @@ import IconButton from "@mui/material/IconButton";
 import { Favorite, FavoriteBorder } from "@mui/icons-material";
 import Calendar from "react-calendar";
 import DetailFooter from "./DetailFooter";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import { getUserIdCookie } from "../../utils/Cookie";
+import { getLikeStatusStorage, setLikeStatusStorage } from "../../utils/Storage";
 
 // KakaoMap
 const { kakao } = window;
 
 const Product = ({ festivalId }) => {
     const dispatch = useDispatch();
-    const userId = useSelector((state) => state.loginSlice.id);
-    const { festivalData, totalStar, isLiked, placeDetailName, placeLocation, loading, error } = useSelector(
-        (state) => state.detail
-    );
+    const navigate = useNavigate();
+    const userId = useSelector((state) => state.loginSlice.id) || getUserIdCookie();
+    const { festivalDetails, totalStar, isLiked, likeCount, placeDetailName, placeLocation, loading, error } =
+        useSelector((state) => state.detail);
 
     const [isMapOpen, setIsMapOpen] = useState(false);
     const [selectedDate, setSelectedDate] = useState(new Date());
@@ -29,14 +34,17 @@ const Product = ({ festivalId }) => {
     const mapRef = useRef(null);
     const markerRef = useRef(null);
 
-    // Redux에서 데이터 가져오기
+    // ✅ 새로고침 후에도 유지되도록 localStorage에서 가져옴
+    const [localIsLiked, setLocalIsLiked] = useState(getLikeStatusStorage(festivalId));
+
+    // Redux에서 데이터 로드
     useEffect(() => {
         if (festivalId) {
             dispatch(fetchFestivalDetail({ festivalId, userId }));
         }
     }, [festivalId, userId, dispatch]);
 
-    // festivalData에서 필요한 데이터 추출
+    // festivalDetails에서 필요한 데이터 추출
     const {
         festivalName = "",
         placeName = "",
@@ -48,7 +56,7 @@ const Product = ({ festivalId }) => {
         postImage = "",
         runningTime = "",
         age = "",
-    } = festivalData || {};
+    } = festivalDetails || {};
 
     const toggleMap = () => {
         setIsMapOpen((prevState) => !prevState);
@@ -109,10 +117,10 @@ const Product = ({ festivalId }) => {
     };
 
     useEffect(() => {
-        if (selectedDate) {
-            handleDateChange(selectedDate);
-        }
-    }, [selectedDate]);
+        const savedIsLiked = getLikeStatusStorage(festivalId); // localStorage에서 불러오기
+        dispatch(setIsLiked(savedIsLiked)); // Redux 상태 업데이트
+        setLocalIsLiked(savedIsLiked); // localState 업데이트
+    }, [festivalId, dispatch]);
 
     const handleTimeClick = (time) => {
         setSelectedTime((prev) => (prev === time ? null : time));
@@ -122,25 +130,68 @@ const Product = ({ festivalId }) => {
     const ratingValue = totalStar?.["별점 총점"] || 0;
 
     const handleReservationClick = () => {
+        if (!userId) {
+            navigate("/login");
+            return;
+        }
+
         if (!selectedDate || !selectedTime) return;
 
         const formattedDate = selectedDate.toISOString().split("T")[0];
 
         const queryParams = new URLSearchParams({
             festivalId,
-            festivalName: encodeURIComponent(festivalData.festivalName || ""),
+            festivalName: encodeURIComponent(festivalDetails.festivalName || ""),
             selectedDate: formattedDate,
             selectedTime: selectedTime || "",
-            salePrice: festivalData.salePrice || 0,
-            poster: encodeURIComponent(festivalData.postImage || ""),
+            salePrice: festivalDetails.salePrice || 0,
+            poster: encodeURIComponent(festivalDetails.postImage || ""),
         }).toString();
 
         window.open(`/reservation?${queryParams}`, "_blank", "width=980,height=745,resizable=no,scrollbars=no");
     };
 
+    // 좋아요 버튼
+    const handleLikeClick = async () => {
+        if (!userId) {
+            Swal.fire({
+                icon: "warning",
+                title: "로그인이 필요합니다.",
+                text: "로그인 후 이용 가능합니다.",
+                confirmButtonText: "확인",
+            }).then(() => navigate("/login"));
+            return;
+        }
+
+        try {
+            const updatedLikeStatus = !localIsLiked; // 현재 상태 반대로 변경
+
+            if (updatedLikeStatus) {
+                // ✅ 좋아요 추가 (POST 요청)
+                await postLike(userId, festivalId);
+                dispatch(setLikeCount(likeCount + 1));
+            } else {
+                // ✅ 좋아요 취소 (DELETE 요청)
+                await deleteLike(userId, festivalId);
+                dispatch(setLikeCount(likeCount - 1));
+            }
+
+            // Redux 및 localStorage 업데이트
+            dispatch(setIsLiked(updatedLikeStatus));
+            setLikeStatusStorage(festivalId, updatedLikeStatus); // ✅ localStorage 저장
+            setLocalIsLiked(updatedLikeStatus); // 로컬 상태 업데이트
+        } catch (error) {
+            console.error("좋아요 요청 에러:", error);
+            Swal.fire({
+                icon: "error",
+                title: "에러 발생",
+                text: error.message,
+            });
+        }
+    };
+
     if (loading) return <p>로딩 중...</p>;
     if (error) return <p>에러 발생: {error}</p>;
-
     return (
         <div className="Information_Container">
             <div className="Information_Wrap">
@@ -187,7 +238,7 @@ const Product = ({ festivalId }) => {
                                     </svg>
                                 </a>
                             </div>
-                            <h2 className="Information_Title">{festivalData?.festivalName}</h2>
+                            <h2 className="Information_Title">{festivalDetails?.festivalName}</h2>
 
                             <div className="Information_Rating">
                                 <div className="Information_TagText">
@@ -213,7 +264,7 @@ const Product = ({ festivalId }) => {
                                 <div className="Information_PosterBoxBottom">
                                     <div className="Information_CastHeart">
                                         <div className="Information_CastWrap">
-                                            <a className="Information_CastBtn">
+                                            <a className="Information_CastBtn" onClick={handleLikeClick}>
                                                 {isLiked ? (
                                                     <Favorite className="Information_HeartOn" />
                                                 ) : (
@@ -238,7 +289,9 @@ const Product = ({ festivalId }) => {
                                                 </div>
                                             </div>
                                         </div>
-                                        <p className="Information_CastNum">API</p>
+                                        <p className="Information_CastNum">
+                                            {typeof likeCount === "object" ? likeCount["좋아요 개수"] : likeCount}
+                                        </p>
                                     </div>
                                     <div className="Information_Share">
                                         <ul className="Information_ShareList">

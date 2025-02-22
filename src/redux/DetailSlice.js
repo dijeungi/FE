@@ -1,3 +1,5 @@
+// src/redux/DetailSlice.js
+
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { getProductDetail, getCastingList } from "../api/festivalApi";
 import { getTotalStar } from "../api/reviewApi";
@@ -5,7 +7,7 @@ import { getLikeCount, getIsLiked } from "../api/likeApi";
 
 // 초기 상태
 const initialState = {
-    festivalData: null,
+    festivalDetails: null,
     likeCount: 0,
     isLiked: false,
     totalStar: 0,
@@ -16,7 +18,6 @@ const initialState = {
     error: null,
 };
 
-// 비동기 액션: API 데이터 로드
 export const fetchFestivalDetail = createAsyncThunk(
     "detail/fetchFestivalDetail",
     async ({ festivalId, userId }, { rejectWithValue }) => {
@@ -24,7 +25,7 @@ export const fetchFestivalDetail = createAsyncThunk(
             const [festivalDetails, likeCountData, likeStatus, totalStarData, castings] = await Promise.all([
                 getProductDetail(festivalId),
                 getLikeCount(festivalId),
-                userId ? getIsLiked(festivalId, userId) : { isLiked: false },
+                userId ? getIsLiked(userId, festivalId) : { isLiked: false },
                 getTotalStar(festivalId),
                 getCastingList(festivalId),
             ]);
@@ -44,7 +45,6 @@ export const fetchFestivalDetail = createAsyncThunk(
     }
 );
 
-// Redux Slice 생성
 const detailSlice = createSlice({
     name: "detail",
     initialState,
@@ -64,8 +64,12 @@ const detailSlice = createSlice({
             })
             .addCase(fetchFestivalDetail.fulfilled, (state, action) => {
                 const { festivalDetails, likeCount, isLiked, totalStar, castingList } = action.payload;
-                state.festivalData = festivalDetails;
-                state.likeCount = likeCount;
+                state.festivalDetails = festivalDetails;
+                state.likeCount =
+                    typeof likeCount === "object" && likeCount !== null
+                        ? Number(likeCount["좋아요 개수"]) || 0
+                        : Number(likeCount) || 0;
+
                 state.isLiked = isLiked;
                 state.totalStar = totalStar;
                 state.placeDetailName = festivalDetails.placeDetailName || "";
@@ -80,6 +84,5 @@ const detailSlice = createSlice({
     },
 });
 
-// 액션 및 리듀서 내보내기
 export const { setLikeCount, setIsLiked } = detailSlice.actions;
 export default detailSlice.reducer;

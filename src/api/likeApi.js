@@ -1,6 +1,6 @@
 // src/api/likeApi.js
 
-import axiosInstance from '../api/AxiosInstance';
+import axiosInstance from "../api/AxiosInstance";
 
 // 좋아요 개수 가져오기
 export const getLikeCount = async (festivalId) => {
@@ -16,12 +16,18 @@ export const getIsLiked = async (userId, festivalId) => {
 
 // 좋아요 추가 (POST 요청)
 export const postLike = async (userId, festivalId) => {
-    const response = await axiosInstance.post(`/like/add?userId=${userId}&festivalId=${festivalId}`, { festivalId, userId });
+    const response = await axiosInstance.post(`/like/add?userId=${userId}&festivalId=${festivalId}`, {
+        festivalId,
+        userId,
+    });
     return response.data;
 };
 
 // 좋아요 삭제 (DELETE 요청)
 export const deleteLike = async (userId, festivalId) => {
-    const response = await axiosInstance.post(`/like/delete?userId=${userId}&festivalId=${festivalId}`, { festivalId, userId });
+    const response = await axiosInstance.delete(`/like/delete?userId=${userId}&festivalId=${festivalId}`, {
+        festivalId,
+        userId,
+    });
     return response.data;
 };

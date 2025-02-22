@@ -1,31 +1,41 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { getAccessTokenCookie, removeAccessTokenCookie } from '../utils/Cookie';
+import { createSlice } from "@reduxjs/toolkit";
+import {
+    getAccessTokenCookie,
+    setAccessTokenCookie,
+    removeAccessTokenCookie,
+    setRefreshTokenCookie,
+    removeRefreshTokenCookie,
+} from "../utils/Cookie";
 
 const initState = {
-    id: '',
+    id: "",
     roles: [],
-    accessToken: getAccessTokenCookie() || '',
+    accessToken: getAccessTokenCookie() || "",
 };
 
 const loginSlice = createSlice({
-    name: 'loginSlice',
+    name: "loginSlice",
     initialState: initState,
     reducers: {
         login: (state, action) => {
-            console.log('login:', action.payload);
-            const payload = action.payload; // { id, roles, accessToken }
-            return { ...payload };
+            console.log("login:", action.payload);
+            const { id, roles, accessToken, refreshToken } = action.payload;
+            setAccessTokenCookie(accessToken, 30);
+            setRefreshTokenCookie(refreshToken, 30);
+            return { id, roles, accessToken };
         },
         logout: (state) => {
-            removeAccessTokenCookie(); // 쿠키 삭제
-            return { ...initState };
+            removeAccessTokenCookie();
+            removeRefreshTokenCookie();
+            return { id: "", roles: [], accessToken: "" };
         },
         setAccessToken: (state, action) => {
-            console.log('setAccessToken:', action.payload);
             state.accessToken = action.payload;
+            setAccessTokenCookie(action.payload, 30); // 쿠키에도 저장
         },
     },
 });
 
+// `setAccessToken`을 export할 수 있도록 수정됨
 export const { login, logout, setAccessToken } = loginSlice.actions;
 export default loginSlice.reducer;

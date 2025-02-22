@@ -1,15 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useSelector, useDispatch } from 'react-redux';
-import { logout } from '../../redux/LoginSlice';
-import { setAccessTokenCookie } from '../../utils/Cookie';
-import '../../styles/Components/Header.css';
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../../redux/LoginSlice";
+import { setAccessTokenCookie, removeRefreshTokenCookie } from "../../utils/Cookie";
+import Swal from "sweetalert2"; // sweetalert2 라이브러리 import
+import "../../styles/Components/Header.css";
 
-import LoginIcon from '@mui/icons-material/Login';
-import LogoutIcon from '@mui/icons-material/Logout';
-import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
-import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
-import ManageSearchIcon from '@mui/icons-material/ManageSearch';
+import LoginIcon from "@mui/icons-material/Login";
+import LogoutIcon from "@mui/icons-material/Logout";
+import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
+import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
+import ManageSearchIcon from "@mui/icons-material/ManageSearch";
 
 export default function Header() {
     const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
@@ -20,13 +21,13 @@ export default function Header() {
 
     useEffect(() => {
         const handleResize = () => setViewportWidth(window.innerWidth);
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
     }, []);
 
     useEffect(() => {
         if (accessToken) {
-            setAccessTokenCookie(accessToken); // 로그인하면 쿠키 저장
+            setAccessTokenCookie(accessToken); // 로그인하면 access token 쿠키 저장
         }
     }, [accessToken]);
 
@@ -34,7 +35,8 @@ export default function Header() {
         const interval = setInterval(() => {
             const now = Date.now();
             const elapsedTime = now - lastApiCallTime;
-            if (elapsedTime >= 30 * 60 * 1000) { // 30분 (밀리초 단위)
+            if (elapsedTime >= 30 * 60 * 1000) {
+                // 30분 (밀리초 단위)
                 dispatch(logout()); // 자동 로그아웃
             }
         }, 60 * 1000); // 1분마다 체크
@@ -48,7 +50,14 @@ export default function Header() {
     };
 
     const handleLogout = () => {
+        removeRefreshTokenCookie(); // 리프레시 토큰 삭제
         dispatch(logout());
+        // 로그아웃 후 sweetalert2로 알림 표시
+        Swal.fire({
+            icon: "success",
+            title: "로그아웃 성공",
+            text: "정상적으로 로그아웃되었습니다.",
+        });
     };
 
     return (
@@ -95,19 +104,29 @@ export default function Header() {
                     <nav className="header_nav">
                         <ul className="header_navList">
                             <li className="header_navItem first_nav_item">
-                                <Link to="/" className="header_navLink header_nav_Link_First">공지사항</Link>
+                                <Link to="/" className="header_navLink header_nav_Link_First">
+                                    공지사항
+                                </Link>
                             </li>
                             <li className="header_navItem">
-                                <Link to="/" className="header_navLink">티켓오픈</Link>
+                                <Link to="/" className="header_navLink">
+                                    티켓오픈
+                                </Link>
                             </li>
                             <li className="header_navItem">
-                                <Link to="/" className="header_navLink">공연장</Link>
+                                <Link to="/" className="header_navLink">
+                                    공연장
+                                </Link>
                             </li>
                             <li className="header_navItem">
-                                <Link to="/" className="header_navLink">이벤트</Link>
+                                <Link to="/" className="header_navLink">
+                                    이벤트
+                                </Link>
                             </li>
                             <li className="header_navItem">
-                                <Link to="/ranking" className="header_navLink">랭킹</Link>
+                                <Link to="/ranking" className="header_navLink">
+                                    랭킹
+                                </Link>
                             </li>
                         </ul>
                         <div className="header_searchBar">
@@ -115,9 +134,7 @@ export default function Header() {
                             <ManageSearchIcon className="header_searchIcon" />
                         </div>
                     </nav>
-                    <div className="header_viewportInfo">
-                        {viewportWidth}px
-                    </div>
+                    <div className="header_viewportInfo">{viewportWidth}px</div>
                 </div>
             </div>
         </header>
