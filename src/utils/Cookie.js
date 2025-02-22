@@ -2,6 +2,7 @@ import Cookies from "js-cookie";
 
 const ACCESS_COOKIE_NAME = "accessToken";
 const REFRESH_COOKIE_NAME = "refreshToken";
+const USER_ID_COOKIE_NAME = "userId";
 
 // 현재 환경이 HTTPS인지 확인 (배포 환경이면 true)
 const isProduction = window.location.protocol === "https:";
@@ -26,7 +27,7 @@ export const removeAccessTokenCookie = () => {
 /** Refresh Token 관련 함수 */
 export const setRefreshTokenCookie = (token) => {
     Cookies.set(REFRESH_COOKIE_NAME, token, {
-        expires: 1 / 48, // 30분
+        expires: 30,
         secure: isProduction,
         sameSite: "Strict",
     });
@@ -40,7 +41,19 @@ export const removeRefreshTokenCookie = () => {
     Cookies.remove(REFRESH_COOKIE_NAME);
 };
 
-/** 사용자 정보 관련 함수 */
+/** ✅ 사용자 ID 관련 함수 추가 */
+export const setUserIdCookie = (userId) => {
+    Cookies.set(USER_ID_COOKIE_NAME, userId, {
+        expires: 7, // 7일 유지 (로그인 유지)
+        secure: isProduction,
+        sameSite: "Strict",
+    });
+};
+
 export const getUserIdCookie = () => {
-    return Cookies.get("userId") || "";
+    return Cookies.get(USER_ID_COOKIE_NAME) || "";
+};
+
+export const removeUserIdCookie = () => {
+    Cookies.remove(USER_ID_COOKIE_NAME);
 };

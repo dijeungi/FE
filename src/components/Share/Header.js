@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../redux/LoginSlice";
 import { setAccessTokenCookie, removeRefreshTokenCookie } from "../../utils/Cookie";
-import Swal from "sweetalert2"; // sweetalert2 라이브러리 import
+import Swal from "sweetalert2";
 import "../../styles/Components/Header.css";
 
 import LoginIcon from "@mui/icons-material/Login";
@@ -11,6 +11,8 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import ManageSearchIcon from "@mui/icons-material/ManageSearch";
+
+import { logoutPost } from "../../api/LoginApi";
 
 export default function Header() {
     const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
@@ -20,44 +22,47 @@ export default function Header() {
     const accessToken = useSelector((state) => state.loginSlice.accessToken);
 
     useEffect(() => {
+        // 화면 크기 변경 감지
         const handleResize = () => setViewportWidth(window.innerWidth);
         window.addEventListener("resize", handleResize);
-        return () => window.removeEventListener("resize", handleResize);
-    }, []);
 
-    useEffect(() => {
+        // Access Token이 변경되면 쿠키에 저장
         if (accessToken) {
-            setAccessTokenCookie(accessToken); // 로그인하면 access token 쿠키 저장
+            setAccessTokenCookie(accessToken);
         }
-    }, [accessToken]);
 
-    useEffect(() => {
+        // 30분 동안 API 요청이 없으면 자동 로그아웃
         const interval = setInterval(() => {
-            const now = Date.now();
-            const elapsedTime = now - lastApiCallTime;
-            if (elapsedTime >= 30 * 60 * 1000) {
-                // 30분 (밀리초 단위)
-                dispatch(logout()); // 자동 로그아웃
+            if (Date.now() - lastApiCallTime >= 30 * 60 * 1000) {
+                dispatch(logout());
             }
-        }, 60 * 1000); // 1분마다 체크
+        }, 60 * 1000);
 
-        return () => clearInterval(interval);
-    }, [lastApiCallTime, dispatch]);
+        // Cleanup
+        return () => {
+            window.removeEventListener("resize", handleResize);
+            clearInterval(interval);
+        };
+    }, [accessToken, lastApiCallTime, dispatch]);
 
     // API 요청 시 호출할 함수 (API 호출이 일어나면 시간 리셋)
     const updateApiCallTime = () => {
         setLastApiCallTime(Date.now());
     };
 
-    const handleLogout = () => {
-        removeRefreshTokenCookie(); // 리프레시 토큰 삭제
-        dispatch(logout());
+    const handleLogout = async () => {
+        try {
+            await logoutPost();
+            dispatch(logout());
 
-        Swal.fire({
-            icon: "success",
-            title: "로그아웃 성공",
-            text: "정상적으로 로그아웃되었습니다.",
-        });
+            Swal.fire({
+                icon: "success",
+                title: "로그아웃 성공",
+                text: "정상적으로 로그아웃되었습니다.",
+            });
+        } catch (error) {
+            console.error("로그아웃 실패:", error);
+        }
     };
 
     return (

@@ -65,11 +65,7 @@ const detailSlice = createSlice({
             .addCase(fetchFestivalDetail.fulfilled, (state, action) => {
                 const { festivalDetails, likeCount, isLiked, totalStar, castingList } = action.payload;
                 state.festivalDetails = festivalDetails;
-                state.likeCount =
-                    typeof likeCount === "object" && likeCount !== null
-                        ? Number(likeCount["좋아요 개수"]) || 0
-                        : Number(likeCount) || 0;
-
+                state.likeCount = likeCount;
                 state.isLiked = isLiked;
                 state.totalStar = totalStar;
                 state.placeDetailName = festivalDetails.placeDetailName || "";

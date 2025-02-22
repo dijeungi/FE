@@ -1,5 +1,5 @@
-import { Route, Routes, useLocation } from 'react-router-dom';
-import './App.css';
+import { Route, Routes, useLocation } from "react-router-dom";
+import "./App.css";
 
 import Header from "./components/Share/Header";
 import Footer from "./components/Share/Footer";
@@ -27,22 +27,31 @@ import ReservationWindow from "./components/Share/ReservationWindow";
 import PaymentSuccess from "./components/payments/PaymentSuccess";
 import PaymentFail from "./components/payments/PaymentFail";
 import ScrollToTop from "./components/ScrollToTop";
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import LoadingSpinner from "./components/LoadingSpinner";
 import KakaoChannelButton from "./components/Share/KakaoChatButton";
 
+import { useDispatch } from "react-redux";
+import { initializeAuth } from "./redux/LoginSlice";
+
 function App() {
     const location = useLocation();
+    const dispatch = useDispatch();
     const isReservationPage = location.pathname.startsWith("/reservation");
 
-    // loading
-    const [loading, setLoading] = useState(false);
+    // ✅ 로딩 상태 관리
+    const [loading, setLoading] = useState(true);
 
+    // ✅ Redux에서 쿠키 기반 로그인 상태 복구 & 페이지 변경 시 로딩 적용
     useEffect(() => {
-        setLoading(true);
-        const timer = setTimeout(() => setLoading(false), 500);
-        return () => clearTimeout(timer);
-    }, [location.pathname]);
+        setLoading(true); // 페이지 변경 시 로딩 시작
+
+        dispatch(initializeAuth()); // ✅ Redux에서 로그인 상태 복구
+
+        const timer = setTimeout(() => setLoading(false), 500); // 0.5초 후 로딩 해제
+
+        return () => clearTimeout(timer); // 클린업 함수로 타이머 제거
+    }, [location.pathname, dispatch]);
 
     return (
         <div className="App">
@@ -82,7 +91,7 @@ function App() {
                 <Route path="/payment/fail" element={<PaymentFail />} />
             </Routes>
 
-            {location.pathname === "/" && <KakaoChannelButton/>}
+            {location.pathname === "/" && <KakaoChannelButton />}
 
             {/* ✅ 예매 페이지가 아닐 때만 Footer 표시 */}
             {!isReservationPage && <Footer />}
