@@ -63,9 +63,9 @@ const ProductDetailPage = () => {
     const runningTime = festivalDetails?.runningTime || "";
     const age = festivalDetails?.age || "";
     const placeDetailName = festivalDetails?.placeDetailName || "";
-    const imgSrc1 = festivalDetails.imgSrc1 || "";
-    const imgSrc2 = festivalDetails.imgSrc2 || "";
-    const imgSrc3 = festivalDetails.imgSrc3 || "";
+    const imgSrc1 = festivalDetails?.imgSrc1 || "";
+    const imgSrc2 = festivalDetails?.imgSrc2 || "";
+    const imgSrc3 = festivalDetails?.imgSrc3 || "";
 
     // ✅ Kakao 지도 열기/닫기 함수 (오류 해결)
     const toggleMap = () => {

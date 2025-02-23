@@ -1,11 +1,12 @@
 // src/components/Main/Ranking.js
+import { useEffect } from "react";
 import Category from "../components/Ranking/Category";
 import RankingList from "../components/Ranking/RankingList";
 import StatsInfo from "../components/Ranking/StatsInfo";
 
 import "../styles/Ranking/RankingPages.css";
 
-export default function RankingPages() {
+const RankingPages = () => {
     return (
         <div className="RankingPages">
             <Category />
@@ -13,4 +14,6 @@ export default function RankingPages() {
             <RankingList />
         </div>
     );
-}
+};
+
+export default RankingPages;

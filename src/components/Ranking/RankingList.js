@@ -2,30 +2,29 @@ import { useEffect, useState } from "react";
 import { getRankingList } from "../../api/festivalApi";
 import "../../styles/Ranking/RankingList.css";
 
-export default function RankingList() {
+const RankingList = ({ rankings }) => {
     const [ranking, setRanking] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        const fetchRanking = async () => {
-            try {
-                setLoading(true);
-                const data = await getRankingList();
-                setRanking(data);
-            } catch (err) {
-                console.error("Error fetching RankingList:", err);
-                setError(err);
-            } finally {
-                setLoading(false);
-            }
-        };
+        if (ranking.length === 0) {
+            const fetchRanking = async () => {
+                try {
+                    setLoading(true);
+                    const data = await getRankingList();
+                    setRanking(data);
+                } catch (err) {
+                    console.error("Error fetching RankingList:", err);
+                    setError(err);
+                } finally {
+                    setLoading(false);
+                }
+            };
 
-        fetchRanking();
-    }, []);
-
-    if (loading) return <p>서버와 통신 중..</p>;
-    if (error) return <p>랭킹 데이터를 불러오는 중 오류 발생: {error.message}</p>;
+            fetchRanking();
+        }
+    }, [ranking]); // 의존성 배열을 ranking으로 바꾸기
 
     return (
         <article className="RankingList_Container">
@@ -64,7 +63,7 @@ export default function RankingList() {
                                             <div className="RankingList_ContentsInner">
                                                 <li className="RankingList_MainTitle">{item.festivalName}</li>
                                                 <div className="RankingList_Location">
-                                                    {item.venue}
+                                                    {item.placeDetailName}
                                                     <div className="RankingList_Date">
                                                         {item.fromDate} ~ {item.toDate}
                                                     </div>
@@ -108,4 +107,6 @@ export default function RankingList() {
             </section>
         </article>
     );
-}
+};
+
+export default RankingList;
