@@ -75,6 +75,10 @@
     border-right: 1px solid #eee;
 }
 
+.RankingList_TopItem:last-child {
+    border-right: none;
+}
+
 .RankingList_Badge {
     /* 순위 밑에 과거통계 낼라면 다시 손봐야됨 */
     position: relative;
@@ -85,6 +89,21 @@
     gap: 0.4rem;
     height: auto;
     width: unset;
+}
+
+/* 1위 - 아이콘 색상 */
+.RankingList_TopItem .rank-1 {
+    fill: #ff8170;
+}
+
+/* 2위 - 아이콘 색상 */
+.RankingList_TopItem .rank-2 {
+    fill: #666666; /* 은색 */
+}
+
+/* 3위 - 아이콘 색상 */
+.RankingList_TopItem .rank-3 {
+    fill: #666666; /* 동색 */
 }
 
 .RankingList_BadgeNumber {
@@ -174,6 +193,7 @@
     align-items: flex-start;
     padding: 0;
     width: 100%;
+    font-size: 15px;
 }
 
 .RankingList_Date {
@@ -185,9 +205,9 @@
     -webkit-box-orient: vertical;
     font-style: normal;
     font-weight: 400;
-    font-size: 1.5rem;
+    font-size: 15px;
     line-height: 150%;
-    color: #000;
+    color: #999999;
 
     width: 100%;
     padding: 0;
@@ -195,4 +215,422 @@
     box-sizing: border-box;
 
     align-items: center;
+}
+
+.RankingList_ReservationRate {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 0.1rem;
+    padding: 0;
+    height: 1.7rem;
+    margin: 0.3rem 0 0.325rem;
+}
+
+.RankingList_BookingPercentText {
+    display: initial;
+    height: 2.3rem;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 150%;
+    color: #000;
+}
+
+.RankingList_BookingPercent {
+    /* height: 1rem; */
+    font-style: normal;
+    font-weight: 700;
+    font-size: 15px;
+    /* line-height: 150%; */
+    color: #ff8170;
+    position: relative;
+    left: 5px;
+}
+
+/* 3등부터 ~  */
+
+.RankingList_AllItemList {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    height: auto;
+    background-color: #fff;
+    margin-bottom: 9rem;
+}
+
+.RankingList_ItemList_Container {
+    border-top: 1px solid #eee;
+    padding-top: 20px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0;
+    width: 100%;
+    border-bottom: 1px solid #eee;
+    height: 16rem;
+}
+
+.RankingList_ItemList_Wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    gap: 0;
+    width: 7rem;
+    height: 16rem;
+}
+
+.RankingList_ItemList_Badge {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.RankingList_ItemList_NumberColor {
+    height: 3.8rem;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 2.5rem;
+    line-height: 150%;
+    color: #111;
+
+    display: flex;
+    justify-content: center;
+    width: 2rem;
+}
+
+/* 순위 상승 아이콘 */
+.RankingList_ItemList_rankUp {
+    width: 8px;
+    height: 8px;
+    position: relative;
+    overflow: hidden;
+    pointer-events: none;
+    border-radius: 20%;
+    transform: translateY(50%) rotate(-30deg) skewY(-30deg) scaleX(0.866) rotate(180deg) !important;
+
+    font-style: normal;
+    font-weight: 700;
+    font-size: 2.5rem;
+    line-height: 150%;
+    color: #4caf50;
+}
+
+.RankingList_ItemList_rankUp:before {
+    border-radius: 20% 20% 20% 55%;
+    transform: scaleX(1.155) skewY(30deg) rotate(30deg) translateY(42.3%) skewX(30deg) scaleY(0.866) translateX(-24%);
+    content: "";
+    position: absolute;
+    background: #4caf50;
+    pointer-events: auto;
+
+    width: 8px;
+    height: 8px;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 2.5rem;
+    line-height: 150%;
+    color: #4caf50;
+}
+
+.RankingList_ItemList_rankUp:after {
+    border-radius: 20% 20% 55% 20%;
+    transform: scaleX(1.155) skewY(30deg) rotate(30deg) translateY(42.3%) skewX(-30deg) scaleY(0.866) translateX(24%);
+    content: "";
+    position: absolute;
+    background: #4caf50;
+    pointer-events: auto;
+
+    width: 8px;
+    height: 8px;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 2.5rem;
+    line-height: 150%;
+    color: #4caf50;
+}
+
+/* 순위 하락 아이콘 */
+.RankingList_ItemList_curRank {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0;
+    gap: 1px;
+    height: 18px;
+}
+
+.RankingList_ItemList_rankDown {
+    width: 8px;
+    height: 8px;
+
+    position: relative;
+    overflow: hidden;
+    pointer-events: none;
+    border-radius: 20%;
+    transform: translateY(-50%) rotate(30deg) skewY(30deg) scaleX(0.866) rotate(180deg) !important;
+
+    font-style: normal;
+    font-weight: 700;
+    font-size: 2.5rem;
+    line-height: 150%;
+    color: #111;
+}
+
+.RankingList_ItemList_rankDown:before {
+    border-radius: 20% 20% 20% 55%;
+    transform: scaleX(1.155) skewY(-30deg) rotate(-30deg) translateY(-42.3%) skewX(30deg) scaleY(0.866) translateX(-24%);
+
+    content: "";
+    position: absolute;
+    background: #999;
+    pointer-events: auto;
+
+    width: 8px;
+    height: 8px;
+
+    font-style: normal;
+    font-weight: 700;
+    font-size: 2.5rem;
+    line-height: 150%;
+    color: #111;
+}
+
+.RankingList_ItemList_rankDown:after {
+    border-radius: 20% 20% 55% 20%;
+
+    transform: scaleX(1.155) skewY(-30deg) rotate(-30deg) translateY(-42.3%) skewX(-30deg) scaleY(0.866) translateX(24%);
+
+    content: "";
+    position: absolute;
+    background: #999;
+    pointer-events: auto;
+
+    width: 8px;
+    height: 8px;
+
+    font-style: normal;
+    font-weight: 700;
+    font-size: 2.5rem;
+    line-height: 150%;
+    color: #111;
+}
+
+.RankingList_ItemList_rankDownText {
+    color: #999;
+
+    height: 18px;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 150%;
+}
+
+.RankingList_ItemListInner {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    padding: 0;
+    gap: 2.4rem;
+    cursor: pointer;
+    height: 100%;
+    flex: 1 1;
+}
+
+.RankingList_ImageListWrap {
+    box-sizing: border-box;
+    position: relative;
+    width: 9rem;
+    height: 12rem;
+    border-radius: 0.8rem;
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.04), rgba(0, 0, 0, 0.04));
+}
+
+.RankingList_ImageListWrap:before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.08);
+    z-index: 1;
+    border-radius: 8px;
+}
+
+.RankingList_Image {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    inset: 0px;
+    color: transparent;
+
+    border-radius: 8px;
+}
+
+.RankingList_RankingContents {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+    gap: 8px;
+    list-style-type: none;
+    position: relative;
+    flex: 1 1;
+    height: 100%;
+}
+
+.RankingList_BadgeWrap {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.2rem;
+    position: absolute;
+    top: 5.25rem;
+}
+
+.RankingList_ExclusiveSale {
+    border-color: #ffe4d5;
+    color: #ff7262;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 0 0.6rem;
+    gap: 1rem;
+    width: 100%;
+    height: 1.5rem;
+    background: #fff;
+    border: 1px solid;
+    border-radius: 0.4rem;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 150%;
+}
+
+.RankingList_ExclusiveSale::before {
+    content: "단독판매";
+}
+
+.RankingList_AdvantageSeat {
+    border-color: #ffe4d5;
+    color: #796fff;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 0 0.6rem;
+    gap: 1rem;
+    width: 100%;
+    height: 1.5rem;
+    background: #fff;
+    border: 1px solid;
+    border-radius: 0.4rem;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 150%;
+}
+
+.RankingList_AdvantageSeat::before {
+    content: "좌석우위";
+}
+
+.RankingList_RankingContentsInner {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: row;
+    padding: 0;
+    gap: 20px;
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.RankingList_GoodsName {
+    margin-top: 7.15rem;
+    display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 17px;
+    line-height: 150%;
+    color: #000;
+    width: calc(30% - 0rem);
+}
+
+.RankingList_RankList_Wrap {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.RankinList_PlaceName {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    /* line-height: 150%; */
+    text-align: center;
+    color: #000;
+
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 2rem;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.RankingList_SubContainer {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    /* line-height: 150%; */
+    color: #000;
+}
+
+.RankingList_DateWrap {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    /* line-height: 150%; */
+    color: #000;
+}
+
+.RankingList_BookingPercentText1 {
+    color: #7db1ff;
+    height: 1.25rem;
+    /* line-height: 250%; */
+}
+
+.RankingList_ContentsBookingPercent {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 0 2rem;
+    gap: 0.3rem;
+    box-sizing: border-box;
 }

@@ -1,10 +1,10 @@
 // src/redux/RankingSlice.js
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { getProductDetail } from "../api/festivalApi"; // getRankingList 함수 import
+import { getProductList } from "../api/festivalApi";
 
 // 비동기 작업을 위한 thunk
 export const fetchRankingList = createAsyncThunk("ranking/fetchRankingList", async () => {
-    const data = await getProductDetail();
+    const data = await getProductList();
     return data;
 });
 

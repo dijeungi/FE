@@ -48,6 +48,8 @@
     background: none;
     border: none;
     background-color: transparent;
+    top: 4px;
+    right: 5px;
 }
 
 .StatsInfo_Image {
