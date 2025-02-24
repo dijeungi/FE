@@ -1,34 +1,36 @@
 // src/pages/ProductDetailPage.js
 
+// ✅ React & 관련 라이브러리
 import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 
-// Redux
-import { fetchFestivalDetail, setIsLiked } from "../redux/DetailSlice";
+// ✅ Redux 관련
+import { fetchFestivalDetail } from "../redux/DetailSlice";
 
-// API
+// ✅ API 호출
 import { getFestivalDetailTimeDate } from "../api/festivalApi";
+import { getLikeCount, getIsLiked, postLike, deleteLike } from "../api/likeApi";
 
-// Cookie / LocalStorage
+// ✅ 유틸리티 (쿠키, 로컬스토리지)
 import { getUserIdCookie } from "../utils/Cookie";
 
-// Style
+// ✅ 스타일
 import "../styles/info/Information.css";
 import "../styles/info/Calendar.css";
 import "../styles/info/KakaoMap.css";
 
-// UI Library
+// ✅ UI 라이브러리
 import { Rating } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import { Favorite, FavoriteBorder } from "@mui/icons-material";
 import Calendar from "react-calendar";
 
-//  Components
+// ✅ 컴포넌트
 import DetailFooter from "../components/product/DetailFooter";
 
-// KakaoMap
+// ✅ KakaoMap
 const { kakao } = window;
 
 const ProductDetailPage = () => {
@@ -36,43 +38,47 @@ const ProductDetailPage = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    // 사용자 ID 가져오기 (Redux + 쿠키)
+    // ✅ 사용자 정보 가져오기 (Redux + 쿠키)
     const userId = useSelector((state) => state.loginSlice.id) || getUserIdCookie();
 
-    // Redux에서 공연 상세 정보 가져오기
-    const { festivalDetails, totalStar, isLiked, likeCount, placeLocation } = useSelector((state) => state.detail);
+    // ✅ Redux에서 공연 상세 정보 가져오기
+    const { festivalDetails, totalStar, placeLocation } = useSelector((state) => state.detail);
 
-    // 상태 변수
-    const [isMapOpen, setIsMapOpen] = useState(false); // 지도 열기/닫기 상태
-    const [selectedDate, setSelectedDate] = useState(new Date()); // 선택된 날짜
-    const [selectedTime, setSelectedTime] = useState(null); // 선택된 공연 시간
-    const [festivalTimeData, setFestivalTimeData] = useState([]); // 공연 시간 목록
+    // ✅ 상태 관리
+    const [isMapOpen, setIsMapOpen] = useState(false);
+    const [selectedDate, setSelectedDate] = useState(new Date());
+    const [selectedTime, setSelectedTime] = useState(null);
+    const [festivalTimeData, setFestivalTimeData] = useState([]);
+    const [likeCount, setLikeCount] = useState(0);
+    const [isLiked, setIsLiked] = useState(false);
 
-    // Kakao 지도 관련 Ref
+    // ✅ Kakao 지도 관련 Ref
     const mapRef = useRef(null);
     const markerRef = useRef(null);
 
-    // festivalDetails 추출
-    const festivalName = festivalDetails?.festivalName || "";
-    const ranking = festivalDetails?.ranking || "";
-    const fromDate = festivalDetails?.fromDate || "";
-    const toDate = festivalDetails?.toDate || "";
-    const festivalPrice = festivalDetails?.festivalPrice || 0;
-    const salePrice = festivalDetails?.salePrice || 0;
-    const postImage = festivalDetails?.postImage || "";
-    const runningTime = festivalDetails?.runningTime || "";
-    const age = festivalDetails?.age || "";
-    const placeDetailName = festivalDetails?.placeDetailName || "";
-    const imgSrc1 = festivalDetails?.imgSrc1 || "";
-    const imgSrc2 = festivalDetails?.imgSrc2 || "";
-    const imgSrc3 = festivalDetails?.imgSrc3 || "";
+    // ✅ festivalDetails 데이터 추출
+    const {
+        festivalName = "",
+        ranking = "",
+        fromDate = "",
+        toDate = "",
+        festivalPrice = 0,
+        salePrice = 0,
+        postImage = "",
+        runningTime = "",
+        age = "",
+        placeDetailName = "",
+        imgSrc1 = "",
+        imgSrc2 = "",
+        imgSrc3 = "",
+    } = festivalDetails || {};
 
-    // ✅ Kakao 지도 열기/닫기 함수 (오류 해결)
+    // ✅ Kakao 지도 열기/닫기
     const toggleMap = () => {
         setIsMapOpen((prevState) => !prevState);
     };
 
-    // 날짜 선택 시 공연 시간 불러오기
+    // ✅ 날짜 선택 시 공연 시간 불러오기
     const handleDateChange = async (date) => {
         setSelectedDate(date);
         setSelectedTime(null);
@@ -87,18 +93,18 @@ const ProductDetailPage = () => {
         }
     };
 
-    // 공연 시간 선택
+    // ✅ 공연 시간 선택
     const handleTimeClick = (time) => {
         setSelectedTime((prev) => (prev === time ? null : time));
     };
 
-    // 예매 버튼 활성화 여부
+    // ✅ 예매 버튼 활성화 여부
     const isButtonEnabled = selectedDate && selectedTime;
 
-    // 별점 평균 계산
+    // ✅ 별점 평균 계산
     const ratingValue = totalStar?.["별점 총점"] || 0;
 
-    // 예매하기 버튼 클릭
+    // ✅ 예매하기 버튼 클릭
     const handleReservationClick = () => {
         if (!userId) {
             Swal.fire({
@@ -106,7 +112,6 @@ const ProductDetailPage = () => {
                 position: "top",
                 icon: "warning",
                 title: "로그인이 필요합니다.",
-                // text: "로그인이 필요합니다.",
                 timer: 3000,
                 timerProgressBar: true,
                 allowOutsideClick: false,
@@ -122,7 +127,6 @@ const ProductDetailPage = () => {
         if (!selectedDate || !selectedTime) return;
 
         const formattedDate = selectedDate.toISOString().split("T")[0];
-
         const queryParams = new URLSearchParams({
             festivalId,
             festivalName: encodeURIComponent(festivalDetails?.festivalName || ""),
@@ -135,16 +139,29 @@ const ProductDetailPage = () => {
         window.open(`/reservation?${queryParams}`, "_blank", "width=980,height=745,resizable=no,scrollbars=no");
     };
 
+    // ✅ 좋아요 데이터 불러오기 & 공연 상세 정보 가져오기
     useEffect(() => {
+        const fetchLikeData = async () => {
+            if (!userId) return;
+
+            try {
+                const count = await getLikeCount(festivalId);
+                const likedStatus = await getIsLiked(userId, festivalId);
+                setLikeCount(count);
+                setIsLiked(likedStatus);
+            } catch (error) {
+                console.error("❌ 좋아요 데이터 불러오기 실패:", error);
+            }
+        };
+
         if (festivalId) {
             dispatch(fetchFestivalDetail({ festivalId, userId }));
+            fetchLikeData();
         }
 
-        // 날짜가 바뀌거나, 처음 페이지가 로드될 때 오늘 날짜의 공연 시간 로드
         handleDateChange(selectedDate);
 
-        // Kakao 지도 설정
-        if (isMapOpen && window.kakao && window.kakao.maps && mapRef.current) {
+        if (isMapOpen && kakao && kakao.maps && mapRef.current) {
             const map = new kakao.maps.Map(mapRef.current, {
                 center: new kakao.maps.LatLng(37.5665, 126.978), // 기본 위치: 서울시청
                 level: 3,
@@ -157,12 +174,40 @@ const ProductDetailPage = () => {
                     map.setCenter(coords);
 
                     if (markerRef.current) markerRef.current.setMap(null);
-                    const marker = new kakao.maps.Marker({ position: coords, map: map });
-                    markerRef.current = marker;
+                    markerRef.current = new kakao.maps.Marker({ position: coords, map: map });
                 }
             });
         }
     }, [festivalId, userId, selectedDate, isMapOpen, placeLocation]);
+
+    // ✅ 좋아요 버튼 클릭
+    const handleLikeClick = async () => {
+        if (!userId) {
+            Swal.fire({
+                toast: true,
+                position: "top",
+                icon: "warning",
+                title: "로그인이 필요합니다.",
+                timer: 3000,
+                timerProgressBar: true,
+                showConfirmButton: false,
+            });
+            return;
+        }
+
+        try {
+            if (isLiked) {
+                await deleteLike(userId, festivalId);
+                setLikeCount((prev) => Math.max(prev - 1, 0)); // 좋아요 감소
+            } else {
+                await postLike(userId, festivalId);
+                setLikeCount((prev) => prev + 1); // 좋아요 증가
+            }
+            setIsLiked(!isLiked);
+        } catch (error) {
+            console.error("❌ 좋아요 처리 실패:", error);
+        }
+    };
 
     return (
         <div className="Information_Container">
@@ -236,7 +281,7 @@ const ProductDetailPage = () => {
                                 <div className="Information_PosterBoxBottom">
                                     <div className="Information_CastHeart">
                                         <div className="Information_CastWrap">
-                                            <a className="Information_CastBtn">
+                                            <a className="Information_CastBtn" onClick={handleLikeClick}>
                                                 {isLiked ? (
                                                     <Favorite className="Information_HeartOn" />
                                                 ) : (
@@ -261,9 +306,7 @@ const ProductDetailPage = () => {
                                                 </div>
                                             </div>
                                         </div>
-                                        <p className="Information_CastNum">
-                                            {typeof likeCount === "object" ? likeCount["좋아요 개수"] : likeCount}
-                                        </p>
+                                        <p className="Information_CastNum">{likeCount}</p>
                                     </div>
                                     <div className="Information_Share">
                                         <ul className="Information_ShareList">

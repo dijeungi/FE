@@ -50,10 +50,16 @@ function App() {
     // Redux에서 쿠키 기반 로그인 상태 복구 & 페이지 변경 시 로딩 적용
     useEffect(() => {
         console.log("📌App.js useEffect 실행: location =", location.pathname);
-        setLoading(true);
-        dispatch(initializeAuth());
-        const timer = setTimeout(() => setLoading(false), 500);
-        return () => clearTimeout(timer);
+
+        setLoading(true); // ✅ 로딩 시작
+
+        const fetchData = async () => {
+            await dispatch(initializeAuth()); // ✅ Redux 인증 상태 가져오기 (비동기)
+
+            setLoading(false); // ✅ 비동기 작업이 끝난 즉시 로딩 종료
+        };
+
+        fetchData(); // ✅ 비동기 함수 실행
     }, [location.pathname, dispatch]);
 
     return (
