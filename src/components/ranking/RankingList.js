@@ -1,25 +1,23 @@
+// src/components/ranking/RankingList.js
 import { useEffect, useState } from "react";
-
+import { Link } from "react-router-dom";
 import "../../styles/ranking/RankingList.css";
-
 import QueryStatsIcon from "@mui/icons-material/QueryStats";
 
 const RankingList = ({ rankings }) => {
     const [ranking, setRanking] = useState(rankings);
 
-    // 예매율을 순위에 맞춰서 배분하는 함수
+    // 예매율을 순위에 맞춰 배분하는 함수 (기존 로직 유지)
     const generateRankingBookingPercent = (totalItems) => {
         let remainingPercent = 100;
         let bookingPercentages = [];
 
-        // 1등은 가장 높은 예매율 (예: 11.4%)
-        const highestPercent = 11.4; // 1등 예매율
+        const highestPercent = 11.4;
         bookingPercentages.push(highestPercent);
         remainingPercent -= highestPercent;
 
-        // 2등부터 50등까지 예매율을 점차적으로 낮추는 방식
-        const baseDecrement = 0.2; // 예매율을 줄여주는 기본 차이 (단위: %)
-        const minPercent = 0.5; // 예매율의 최소 값 (0% 대신 최소 0.5% 이상으로 설정)
+        const baseDecrement = 0.2;
+        const minPercent = 0.5;
 
         for (let i = 1; i < totalItems - 1; i++) {
             let percentForThisRank = Math.max(highestPercent - baseDecrement * i, minPercent);
@@ -27,10 +25,8 @@ const RankingList = ({ rankings }) => {
             remainingPercent -= percentForThisRank;
         }
 
-        // 남은 예매율을 마지막 항목에 할당
         bookingPercentages.push(parseFloat(remainingPercent.toFixed(1)));
 
-        // 만약 남은 예매율이 0이 아닌데 부정확하다면 마지막 항목을 다시 조정
         let total = bookingPercentages.reduce((acc, val) => acc + val, 0);
         if (total !== 100) {
             let diff = 100 - total;
@@ -41,47 +37,34 @@ const RankingList = ({ rankings }) => {
     };
 
     useEffect(() => {
-        const totalItems = rankings.length; // rankings 길이 계산
-        const bookingPercentages = generateRankingBookingPercent(totalItems); // 예매율 계산
+        const totalItems = rankings.length;
+        const bookingPercentages = generateRankingBookingPercent(totalItems);
 
         setRanking(
             rankings.map((item, index) => ({
                 ...item,
-                bookingPercent: bookingPercentages[index], // 예매율 추가
-                randomTrend: getRandomTrend(), // 랜덤 트렌드 추가
-                rankChange: getRandomRankChange(), // 랜덤 rankChange 추가
+                bookingPercent: bookingPercentages[index],
+                randomTrend: Math.random() < 0.5 ? "up" : "down",
+                rankChange: Math.floor(Math.random() * 21) - 10,
             }))
         );
-    }, [rankings]); // rankings가 변경될 때마다 실행
+    }, [rankings]);
 
-    // 상승/하락에 따른 랜덤 숫자 생성 (-10 ~ 10)
-    const getRandomRankChange = () => {
-        const rankChange = Math.floor(Math.random() * 21) - 10; // -10 ~ 10 사이의 숫자
-        console.log("Generated rankChange:", rankChange); // 확인용 로그
-        return rankChange;
-    };
-
-    // 랜덤 상승/하락 아이콘을 결정하는 함수
-    const getRandomTrend = () => {
-        return Math.random() < 0.5 ? "up" : "down";
-    };
-
-    // 랜덤 클래스 선택 함수
-    const getRandomClass = () => {
-        const classes = ["RankingList_ExclusiveSale", "RankingList_AdvantageSeat", "none"];
-        const randomIndex = Math.floor(Math.random() * classes.length);
-        return classes[randomIndex];
-    };
+    if (ranking.length === 0) return <div>해당 카테고리의 데이터가 없습니다.</div>;
 
     return (
         <article className="RankingList_Container">
             <section className="RankingList_Wrap">
                 <div className="RankingList_Panel">
                     <div className="RankingList_subWrap">
-                        {/* 1~3위 상단 고정 */}
+                        {/* 상위 3개 아이템 렌더링 */}
                         <div className="RankingList_Top">
                             {ranking.slice(0, 3).map((item, index) => (
-                                <div key={item.id} className={`RankingList_TopItem rank-${index + 1}`}>
+                                <Link
+                                    key={item.id}
+                                    to={`/product/${item.id}`}
+                                    className={`RankingList_TopItem rank-${index + 1}`}
+                                >
                                     <div className="RankingList_Badge">
                                         <div className="RankingList_BadgeNumber">{index + 1}</div>
                                         <div className="RankingList_ImageWrap">
@@ -105,12 +88,11 @@ const RankingList = ({ rankings }) => {
                                             src={item.postImage}
                                             alt={item.festivalName}
                                             className="RankingList_ImageContainer"
-                                        ></img>
+                                        />
                                         <ul className="RankingList_Info">
                                             <div className="RankingList_ContentsInner">
                                                 <li className="RankingList_MainTitle">{item.festivalName}</li>
                                                 <div className="RankingList_Location">
-                                                    {/* {item.placeDetailName} */}
                                                     블루스퀘어 신한카드홀
                                                     <div className="RankingList_Date">
                                                         {item.fromDate} ~{" "}
@@ -126,74 +108,81 @@ const RankingList = ({ rankings }) => {
                                             </div>
                                         </ul>
                                     </div>
-                                </div>
+                                </Link>
                             ))}
                         </div>
 
-                        {/* 4위부터 50까지 리스트 */}
+                        {/* 4위부터 나머지 리스트 렌더링 */}
                         <div className="RankingList_AllItemList">
                             {ranking.slice(3, 50).map((item, index) => (
-                                <>
-                                    <div key={item.id} className="RankingList_ItemList_Container">
-                                        <div className="RankingList_ItemList_Wrap">
-                                            <div className="RankingList_ItemList_Badge">
-                                                <div className="RankingList_ItemList_NumberColor">{index + 4}</div>
-                                            </div>
-                                            <div className="RankingList_ItemList_curRank">
-                                                <div
-                                                    className={`RankingList_ItemList_rank ${
-                                                        item.randomTrend === "up"
-                                                            ? "RankingList_ItemList_rankUp"
-                                                            : "RankingList_ItemList_rankDown"
-                                                    }`}
-                                                ></div>
-                                                <span
-                                                    className="RankingList_ItemList_rankDownText"
-                                                    style={{
-                                                        color: item.randomTrend === "up" ? "green" : "gray",
-                                                    }}
-                                                >
-                                                    {isNaN(item.rankChange) ? 0 : Math.abs(item.rankChange)}
-                                                </span>
-                                            </div>
+                                <Link
+                                    key={item.id}
+                                    to={`/product/${item.id}`}
+                                    className="RankingList_ItemList_Container"
+                                >
+                                    <div className="RankingList_ItemList_Wrap">
+                                        <div className="RankingList_ItemList_Badge">
+                                            <div className="RankingList_ItemList_NumberColor">{index + 4}</div>
                                         </div>
-                                        {/* 이미지 표시 */}
-                                        <div className="RankingList_ItemListInner">
-                                            <div className="RankingList_ImageListWrap">
-                                                <img
-                                                    src={item.postImage}
-                                                    alt={item.festivalName}
-                                                    className="RankingList_Image"
-                                                />
-                                            </div>
-                                            <ul className="RankingList_RankingContents">
-                                                <div className="RankingList_BadgeWrap">
-                                                    <div className={getRandomClass()}></div>
-                                                </div>
-                                                <div className="RankingList_RankingContentsInner">
-                                                    <li className="RankingList_GoodsName">{item.festivalName}</li>
-                                                    <div className="RankingList_RankList_Wrap">
-                                                        <li className="RankinList_PlaceName">블루스퀘어 신한카드홀</li>
-                                                        <div className="RankingList_SubContainer">
-                                                            <li className="RankingList_DateWrap">
-                                                                {item.fromDate} ~{" "}
-                                                                {item.toDate === "9999-12-31" ? "오픈런" : item.toDate}
-                                                            </li>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div className="RankingList_ContentsBookingPercent">
-                                                    <span className="RankingList_BookingPercentText1">
-                                                        <QueryStatsIcon />
-                                                    </span>
-                                                    <li className="RankingList_BookingPercent">
-                                                        {item.bookingPercent}%
-                                                    </li>
-                                                </div>
-                                            </ul>
+                                        <div className="RankingList_ItemList_curRank">
+                                            <div
+                                                className={`RankingList_ItemList_rank ${
+                                                    item.randomTrend === "up"
+                                                        ? "RankingList_ItemList_rankUp"
+                                                        : "RankingList_ItemList_rankDown"
+                                                }`}
+                                            ></div>
+                                            <span
+                                                className="RankingList_ItemList_rankDownText"
+                                                style={{
+                                                    color: item.randomTrend === "up" ? "green" : "gray",
+                                                }}
+                                            >
+                                                {isNaN(item.rankChange) ? 0 : Math.abs(item.rankChange)}
+                                            </span>
                                         </div>
                                     </div>
-                                </>
+                                    <div className="RankingList_ItemListInner">
+                                        <div className="RankingList_ImageListWrap">
+                                            <img
+                                                src={item.postImage}
+                                                alt={item.festivalName}
+                                                className="RankingList_Image"
+                                            />
+                                        </div>
+                                        <ul className="RankingList_RankingContents">
+                                            <div className="RankingList_BadgeWrap">
+                                                <div
+                                                    className={
+                                                        [
+                                                            "RankingList_ExclusiveSale",
+                                                            "RankingList_AdvantageSeat",
+                                                            "none",
+                                                        ][Math.floor(Math.random() * 3)]
+                                                    }
+                                                ></div>
+                                            </div>
+                                            <div className="RankingList_RankingContentsInner">
+                                                <li className="RankingList_GoodsName">{item.festivalName}</li>
+                                                <div className="RankingList_RankList_Wrap">
+                                                    <li className="RankinList_PlaceName">블루스퀘어 신한카드홀</li>
+                                                    <div className="RankingList_SubContainer">
+                                                        <li className="RankingList_DateWrap">
+                                                            {item.fromDate} ~{" "}
+                                                            {item.toDate === "9999-12-31" ? "오픈런" : item.toDate}
+                                                        </li>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="RankingList_ContentsBookingPercent">
+                                                <span className="RankingList_BookingPercentText1">
+                                                    <QueryStatsIcon />
+                                                </span>
+                                                <li className="RankingList_BookingPercent">{item.bookingPercent}%</li>
+                                            </div>
+                                        </ul>
+                                    </div>
+                                </Link>
                             ))}
                         </div>
                     </div>

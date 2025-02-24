@@ -11,7 +11,7 @@ import {
     removeUserIdCookie,
 } from "../utils/Cookie";
 
-// ✅ 새로고침 후 쿠키에서 로그인 상태 복원
+// 새로고침 후 쿠키에서 로그인 상태 복원
 const initialState = {
     id: getUserIdCookie() || null, // 쿠키에서 사용자 ID 불러오기
     roles: [],
@@ -40,7 +40,7 @@ const loginSlice = createSlice({
                 isAuthenticated: true,
             };
         },
-        // ✅ 로그아웃 시 Redux 상태와 쿠키 삭제
+        // 로그아웃 시 Redux 상태와 쿠키 삭제
         logout: (state) => {
             removeAccessTokenCookie();
             // removeRefreshTokenCookie();
@@ -54,21 +54,19 @@ const loginSlice = createSlice({
                 isAuthenticated: false, // 로그아웃 상태 반영
             };
         },
-        // ✅ 액세스 토큰 갱신 (자동 로그인 유지)
+        // 액세스 토큰 갱신 (자동 로그인 유지) + Cookie
         setAccessToken: (state, action) => {
             state.accessToken = action.payload;
-            setAccessTokenCookie(action.payload, 30); // ✅ 쿠키에도 저장
+            setAccessTokenCookie(action.payload, 30);
         },
-        // ✅ 새로고침 시 Redux 상태 초기화 (쿠키에서 불러오기)
+        // 새로고침 시 Redux 상태 초기화 (쿠키에서 불러오기)
         initializeAuth: (state) => {
             const accessToken = getAccessTokenCookie();
-            // const refreshToken = getRefreshTokenCookie();
             const id = getUserIdCookie();
-
+            console.log("📌LoginSlice.js: accessToken =", accessToken, ", userId =", id);
             if (accessToken) {
                 state.id = id;
                 state.accessToken = accessToken;
-                // state.refreshToken = refreshToken;
                 state.isAuthenticated = true;
             }
         },

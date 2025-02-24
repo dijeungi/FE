@@ -49,18 +49,16 @@ function App() {
 
     // Redux에서 쿠키 기반 로그인 상태 복구 & 페이지 변경 시 로딩 적용
     useEffect(() => {
+        console.log("📌App.js useEffect 실행: location =", location.pathname);
         setLoading(true);
-
         dispatch(initializeAuth());
-
         const timer = setTimeout(() => setLoading(false), 500);
-
         return () => clearTimeout(timer);
     }, [location.pathname, dispatch]);
 
     return (
         <div className="App">
-            {/* ✅ 예매 페이지가 아닐 때만 Header 표시 */}
+            {/* 예매 페이지가 아닐 때만 Header 표시 */}
             {loading && <LoadingSpinner />}
             {!isReservationPage && <Header />}
             <ScrollToTop />

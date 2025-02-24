@@ -27,6 +27,15 @@ export const getProductDetail = async (festivalId) => {
     return response.data;
 };
 
+// festival Category
+export const getCategoryList = async (categoryId) => {
+    console.log("API 호출 시 전달된 categoryId:", categoryId); // 전달값 확인
+    // URL 쿼리 파라미터의 키가 'categoryId'가 맞는지 확인 필요
+    const response = await axiosInstance.get(`/festival/list?categoryId=${categoryId}`);
+    console.log("API 응답 데이터:", response.data); // 응답 데이터 확인
+    return response.data;
+};
+
 // Festival Time
 export const getFestivalDetailTimeDate = async (festivalId, date) => {
     try {

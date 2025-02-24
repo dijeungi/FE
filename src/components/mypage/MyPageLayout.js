@@ -149,8 +149,10 @@ export default function MyPageLayout() {
                                         color: "green",
                                         lineHeight: "200%",
                                         fontWeight: "700",
+                                        fontSize: "14.3px",
                                     }}
                                 >
+                                    <br />
                                     각각 10% 바로적용💸
                                 </span>
                                 <br />

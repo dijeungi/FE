@@ -1,17 +1,21 @@
+// src/components/mypage/Booking.js
 import "../../styles/mypage/Booking.css";
-
 import { getTicketList } from "../../api/TicketApi";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import Paginations from "./Paginations";
 
 const Booking = () => {
     const [bookings, setBookings] = useState([]);
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0);
-    const [userId, setUserId] = useState(null);
 
-    // API 호출을 위한 함수
+    // 리덕스 스토어에서 userId 가져오기
+    const userId = useSelector((state) => state.loginSlice.id);
+
+    // API 호출 함수 (userId가 있을 때만 호출)
     const fetchTicketList = async () => {
+        console.log("현재 userId:", userId);
         const params = {
             page: page,
             size: 10,
@@ -21,6 +25,7 @@ const Booking = () => {
 
         try {
             const response = await getTicketList(params);
+            console.log("MyPage API:", response);
             setBookings(response.dtoList || []);
             setTotalPages(response.totalPage || 0);
         } catch (error) {
@@ -28,12 +33,13 @@ const Booking = () => {
         }
     };
 
-    // page나 userId가 변경될 때마다 데이터 호출
+    // page 혹은 userId가 변경될 때 데이터 호출
     useEffect(() => {
-        fetchTicketList();
+        if (userId) {
+            fetchTicketList();
+        }
     }, [page, userId]);
 
-    // 페이지 변경 핸들러
     const handlePageChange = (event, newPage) => {
         setPage(newPage);
     };
@@ -42,8 +48,6 @@ const Booking = () => {
         <>
             <div className="booking-container">
                 <div className="MyPage_Right_Title">예매내역</div>
-
-                {/* 헤더 부분: 예매일 / 예약번호 / 공연명 / 관람일 / 매수 / 취소가능일 / 상태 */}
                 <div className="booking-header">
                     <div>예매일</div>
                     <div>예약번호</div>
@@ -53,8 +57,6 @@ const Booking = () => {
                     <div>취소가능일</div>
                     <div>상태</div>
                 </div>
-
-                {/* 예매 내역이 없는 경우와 있는 경우를 조건부 렌더링 */}
                 {bookings.length === 0 ? (
                     <div style={{ paddingBottom: "10px" }}>
                         <p style={{ width: "100%", textAlign: "center", fontSize: "18px", paddingTop: "100px" }}>
@@ -62,7 +64,6 @@ const Booking = () => {
                         </p>
                     </div>
                 ) : (
-                    // map 함수를 사용해 API로 받아온 예매 내역 데이터를 출력합니다.
                     bookings.map((booking, index) => (
                         <div key={index} className="booking-row">
                             <div>{booking.bookingDate}</div>
@@ -77,7 +78,6 @@ const Booking = () => {
                 )}
             </div>
             <Paginations page={page} totalPages={totalPages} handlePageChange={handlePageChange} />
-            <div />
         </>
     );
 };

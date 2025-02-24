@@ -8,7 +8,7 @@
     height: 130px;
     margin: auto;
     margin-top: 30px;
-    border: 1px solid #ff8364;
+    border: 1px solid #ff7b14;
     border-radius: 10px;
     /* box-sizing: border-box; */
     overflow: hidden;
@@ -16,7 +16,7 @@
 
 .MyPage_Top_Left {
     float: left;
-    background: #ff8364;
+    background: #ff7b14;
     width: 240px;
     height: 130px;
     border-radius: 8px 0 0 8px;
@@ -110,7 +110,7 @@ a {
     margin-top: 3px;
     font-size: 22px;
     font-weight: bold;
-    color: #ff4b4b;
+    color: #ff7b14;
 }
 
 .MyPage_Wrap {
@@ -127,7 +127,7 @@ a {
     padding: 40px 30px;
     background: #fff;
     border-radius: 10px;
-    border: 0.1px solid #ff4b4b;
+    border: 0.1px solid #ff7b14;
 
     margin-left: -9.25px;
 }

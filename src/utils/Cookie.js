@@ -41,7 +41,6 @@ export const removeRefreshTokenCookie = () => {
     Cookies.remove(REFRESH_COOKIE_NAME);
 };
 
-/** ✅ 사용자 ID 관련 함수 추가 */
 export const setUserIdCookie = (userId) => {
     Cookies.set(USER_ID_COOKIE_NAME, userId, {
         expires: 7, // 7일 유지 (로그인 유지)
