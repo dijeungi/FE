@@ -1,0 +1,66 @@
+import "../../styles/mypage/Booking.css";
+
+import { getTicketList } from "../../api/TicketApi";
+import { useState } from "react";
+
+const Booking = async () => {
+    const [page, setPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(0);
+    const [userId, setUserId] = useState();
+
+    const params = {
+        page: page,
+        size: 10,
+        sort: "desc",
+        userId: userId,
+    };
+
+    try {
+        const response = await getTicketList(params);
+        set(response.dtoList || []);
+        setTotalPages(response.totalPage || 0);
+    } catch (error) {
+        console.error("공연 목록 로딩 실패:", error);
+    }
+
+    return (
+        <div className="booking-container">
+            <div className="MyPage_Right_Title">예매내역</div>
+
+            {/* 헤더 부분: 예매일 / 예약번호 / 공연명 / 관람일 / 매수 / 취소가능일 / 상태 */}
+            <div className="booking-header">
+                <div>예매일</div>
+                <div>예약번호</div>
+                <div>공연명</div>
+                <div>관람일</div>
+                <div>매수</div>
+                <div>취소가능일</div>
+                <div>상태</div>
+            </div>
+
+            {/* 예매 내역이 없는 경우와 있는 경우를 조건부 렌더링 */}
+            {dummyBookings.length === 0 ? (
+                <div style={{ paddingBottom: "10px" }}>
+                    <p style={{ width: "100%", textAlign: "center", fontSize: "18px", paddingTop: "100px" }}>
+                        예매 내역이 없습니다.
+                    </p>
+                </div>
+            ) : (
+                // map 함수를 사용해 임시 데이터(dummyBookings)를 출력합니다.
+                dummyBookings.map((booking, index) => (
+                    <div key={index} className="booking-row">
+                        <div>{booking.bookingDate}</div>
+                        <div>{booking.reservationNumber}</div>
+                        <div>{booking.performanceName}</div>
+                        <div>{booking.viewingDate}</div>
+                        <div>{booking.ticketCount}</div>
+                        <div>{booking.cancellationDeadline}</div>
+                        <div>{booking.status}</div>
+                    </div>
+                ))
+            )}
+        </div>
+    );
+};
+
+export default Booking;

@@ -83,7 +83,7 @@ export default function Header() {
                                     <LogoutIcon className="header_icon" />
                                     <span>로그아웃</span>
                                 </span>
-                                <Link to="/mypage" className="header_userMenuItem" title="마이페이지">
+                                <Link to="/mypage/booking" className="header_userMenuItem" title="마이페이지">
                                     <PersonOutlineIcon className="header_icon" />
                                     <span>마이페이지</span>
                                 </Link>

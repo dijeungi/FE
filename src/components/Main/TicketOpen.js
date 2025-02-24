@@ -27,14 +27,7 @@ const TicketOpen = () => {
     if (loading) return <p>서버와 통신 중..</p>;
     if (error) return <p>티켓 오픈: {error.message}</p>;
 
-    return (
-        <Slide
-            data={tickets}
-            title="티켓오픈 🎉"
-            link="/ticketopen"
-            isRanking={false}
-        />
-    );
+    return <Slide data={tickets} title="티켓오픈 🎉" link="/ticketopen" isRanking={false} />;
 };
 
 export default TicketOpen;

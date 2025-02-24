@@ -1,4 +1,4 @@
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Link, Route, Routes, useLocation } from "react-router-dom";
 import "./App.css";
 
 import Header from "./components/share/Header";
@@ -23,6 +23,8 @@ import FindAccountId from "./pages/login/FindAccountId";
 import FindAccountPassword from "./pages/login/FindAccountPassword";
 import FindAccountPasswordDetail from "./pages/login/FindAccountPasswordDetail";
 
+import MyPageLayout from "./components/mypage/MyPageLayout";
+
 import ReservationWindow from "./components/share/ReservationWindow";
 import PaymentSuccess from "./components/payments/PaymentSuccess";
 import PaymentFail from "./components/payments/PaymentFail";
@@ -33,6 +35,11 @@ import KakaoChannelButton from "./components/share/KakaoChatButton";
 
 import { useDispatch } from "react-redux";
 import { initializeAuth } from "./redux/LoginSlice";
+import Reviews from "./components/mypage/Reviews";
+import Like from "./components/mypage/Like";
+import Modify from "./components/mypage/Modify";
+import Secession from "./components/mypage/Secession";
+import Booking from "./components/mypage/Booking";
 
 function App() {
     const location = useLocation();
@@ -73,6 +80,16 @@ function App() {
                 <Route path="/member/kakao" element={<KakaoRedirectPage />} />
                 <Route path="/member/naver" element={<NaverRedirectPage />} />
                 <Route path="/member/google" element={<GoogleRedirectPage />} />
+
+                {/* 마이페이지 */}
+                <Route path="/mypage" element={<MyPageLayout />}>
+                    <Route index element={<Link to="booking" replace />} />
+                    <Route path="booking" element={<Booking />} />
+                    <Route path="reviews" element={<Reviews />} />
+                    <Route path="likes" element={<Like />} />
+                    <Route path="modify" element={<Modify />} />
+                    <Route path="withdraw" element={<Secession />} />
+                </Route>
 
                 {/* 기타 페이지 */}
                 <Route path="/ranking" element={<Ranking />} />

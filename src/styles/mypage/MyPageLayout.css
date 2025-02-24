@@ -1,0 +1,179 @@
+.clearfix::after {
+    content: "";
+    display: block;
+    clear: both;
+}
+.MyPage_Top {
+    width: 1120px;
+    height: 130px;
+    margin: auto;
+    margin-top: 30px;
+    border: 1px solid #ff8364;
+    border-radius: 10px;
+    /* box-sizing: border-box; */
+    overflow: hidden;
+}
+
+.MyPage_Top_Left {
+    float: left;
+    background: #ff8364;
+    width: 240px;
+    height: 130px;
+    border-radius: 8px 0 0 8px;
+}
+
+.MyPage_Top_Left img {
+    position: relative;
+    top: 25px;
+    left: 30 px;
+}
+
+.MyPage_Top_Right {
+    float: left;
+    width: 860px;
+    height: 100px;
+    padding: 10px 0;
+    background: #fff;
+    border-radius: 0 10px 10px 0;
+    line-height: 200%;
+}
+
+.MyPage_Contents {
+    float: left;
+    width: 160px;
+    height: 110px;
+    padding: 11px 10px;
+    /* border-right: 1px solid #ddd; */
+
+    position: relative;
+    align-items: center;
+    justify-content: center;
+}
+
+.MyPage_Contents::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 50%;
+    height: 80px;
+    width: 1px;
+    background-color: #ddd;
+    transform: translateY(-50%);
+}
+
+/* .MyPage_Contents::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 50%;
+    height: 60%;
+    width: 1px;
+    background-color: #ddd;
+    transform: translateY(-50%);
+} */
+
+.MyPage_Title {
+    font-size: 18px;
+    color: #555;
+}
+
+a {
+    color: #000;
+    text-decoration: none;
+}
+
+.MyPage_Top_Name {
+    font-size: 18px;
+    color: #555;
+    font-weight: bold;
+}
+
+.MyPage_Top_Nim {
+    font-size: 18px;
+    color: #777;
+    font-weight: normal;
+}
+
+.MyPage_Top_Title {
+    font-size: 18px;
+    color: #555;
+    font-weight: bold;
+}
+
+.Arrow_gt {
+    font-weight: normal;
+    font-size: 12px;
+    vertical-align: 2px;
+}
+
+.MyPage_Top_Number {
+    margin-top: 3px;
+    font-size: 22px;
+    font-weight: bold;
+    color: #ff4b4b;
+}
+
+.MyPage_Wrap {
+    width: 1100px;
+    margin: auto;
+    margin-top: 30px;
+}
+
+/* 왼쪽 메뉴 영역 */
+.MyPage_Wrap_Left {
+    float: left;
+    width: 240px;
+    min-height: 37.5rem;
+    padding: 40px 30px;
+    background: #fff;
+    border-radius: 10px;
+    border: 0.1px solid #ff4b4b;
+
+    margin-left: -9.25px;
+}
+
+.MyPage_Wrap_Left ul {
+    list-style: none;
+    border-top: 1px solid #dddddd;
+    margin-top: 12.5px;
+    padding-top: 10px;
+}
+
+.MyPage_Left_Title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #555;
+}
+
+.MyPage_Left_Sub {
+    font-size: 18px;
+    font-weight: 700;
+    padding: 10px 0;
+    cursor: pointer;
+}
+
+.MyPage_Left_SubOn {
+    color: #ff4b4b;
+    font-weight: 700;
+}
+
+.MyPage_Left_SubOff {
+    color: #333;
+    font-weight: 400;
+}
+
+.MyPageLayout_Wrap_Right {
+    float: right;
+    width: 840px;
+    min-height: 37.5rem;
+    padding: 30px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+
+    margin-right: -10px;
+}
+
+.footer_pd {
+    clear: both;
+    padding: 15px;
+}
