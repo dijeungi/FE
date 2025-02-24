@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import "../../styles/Ranking/StatsInfo.css";
+import "../../styles/ranking/StatsInfo.css";
 
 export default function StatsInfo() {
     // 30분 단위로 반올림된 현재 시간 반환

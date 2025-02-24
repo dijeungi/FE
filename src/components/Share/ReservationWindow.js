@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { loadTossPayments } from '@tosspayments/payment-sdk';
-import "../../styles/Components/ReservationWindow.css";
+import { loadTossPayments } from "@tosspayments/payment-sdk";
+import "../../styles/components/ReservationWindow.css";
 
 const ReservationWindow = () => {
     const location = useLocation();
@@ -25,9 +25,7 @@ const ReservationWindow = () => {
 
     const handleSeatClick = (seat) => {
         setSelectedSeats((prevSelected) =>
-            prevSelected.includes(seat)
-                ? prevSelected.filter((s) => s !== seat)
-                : [...prevSelected, seat]
+            prevSelected.includes(seat) ? prevSelected.filter((s) => s !== seat) : [...prevSelected, seat]
         );
     };
 
@@ -42,10 +40,11 @@ const ReservationWindow = () => {
                 amount: totalPrice,
                 orderName: "공연 티켓",
                 customerName: "고객 이름",
-                successUrl: `${window.location.origin}/payment/success?orderId=${orderId}&totalPrice=${totalPrice}&seats=${selectedSeats.join(",")}`,
+                successUrl: `${
+                    window.location.origin
+                }/payment/success?orderId=${orderId}&totalPrice=${totalPrice}&seats=${selectedSeats.join(",")}`,
                 failUrl: `${window.location.origin}/payment/fail`,
             });
-
         } catch (error) {
             console.error("결제 오류:", error);
             alert(`결제 실패: ${error.message}`);
@@ -64,10 +63,18 @@ const ReservationWindow = () => {
             <div className="Reservation_SeatWrap">
                 <div className="Reservation_Header">
                     <ul className="Reservation_Ul">
-                        <li className="Reservation_Li"><strong>공연명:</strong> {festivalName}</li>
-                        <li className="Reservation_Li"><strong>날짜:</strong> {selectedDate}</li>
-                        <li className="Reservation_Li"><strong>시간:</strong> {selectedTime}</li>
-                        <li className="Reservation_Li"><strong>가격 (1석 기준):</strong> {salePrice.toLocaleString()}원</li>
+                        <li className="Reservation_Li">
+                            <strong>공연명:</strong> {festivalName}
+                        </li>
+                        <li className="Reservation_Li">
+                            <strong>날짜:</strong> {selectedDate}
+                        </li>
+                        <li className="Reservation_Li">
+                            <strong>시간:</strong> {selectedTime}
+                        </li>
+                        <li className="Reservation_Li">
+                            <strong>가격 (1석 기준):</strong> {salePrice.toLocaleString()}원
+                        </li>
                     </ul>
                 </div>
 
@@ -75,7 +82,7 @@ const ReservationWindow = () => {
                     <div className="screen">공연 무대</div>
                     {rows.map((row) => (
                         <div key={row} className="seat-row">
-                            {Array.from({length: seatsPerRow}, (_, i) => {
+                            {Array.from({ length: seatsPerRow }, (_, i) => {
                                 const seat = `${row}${i + 1}`;
                                 return (
                                     <button
@@ -100,7 +107,11 @@ const ReservationWindow = () => {
                         <strong>총 가격:</strong> {totalPrice.toLocaleString()}원
                     </p>
 
-                    <button className="reservation-button" disabled={selectedSeats.length === 0} onClick={handlePayment}>
+                    <button
+                        className="reservation-button"
+                        disabled={selectedSeats.length === 0}
+                        onClick={handlePayment}
+                    >
                         예매 완료 (결제)
                     </button>
                 </div>

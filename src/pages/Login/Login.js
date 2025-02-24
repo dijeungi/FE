@@ -1,23 +1,23 @@
-import React, {useState} from 'react';
-import '../../styles/Login/Login.css';
-import Loginicon1 from '../../img/kakao_icon.png'
-import Loginicon2 from '../../img/naver_icon.png'
-import Loginicon3 from '../../img/google.png'
-import {Link, useNavigate} from "react-router-dom";
-import {useDispatch} from "react-redux";
-import Swal from 'sweetalert2';
-import {login} from "../../redux/LoginSlice";
-import {loginPost} from "../../api/LoginApi";
-import {getKakaoLoginLink} from "../../api/KakaoApi";
-import {getNaverLoginLink} from "../../api/NaverApi";
-import {getGoogleLoginLink} from "../../api/GoogleApi";
+import React, { useState } from "react";
+import "../../styles/login/Login.css";
+import Loginicon1 from "../../img/kakao_icon.png";
+import Loginicon2 from "../../img/naver_icon.png";
+import Loginicon3 from "../../img/google.png";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import Swal from "sweetalert2";
+import { login } from "../../redux/LoginSlice";
+import { loginPost } from "../../api/LoginApi";
+import { getKakaoLoginLink } from "../../api/KakaoApi";
+import { getNaverLoginLink } from "../../api/NaverApi";
+import { getGoogleLoginLink } from "../../api/GoogleApi";
 
 const LoginPage = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [loginForm, setLoginForm] = useState({
-        id: '',
-        password: '',
+        id: "",
+        password: "",
     });
 
     const [isOpen, setIsOpen] = useState(false);
@@ -33,26 +33,26 @@ const LoginPage = () => {
         e.preventDefault();
         try {
             const response = await loginPost(loginForm.id, loginForm.password);
-            console.log('로그인 성공:', response);
+            console.log("로그인 성공:", response);
 
             dispatch(login(response));
             Swal.fire({
-                title: '로그인 성공',
-                text: '로그인 되었습니다.',
-                icon: 'success',
-                confirmButtonText: '확인',
+                title: "로그인 성공",
+                text: "로그인 되었습니다.",
+                icon: "success",
+                confirmButtonText: "확인",
             }).then((result) => {
                 if (result.isConfirmed) {
-                    navigate('/');
+                    navigate("/");
                 }
             });
         } catch (error) {
-            console.error('로그인 실패:', error);
+            console.error("로그인 실패:", error);
             Swal.fire({
-                title: '로그인 실패',
-                text: '로그인에 실패했습니다. 이메일과 비밀번호를 확인해주세요.',
-                icon: 'error',
-                confirmButtonText: '확인',
+                title: "로그인 실패",
+                text: "로그인에 실패했습니다. 이메일과 비밀번호를 확인해주세요.",
+                icon: "error",
+                confirmButtonText: "확인",
             });
         }
     };
@@ -90,7 +90,7 @@ const LoginPage = () => {
             />
             <div className="Login-keep-logged-in">
                 <label htmlFor="chk">
-                    <input type="checkbox"/>
+                    <input type="checkbox" />
                     <span className="Login-text">로그인 상태 유지</span>
                 </label>
             </div>
@@ -99,17 +99,23 @@ const LoginPage = () => {
             </button>
 
             <div className="Login-links">
-                <Link to="/account/findId" className="Login-link">아이디 찾기</Link>
+                <Link to="/account/findId" className="Login-link">
+                    아이디 찾기
+                </Link>
                 <span>|</span>
-                <Link to="/account/findPassword" className="Login-link">비밀번호 찾기</Link>
+                <Link to="/account/findPassword" className="Login-link">
+                    비밀번호 찾기
+                </Link>
                 <span>|</span>
-                <Link to="/register" className="Login-link">회원가입</Link>
+                <Link to="/register" className="Login-link">
+                    회원가입
+                </Link>
             </div>
 
             <div className="Login-social-icons">
-                <img src={Loginicon1} alt="KakaoTalk" className="Login-icon" onClick={handleKakaoLogin}/>
-                <img src={Loginicon2} alt="Naver" className="Login-icon" onClick={handleNaverLogin}/>
-                <img src={Loginicon3} alt="Google" className="Login-icon" onClick={handleGoogleLogin}/>
+                <img src={Loginicon1} alt="KakaoTalk" className="Login-icon" onClick={handleKakaoLogin} />
+                <img src={Loginicon2} alt="Naver" className="Login-icon" onClick={handleNaverLogin} />
+                <img src={Loginicon3} alt="Google" className="Login-icon" onClick={handleGoogleLogin} />
             </div>
             {/*<button className="Reservation" onClick={() => setIsOpen(true)}>*/}
             {/*    예매하기*/}
@@ -123,6 +129,6 @@ const LoginPage = () => {
             {/*)}*/}
         </div>
     );
-}
+};
 
 export default LoginPage;

@@ -1,14 +1,14 @@
 // src/components/Pop.js
-import '../../styles/Components/Pop.css';
-import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom'; // React Router 사용
+import "../../styles/components/Pop.css";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom"; // React Router 사용
 
 export default function Pop() {
     const [showPopup, setShowPopup] = useState(false);
     const [isChecked, setIsChecked] = useState(false);
 
     useEffect(() => {
-        const popupStatus = localStorage.getItem('hidePopup');
+        const popupStatus = localStorage.getItem("hidePopup");
         if (!popupStatus || new Date().getTime() > parseInt(popupStatus)) {
             setShowPopup(true);
         }
@@ -25,7 +25,7 @@ export default function Pop() {
     const applyHidePopup = () => {
         if (isChecked) {
             const expireTime = new Date().getTime() + 24 * 60 * 60 * 1000; // 하루 뒤 시간 설정
-            localStorage.setItem('hidePopup', expireTime.toString());
+            localStorage.setItem("hidePopup", expireTime.toString());
         }
         closeMainPopup();
     };
@@ -37,7 +37,10 @@ export default function Pop() {
                     <div className="pop_left">
                         <ul>
                             <li>
-                                <Link to="/Perf/52554?Gcode=009_217_001" title="도쿄卍리벤저스展 (3.29~6.29 기간 내 자유관람)">
+                                <Link
+                                    to="/Perf/52554?Gcode=009_217_001"
+                                    title="도쿄卍리벤저스展 (3.29~6.29 기간 내 자유관람)"
+                                >
                                     <img
                                         src="http://tkfile.yes24.com/upload2/perfblog/202502/20250205/20250205-52554.jpg/dims/quality/70/"
                                         alt="도쿄卍리벤저스展 (3.29~6.29 기간 내 자유관람)"
@@ -61,7 +64,10 @@ export default function Pop() {
                                 </Link>
                             </li>
                             <li>
-                                <Link to="/Perf/52336?Gcode=009_217_001" title="2025 JUNGWOO B-day PARTY [CANDY FACTORY]">
+                                <Link
+                                    to="/Perf/52336?Gcode=009_217_001"
+                                    title="2025 JUNGWOO B-day PARTY [CANDY FACTORY]"
+                                >
                                     <img
                                         src="http://tkfile.yes24.com/upload2/perfblog/202501/20250131/20250131-52336_1.jpg/dims/quality/70/"
                                         alt="2025 JUNGWOO B-day PARTY [CANDY FACTORY]"
@@ -85,7 +91,10 @@ export default function Pop() {
                                 </Link>
                             </li>
                             <li>
-                                <Link to="/New/Genre/GenreBridge.aspx?genre=15459&amp;id=1289&amp;Gcode=009_217_001" title="김해문화의전당 2025 상반기">
+                                <Link
+                                    to="/New/Genre/GenreBridge.aspx?genre=15459&amp;id=1289&amp;Gcode=009_217_001"
+                                    title="김해문화의전당 2025 상반기"
+                                >
                                     <img
                                         src="http://tkfile.yes24.com/Upload2/Display/202502/20250210/패키지-포스터(yes-용).jpg/dims/quality/70/"
                                         alt="김해문화의전당 2025 상반기"
@@ -109,7 +118,10 @@ export default function Pop() {
                                 </Link>
                             </li>
                             <li>
-                                <Link to="/New/Genre/GenreBridge.aspx?genre=15456&amp;id=1294&amp;Gcode=009_217_001" title="[서울] 오월오일 전국 클럽 투어 〈Harvest Days〉">
+                                <Link
+                                    to="/New/Genre/GenreBridge.aspx?genre=15456&amp;id=1294&amp;Gcode=009_217_001"
+                                    title="[서울] 오월오일 전국 클럽 투어 〈Harvest Days〉"
+                                >
                                     <img
                                         src="http://tkfile.yes24.com/upload2/perfblog/202502/20250206/20250206-52594.jpg/dims/quality/70/"
                                         alt="[서울] 오월오일 전국 클럽 투어 〈Harvest Days〉"
@@ -121,7 +133,10 @@ export default function Pop() {
                                 </Link>
                             </li>
                             <li>
-                                <Link to="/Perf/52393?Gcode=009_217_001" title="2025 HIGHLIGHT FAN CON [WELCOME TO THE HIGH-MART]">
+                                <Link
+                                    to="/Perf/52393?Gcode=009_217_001"
+                                    title="2025 HIGHLIGHT FAN CON [WELCOME TO THE HIGH-MART]"
+                                >
                                     <img
                                         src="http://tkfile.yes24.com/upload2/perfblog/202502/20250203/20250203-52393.jpg/dims/quality/70/"
                                         alt="2025 HIGHLIGHT FAN CON [WELCOME TO THE HIGH-MART]"
@@ -133,7 +148,10 @@ export default function Pop() {
                                 </Link>
                             </li>
                             <li>
-                                <Link to="/Perf/52338?Gcode=009_217_001" title="2025 JISUNG B-day PARTY [FM 2.05 Mhz 〈Happy JISUN]">
+                                <Link
+                                    to="/Perf/52338?Gcode=009_217_001"
+                                    title="2025 JISUNG B-day PARTY [FM 2.05 Mhz 〈Happy JISUN]"
+                                >
                                     <img
                                         src="http://tkfile.yes24.com/upload2/perfblog/202502/20250203/20250203-52338.jpg/dims/quality/70/"
                                         alt="2025 JISUNG B-day PARTY [FM 2.05 Mhz 〈Happy JISUN]"
@@ -146,12 +164,20 @@ export default function Pop() {
                             </li>
                         </ul>
                     </div>
-                    <div className="pop_right" style={{ display: 'none' }}></div>
+                    <div className="pop_right" style={{ display: "none" }}></div>
                 </div>
                 <div className="pop_bottom">
                     <input type="checkbox" id="chkToday" checked={isChecked} onChange={handleCheckboxClick} />
                     <label htmlFor="chkToday">오늘 그만보기</label>
-                    <a href="#" onClick={(e) => { e.preventDefault(); applyHidePopup(); }}>닫기</a>
+                    <a
+                        href="#"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            applyHidePopup();
+                        }}
+                    >
+                        닫기
+                    </a>
                 </div>
             </div>
         )

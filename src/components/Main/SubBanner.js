@@ -1,7 +1,7 @@
-// src/components/Main/SubBanner.js
-import "../../styles/Main/SubBanner.css";
+// src/components/main/SubBanner.js
+import "../../styles/main/SubBanner.css";
 
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function SubBanner() {
     return (

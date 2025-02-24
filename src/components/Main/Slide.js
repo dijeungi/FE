@@ -3,7 +3,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Autoplay } from "swiper/modules";
 import { Link, useNavigate } from "react-router-dom";
 
-import "../../styles/Main/TicketOpen.css";
+import "../../styles/main/TicketOpen.css";
 
 const Slide = ({ data, title, link, isRanking = false }) => {
     const navigate = useNavigate();

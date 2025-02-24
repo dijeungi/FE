@@ -1,5 +1,5 @@
-import '../../styles/Main/Video.css';
-import { useState, useRef } from 'react';
+import "../../styles/main/Video.css";
+import { useState, useRef } from "react";
 
 export default function Video() {
     const [isPlaying, setIsPlaying] = useState(false);
@@ -14,8 +14,8 @@ export default function Video() {
     };
 
     return (
-        <div className="video" style={{ background: 'black', height: '560px', width: '100%' }}>
-            <div className="video_wrap" style={{ maxWidth: '1200px', margin: '0 auto' }}>
+        <div className="video" style={{ background: "black", height: "560px", width: "100%" }}>
+            <div className="video_wrap" style={{ maxWidth: "1200px", margin: "0 auto" }}>
                 <div className="video_txt">
                     <p className="video_tit">
                         <span>
@@ -23,7 +23,11 @@ export default function Video() {
                         </span>
                     </p>
                     <p className="video_tit2">
-                        <a href="/Perf/51288?Gcode=009_212">연극<br />톡톡</a>
+                        <a href="/Perf/51288?Gcode=009_212">
+                            연극
+                            <br />
+                            톡톡
+                        </a>
                     </p>
                     <p className="video_detail">
                         <a href="/Perf/51288?Gcode=009_212">
@@ -32,7 +36,7 @@ export default function Video() {
                     </p>
                 </div>
 
-                <div className="video_con" style={{ textAlign: 'center' }}>
+                <div className="video_con" style={{ textAlign: "center" }}>
                     {isPlaying ? (
                         <iframe
                             ref={iframeRef}
@@ -53,7 +57,7 @@ export default function Video() {
                                 <img
                                     src="http://tkfile.yes24.com/Upload2/Display/202501/20250117/dd.jpg/dims/quality/70/"
                                     alt="Play Video"
-                                    style={{ width: '640px', height: '360px' }}
+                                    style={{ width: "640px", height: "360px" }}
                                 />
                             </a>
                         </div>

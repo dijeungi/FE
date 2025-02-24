@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../redux/LoginSlice";
 import { setAccessTokenCookie, removeRefreshTokenCookie } from "../../utils/Cookie";
 import Swal from "sweetalert2";
-import "../../styles/Components/Header.css";
+import "../../styles/components/Header.css";
 
 import LoginIcon from "@mui/icons-material/Login";
 import LogoutIcon from "@mui/icons-material/Logout";

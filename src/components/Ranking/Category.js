@@ -1,5 +1,5 @@
 // src/components/Ranking/MiniBanner.js
-import "../../styles/Ranking/Category.css";
+import "../../styles/ranking/Category.css";
 
 export default function Category() {
     return (

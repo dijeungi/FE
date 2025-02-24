@@ -1,9 +1,9 @@
 // src/components/Footer.js
 
-import React from 'react';
-import '../../styles/Components/Footer.css';
+import React from "react";
+import "../../styles/components/Footer.css";
 
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function Footer() {
     return (
@@ -11,7 +11,9 @@ export default function Footer() {
             <div className="footer_menu">
                 <ul className="footer_menu_list">
                     <li className="footer_menu_item">
-                        <Link className="footer_menu_link" to="/">회사소개</Link>
+                        <Link className="footer_menu_link" to="/">
+                            회사소개
+                        </Link>
                     </li>
                     <li className="footer_menu_item">
                         <Link className="footer_menu_link" to="/">
@@ -19,19 +21,29 @@ export default function Footer() {
                         </Link>
                     </li>
                     <li className="footer_menu_item">
-                        <Link className="footer_menu_link" to="/">청소년 보호정책</Link>
+                        <Link className="footer_menu_link" to="/">
+                            청소년 보호정책
+                        </Link>
                     </li>
                     <li className="footer_menu_item">
-                        <Link className="footer_menu_link" to="/">이용약관</Link>
+                        <Link className="footer_menu_link" to="/">
+                            이용약관
+                        </Link>
                     </li>
                     <li className="footer_menu_item">
-                        <Link className="footer_menu_link" to="/">고객센터</Link>
+                        <Link className="footer_menu_link" to="/">
+                            고객센터
+                        </Link>
                     </li>
                     <li className="footer_menu_item">
-                        <Link className="footer_menu_link" to="/">티켓판매안내</Link>
+                        <Link className="footer_menu_link" to="/">
+                            티켓판매안내
+                        </Link>
                     </li>
                     <li className="footer_menu_item">
-                        <Link className="footer_menu_link" to="/">광고안내</Link>
+                        <Link className="footer_menu_link" to="/">
+                            광고안내
+                        </Link>
                     </li>
                 </ul>
             </div>
@@ -48,7 +60,9 @@ export default function Footer() {
                         <span className="footer_address_item">cc-Company@cc.co.kr</span>
                         <span className="footer_address_item">통신판매업 신고번호: 제2025-서울서초-0000호</span>
                         <span className="footer_address_item">
-                            <Link to="/" className="btn_hyperlink" target="_blank" rel="noreferrer">사업자정보확인</Link>
+                            <Link to="/" className="btn_hyperlink" target="_blank" rel="noreferrer">
+                                사업자정보확인
+                            </Link>
                         </span>
                         <span className="footer_address_item">개인정보보호 책임자: 김범석</span>
                     </p>

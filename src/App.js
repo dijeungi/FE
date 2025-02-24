@@ -1,16 +1,16 @@
 import { Route, Routes, useLocation } from "react-router-dom";
 import "./App.css";
 
-import Header from "./components/Share/Header";
-import Footer from "./components/Share/Footer";
+import Header from "./components/share/Header";
+import Footer from "./components/share/Footer";
 
 import MainPages from "./pages/MainPages";
-import LoginPage from "./pages/Login/Login";
-import JoinSelectAuthorization from "./pages/Login/JoinSelectAuthorization";
-import JoinUser from "./pages/Login/JoinUser";
-import JoinTeam from "./pages/Login/JoinTeam";
-import UserAgree from "./pages/Login/UserAgree";
-import TeamAgree from "./pages/Login/TeamAgree";
+import LoginPage from "./pages/login/Login";
+import JoinSelectAuthorization from "./pages/login/JoinSelectAuthorization";
+import JoinUser from "./pages/login/JoinUser";
+import JoinTeam from "./pages/login/JoinTeam";
+import UserAgree from "./pages/login/UserAgree";
+import TeamAgree from "./pages/login/TeamAgree";
 
 import KakaoRedirectPage from "./pages/KakaoRedirectPage";
 import NaverRedirectPage from "./pages/NaverRedirectPage";
@@ -19,17 +19,17 @@ import ProductDetailPage from "./pages/ProductDetailPage";
 
 import Ranking from "./pages/RankingPages";
 
-import FindAccountId from "./pages/Login/FindAccountId";
-import FindAccountPassword from "./pages/Login/FindAccountPassword";
-import FindAccountPasswordDetail from "./pages/Login/FindAccountPasswordDetail";
+import FindAccountId from "./pages/login/FindAccountId";
+import FindAccountPassword from "./pages/login/FindAccountPassword";
+import FindAccountPasswordDetail from "./pages/login/FindAccountPasswordDetail";
 
-import ReservationWindow from "./components/Share/ReservationWindow";
+import ReservationWindow from "./components/share/ReservationWindow";
 import PaymentSuccess from "./components/payments/PaymentSuccess";
 import PaymentFail from "./components/payments/PaymentFail";
 import ScrollToTop from "./components/ScrollToTop";
 import { useEffect, useState } from "react";
 import LoadingSpinner from "./components/LoadingSpinner";
-import KakaoChannelButton from "./components/Share/KakaoChatButton";
+import KakaoChannelButton from "./components/share/KakaoChatButton";
 
 import { useDispatch } from "react-redux";
 import { initializeAuth } from "./redux/LoginSlice";
@@ -38,19 +38,17 @@ function App() {
     const location = useLocation();
     const dispatch = useDispatch();
     const isReservationPage = location.pathname.startsWith("/reservation");
-
-    // ✅ 로딩 상태 관리
     const [loading, setLoading] = useState(true);
 
-    // ✅ Redux에서 쿠키 기반 로그인 상태 복구 & 페이지 변경 시 로딩 적용
+    // Redux에서 쿠키 기반 로그인 상태 복구 & 페이지 변경 시 로딩 적용
     useEffect(() => {
-        setLoading(true); // 페이지 변경 시 로딩 시작
+        setLoading(true);
 
-        dispatch(initializeAuth()); // ✅ Redux에서 로그인 상태 복구
+        dispatch(initializeAuth());
 
-        const timer = setTimeout(() => setLoading(false), 500); // 0.5초 후 로딩 해제
+        const timer = setTimeout(() => setLoading(false), 500);
 
-        return () => clearTimeout(timer); // 클린업 함수로 타이머 제거
+        return () => clearTimeout(timer);
     }, [location.pathname, dispatch]);
 
     return (

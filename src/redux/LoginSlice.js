@@ -5,7 +5,7 @@ import {
     getRefreshTokenCookie,
     setAccessTokenCookie,
     removeAccessTokenCookie,
-    setRefreshTokenCookie,
+    // setRefreshTokenCookie,
     removeRefreshTokenCookie,
     setUserIdCookie,
     removeUserIdCookie,
@@ -16,7 +16,7 @@ const initialState = {
     id: getUserIdCookie() || null, // 쿠키에서 사용자 ID 불러오기
     roles: [],
     accessToken: getAccessTokenCookie() || "",
-    refreshToken: getRefreshTokenCookie() || "",
+    // refreshToken: getRefreshTokenCookie() || "",
     isAuthenticated: !!getAccessTokenCookie(), // 액세스 토큰이 있으면 로그인 상태 유지
 };
 
@@ -24,34 +24,33 @@ const loginSlice = createSlice({
     name: "loginSlice",
     initialState,
     reducers: {
-        // ✅ 로그인 성공 시 Redux와 쿠키 업데이트
         login: (state, action) => {
             console.log("🔹 login action:", action.payload);
-            const { id, roles, accessToken, refreshToken } = action.payload;
+            const { id, roles, accessToken } = action.payload;
 
-            setAccessTokenCookie(accessToken, 30); // 30분 유지
-            setRefreshTokenCookie(refreshToken, 7); // 7일 유지
-            setUserIdCookie(id, 7); // 사용자 ID도 저장
+            setAccessTokenCookie(accessToken, 30);
+            //setRefreshTokenCookie(refreshToken, 7);
+            setUserIdCookie(id, 7);
 
             return {
                 id,
                 roles,
                 accessToken,
-                refreshToken,
+                //refreshToken,
                 isAuthenticated: true,
             };
         },
         // ✅ 로그아웃 시 Redux 상태와 쿠키 삭제
         logout: (state) => {
             removeAccessTokenCookie();
-            removeRefreshTokenCookie();
+            // removeRefreshTokenCookie();
             removeUserIdCookie();
 
             return {
                 id: null,
                 roles: [],
                 accessToken: "",
-                refreshToken: "",
+                // refreshToken: "",
                 isAuthenticated: false, // 로그아웃 상태 반영
             };
         },
@@ -63,13 +62,13 @@ const loginSlice = createSlice({
         // ✅ 새로고침 시 Redux 상태 초기화 (쿠키에서 불러오기)
         initializeAuth: (state) => {
             const accessToken = getAccessTokenCookie();
-            const refreshToken = getRefreshTokenCookie();
+            // const refreshToken = getRefreshTokenCookie();
             const id = getUserIdCookie();
 
-            if (accessToken && refreshToken) {
+            if (accessToken) {
                 state.id = id;
                 state.accessToken = accessToken;
-                state.refreshToken = refreshToken;
+                // state.refreshToken = refreshToken;
                 state.isAuthenticated = true;
             }
         },

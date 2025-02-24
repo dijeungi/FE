@@ -1,12 +1,12 @@
 // src/components/Main/Ranking.js
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Category from "../components/Ranking/Category";
-import RankingList from "../components/Ranking/RankingList";
-import StatsInfo from "../components/Ranking/StatsInfo";
+import Category from "../components/ranking/Category";
+import RankingList from "../components/ranking/RankingList";
+import StatsInfo from "../components/ranking/StatsInfo";
 import { fetchRankingList } from "../redux/RankingSlice"; // 여기에서 import 경로 수정
 
-import "../styles/Ranking/RankingPages.css";
+import "../styles/ranking/RankingPages.css";
 
 const RankingPages = () => {
     const dispatch = useDispatch();

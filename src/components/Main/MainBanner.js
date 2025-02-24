@@ -1,53 +1,54 @@
 // src/components/MainBanner.js
 
 // React
-import '../../styles/Main/MainBanner.css';
-import { useState, useRef, useCallback, useEffect } from 'react';
+import "../../styles/main/MainBanner.css";
+import { useState, useRef, useCallback, useEffect } from "react";
 
 // Swiper 라이브러리
-import 'swiper/css';
-import 'swiper/css/effect-fade';
-import 'swiper/css/navigation';
+import "swiper/css";
+import "swiper/css/effect-fade";
+import "swiper/css/navigation";
 
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, EffectFade } from 'swiper/modules';
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, EffectFade } from "swiper/modules";
 
 // Router 라이브러리
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 // 슬라이드 이미지 데이터 및 배경색
 const images = [
     {
         src: "https://image.toast.com/aaaaab/ticketlink/TKL_7/PC_BigBanner_2%EC%9B%94%EB%A7%81%ED%81%AC%ED%94%BD.jpg",
         backgroundColor: "rgb(255, 202, 220)",
-        url: "/"
+        url: "/",
     },
     {
         src: "https://image.toast.com/aaaaab/ticketlink/TKL_1/PC_BigBanner_2025SoundberryTheater.jpg",
         backgroundColor: "rgb(245, 235, 208)",
-        url: "/"
+        url: "/",
     },
     {
         src: "https://image.toast.com/aaaaab/ticketlink/TKL_10/PC_BigBanner_%EC%A7%80%ED%82%AC%EC%95%A4%ED%95%98%EC%9D%B4%EB%93%9C.jpg",
         backgroundColor: "rgb(5, 6, 20)",
-        url: "/"
+        url: "/",
     },
     {
         src: "https://image.toast.com/aaaaab/ticketlink/TKL_8/PC_BigBanner_%EB%82%98%EC%83%81%ED%98%84%EC%94%A8%EB%B0%B4%EB%93%9C.jpg",
         backgroundColor: "rgb(242, 242, 242)",
-        url: "/"
+        url: "/",
     },
     {
         src: "https://image.toast.com/aaaaab/ticketlink/TKL_9/PC_BigBanner_%EC%84%B1%EC%9B%85.jpg",
-        backgroundColor: "rgb(18, 18, 18)" ,
-        url: "/"
+        backgroundColor: "rgb(18, 18, 18)",
+        url: "/",
     },
     {
         src: "https://image.toast.com/aaaaab/ticketlink/TKL_10/PC_BigBanner_%EC%97%B0%EA%B7%B9%EA%BD%83%EC%9D%98%EB%B9%84%EB%B0%80_0107.jpg",
         backgroundColor: "rgb(255, 236, 56)",
         url: "/",
     },
-    { src: "https://image.toast.com/aaaaab/ticketlink/TKL_4/PC_BigBanner_%EC%96%B4%EC%8D%B8%EB%B6%80%EC%82%B0.jpg",
+    {
+        src: "https://image.toast.com/aaaaab/ticketlink/TKL_4/PC_BigBanner_%EC%96%B4%EC%8D%B8%EB%B6%80%EC%82%B0.jpg",
         backgroundColor: "rgb(6, 10, 16)",
         url: "/",
     },
@@ -65,7 +66,7 @@ const images = [
         src: "https://image.toast.com/aaaaab/ticketlink/TKL_4/PC_BigBanner_%EC%84%9C%EC%9A%B8%EC%BB%A4%ED%94%BC%EC%97%91%EC%8A%A4%ED%8F%AC.jpg",
         backgroundColor: "rgb(252, 247, 243)",
         url: "/",
-    }
+    },
 ];
 
 // 커스텀 페이지네이션 이미지 데이터
@@ -79,7 +80,7 @@ const paginationImages = [
     "//image.toast.com/aaaaab/ticketlink/TKL_3/thumbnail_pc_어썸부산.jpg",
     "//image.toast.com/aaaaab/ticketlink/TKL_9/thumbnail_pc_명성황후(1).jpg",
     "//image.toast.com/aaaaab/ticketlink/TKL_4/thumbnail_pc_비엔나1900.jpg",
-    "//image.toast.com/aaaaab/ticketlink/TKL_1/thumbnail_pc_서울커피엑스포.jpg"
+    "//image.toast.com/aaaaab/ticketlink/TKL_1/thumbnail_pc_서울커피엑스포.jpg",
 ];
 
 export default function MainBanner() {
@@ -96,12 +97,12 @@ export default function MainBanner() {
         } else {
             swiperRef.current.autoplay.start();
         }
-        setIsPlaying(prev => !prev);
+        setIsPlaying((prev) => !prev);
     }, [isPlaying]);
 
     // 남은 자동 재생 시간 표시 업데이트
     const onAutoplayTimeLeft = useCallback((_, __, progress) => {
-        progressCircle.current.style.setProperty('--progress', 1 - progress);
+        progressCircle.current.style.setProperty("--progress", 1 - progress);
     }, []);
 
     // 슬라이드 변경 시 현재 인덱스 업데이트
@@ -113,7 +114,7 @@ export default function MainBanner() {
     useEffect(() => {
         if (!paginationRef.current) return;
 
-        const paginationItems = paginationRef.current.querySelectorAll('.mainbaner_banner_pagination_item');
+        const paginationItems = paginationRef.current.querySelectorAll(".mainbaner_banner_pagination_item");
 
         const handleMouseEnter = (index) => {
             if (swiperRef.current) {
@@ -128,14 +129,14 @@ export default function MainBanner() {
         };
 
         paginationItems.forEach((item, index) => {
-            item.addEventListener('mouseenter', () => handleMouseEnter(index));
-            item.addEventListener('mouseleave', handleMouseLeave);
+            item.addEventListener("mouseenter", () => handleMouseEnter(index));
+            item.addEventListener("mouseleave", handleMouseLeave);
         });
 
         return () => {
             paginationItems.forEach((item) => {
-                item.removeEventListener('mouseenter', () => handleMouseEnter);
-                item.removeEventListener('mouseleave', handleMouseLeave);
+                item.removeEventListener("mouseenter", () => handleMouseEnter);
+                item.removeEventListener("mouseleave", handleMouseLeave);
             });
         };
     }, []);
@@ -153,7 +154,7 @@ export default function MainBanner() {
                 fadeEffect={{ crossFade: true }}
                 autoplay={{
                     delay: 5000,
-                    disableOnInteraction: false
+                    disableOnInteraction: false,
                 }}
                 onInit={(swiper) => (swiperRef.current = swiper)}
                 // className="MainBanner"
@@ -171,13 +172,13 @@ export default function MainBanner() {
                         <circle className="background" cx="24" cy="24" r="20"></circle>
                         <circle className="progress" cx="24" cy="24" r="20"></circle>
                     </svg>
-                    <span className="play-pause-icon">{isPlaying ? 'I I' : '▶'}</span>
+                    <span className="play-pause-icon">{isPlaying ? "I I" : "▶"}</span>
                 </div>
 
                 <div className="mainbaner_banner_pagination" ref={paginationRef}>
                     {paginationImages.map((img, index) => (
                         <div
-                            className={`mainbaner_banner_pagination_item ${index === activeIndex ? 'active' : ''}`}
+                            className={`mainbaner_banner_pagination_item ${index === activeIndex ? "active" : ""}`}
                             key={index}
                         >
                             <img src={img} alt={`Thumbnail ${index + 1}`} />

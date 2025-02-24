@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import "../../styles/Ranking/RankingList.css";
+import "../../styles/ranking/RankingList.css";
 
 import QueryStatsIcon from "@mui/icons-material/QueryStats";
 

@@ -1,5 +1,5 @@
 import React from "react";
-import "../styles/Components/LoadingSpinner.css";
+import "../styles/components/LoadingSpinner.css";
 import { MoonLoader } from "react-spinners";
 
 const LoadingSpinner = () => {
