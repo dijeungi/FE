@@ -11,6 +11,7 @@ import JoinUser from "./pages/login/JoinUser";
 import JoinTeam from "./pages/login/JoinTeam";
 import UserAgree from "./pages/login/UserAgree";
 import TeamAgree from "./pages/login/TeamAgree";
+import GenreSelect from "./pages/login/GenreSelect";
 
 import KakaoRedirectPage from "./pages/KakaoRedirectPage";
 import NaverRedirectPage from "./pages/NaverRedirectPage";
@@ -45,6 +46,7 @@ function App() {
     const location = useLocation();
     const dispatch = useDispatch();
     const isReservationPage = location.pathname.startsWith("/reservation");
+    const isJoinUserPage = location.pathname === "/register/JoinUser";
     const [loading, setLoading] = useState(true);
 
     // Redux에서 쿠키 기반 로그인 상태 복구 & 페이지 변경 시 로딩 적용
@@ -66,7 +68,7 @@ function App() {
         <div className="App">
             {/* 예매 페이지가 아닐 때만 Header 표시 */}
             {loading && <LoadingSpinner />}
-            {!isReservationPage && <Header />}
+            {!isReservationPage && !isJoinUserPage && <Header />}
             <ScrollToTop />
             <Routes>
                 {/* 메인 페이지 */}
@@ -79,6 +81,7 @@ function App() {
                 <Route path="/register/JoinTeam" element={<JoinTeam />} />
                 <Route path="/register/AgreeUser" element={<UserAgree />} />
                 <Route path="/register/AgreeTeam" element={<TeamAgree />} />
+                <Route path="/register/GenreSelect" element={<GenreSelect />} />
 
                 {/* 소셜 로그인 리다이렉트 */}
                 <Route path="/member/kakao" element={<KakaoRedirectPage />} />
@@ -112,8 +115,7 @@ function App() {
 
             {location.pathname === "/" && <KakaoChannelButton />}
 
-            {/* ✅ 예매 페이지가 아닐 때만 Footer 표시 */}
-            {!isReservationPage && <Footer />}
+            {!isReservationPage && !isJoinUserPage && <Footer />}
         </div>
     );
 }
