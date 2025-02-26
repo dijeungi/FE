@@ -81,7 +81,7 @@ function App() {
                 <Route path="/register/JoinTeam" element={<JoinTeam />} />
                 <Route path="/register/AgreeUser" element={<UserAgree />} />
                 <Route path="/register/AgreeTeam" element={<TeamAgree />} />
-                <Route path="/register/GenreSelect" element={<GenreSelect />} />
+                <Route path="/register/genreselect" element={<GenreSelect />} />
 
                 {/* 소셜 로그인 리다이렉트 */}
                 <Route path="/member/kakao" element={<KakaoRedirectPage />} />

@@ -8,7 +8,9 @@ const GenreSelect = () => {
     const navigate = useNavigate();
 
     // JoinUser에서 받은 데이터
-    const [formData, setFormData] = useState(location.state?.formData || {});
+    const [formData, setFormData] = useState(location.state || {});
+
+    console.log(formData);
 
     // 좋아하는 장르 선택
     const [selectedGenres, setSelectedGenres] = useState({
@@ -27,26 +29,26 @@ const GenreSelect = () => {
             return;
         }
 
-        // ✅ 서버에서 요구하는 JSON 형식에 맞게 데이터 정리
         const requestData = {
-            id: formData.id, // ✅ ID 값 사용
-            userName: formData.name, // ✅ userName 추가
-            email: formData.email, // ✅ 이메일
-            password: formData.password, // ✅ 비밀번호
-            phone: formData.phone.replace(/-/g, ""), // ✅ 하이픈 제거 (01012345678)
-            favorite1: selectedGenres.favorite1, // ✅ 선택한 장르
+            id: formData.id,
+            userName: formData.name,
+            email: formData.email,
+            password: formData.password,
+            phone: formData.phone,
+            userBirth: formData.userBirth,
+            favorite1: selectedGenres.favorite1,
             favorite2: selectedGenres.favorite2,
             favorite3: selectedGenres.favorite3,
-            mailYn: formData.mailYn || "N", // ✅ 기본값 "N" 설정
+            mailYn: formData.mailYn || "N",
         };
 
-        console.log("📢 최종 전송 데이터:", requestData); // ✅ 최종 데이터 확인
+        console.log("📢 최종 전송 데이터:", requestData);
 
         try {
-            await signupPost(requestData); // ❌ JSON.stringify() 제거!!
+            await signupPost(requestData);
 
             Swal.fire({ icon: "success", title: "회원가입이 완료되었습니다!" }).then(() => {
-                navigate("/login"); // ✅ 로그인 페이지로 이동
+                navigate("/login");
             });
         } catch (error) {
             console.error("❌ 회원가입 실패:", error);

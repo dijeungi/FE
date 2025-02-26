@@ -53,7 +53,7 @@ const JoinUser = () => {
         let newValue = value;
 
         // 아이디, 비밀번호, 이메일, 생년월일에 한글 입력 방지
-        if (["id", "password", "email", "birthday"].includes(name)) {
+        if (["id", "password", "email", "userBirth"].includes(name)) {
             newValue = newValue.replace(/[ㄱ-ㅎ|가-힣]/g, ""); // 한글 제거
         }
 
@@ -75,7 +75,7 @@ const JoinUser = () => {
         if (!formData.id) {
             setIdError("아이디: 필수 정보입니다.");
         } else {
-            setIdError(""); // 아이디가 입력되어 있다면 에러 메시지 제거
+            setIdError("");
         }
     };
     const handlePhoneChange = (e) => {
@@ -199,11 +199,11 @@ const JoinUser = () => {
         try {
             await signupPost({
                 id: formData.id,
-                name: formData.name,
+                name: formData.userName,
                 email: formData.email,
                 password: formData.password,
                 phone: formData.phone,
-                birthday: formData.birthday,
+                userBirth: formData.userBirth,
                 mailYn: formData.mailYn,
                 favorite1: formData.favorite1,
                 favorite2: formData.favorite2,
@@ -245,7 +245,7 @@ const JoinUser = () => {
             phone: cleanedPhone,
         };
 
-        console.log("📢 GenreSelect로 보낼 데이터:", sendData); // ✅ 최종 데이터 확인
+        console.log("📢 GenreSelect로 보낼 데이터:", sendData);
 
         // 장르 선택 페이지로 이동하면서 데이터 전달
         navigate("/register/genreselect", { state: sendData });
@@ -316,7 +316,14 @@ const JoinUser = () => {
                 <label>
                     <EventNoteIcon />
                 </label>
-                <input type="text" name="birthday" value={formData.birthday} maxLength="8" placeholder="생년월일" />
+                <input
+                    type="text"
+                    name="userBirth"
+                    value={formData.userBirth}
+                    onChange={handleChange}
+                    maxLength="8"
+                    placeholder="생년월일"
+                />
                 <div id="recaptcha-container"></div>
             </div>
             <div className="Top_Input">
