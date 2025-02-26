@@ -4,7 +4,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 // 초기 상태 정의
 const initState = {
-    email: '',
+    id: '',
     roles: [],
     accessToken: '',
 };
@@ -16,7 +16,7 @@ const loginSlice = createSlice({
     reducers: {
         login: (state, action) => {
             console.log('login: {}', action.payload);
-            const payload = action.payload; // email, roles, accessToken으로 구성
+            const payload = action.payload; // id, roles, accessToken으로 구성
             return { ...payload };
         },
         logout: (state) => {

@@ -50,6 +50,7 @@ function App() {
 
                 {/* 소셜 로그인 리다이렉트 */}
                 <Route path="/member/kakaoMap" element={<KakaoRedirectPage />} />
+                <Route path="/member/kakao" element={<KakaoRedirectPage />} />
                 <Route path="/member/naver" element={<NaverRedirectPage />} />
                 <Route path="/member/google" element={<GoogleRedirectPage />} />
 
