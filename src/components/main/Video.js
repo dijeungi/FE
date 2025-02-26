@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import "../../styles/main/Video.css";
 import { useState, useRef } from "react";
 
@@ -14,34 +15,42 @@ export default function Video() {
     };
 
     return (
-        <div className="video" style={{ background: "black", height: "560px", width: "100%" }}>
-            <div className="video_wrap" style={{ maxWidth: "1200px", margin: "0 auto" }}>
-                <div className="video_txt">
-                    <p className="video_tit">
+        <div className="Focuson">
+            <div className="Focuson_Wrap">
+                <div className="Focus_txt">
+                    <p className="Focus_Tit_Top">
                         <span>
-                            <img src="http://tkfile.yes24.com/imgNew/main/tit8.png" alt="" />
+                            <img
+                                src="http://tkfile.yes24.com/imgNew/main/tit8.png"
+                                className="Focus_Tit_Link"
+                                alt="title"
+                            />
                         </span>
                     </p>
-                    <p className="video_tit2">
-                        <a href="/Perf/51288?Gcode=009_212">
-                            연극
-                            <br />
-                            톡톡
-                        </a>
-                    </p>
-                    <p className="video_detail">
-                        <a href="/Perf/51288?Gcode=009_212">
-                            다시 돌아온 <br /> 6명 강박환자들의 좌충우돌 그룹치료!
-                        </a>
-                    </p>
+                    <div className="Focus_Tit_Middle">
+                        <Link to="/">
+                            <span className="Focus_Tit_Middle_a1">
+                                연극
+                                <br />
+                                톡톡
+                            </span>
+                        </Link>
+                    </div>
+                    <div className="Focus_Tit_Bottom">
+                        <Link to="/">
+                            <span className="Focus_Tit_Bottom_a2">
+                                다시 돌아온 6명 강박환자들의
+                                <br />
+                                좌충우돌 그룹치료 !
+                            </span>
+                        </Link>
+                    </div>
                 </div>
-
-                <div className="video_con" style={{ textAlign: "center" }}>
+                <div className="Focus_Con">
                     {isPlaying ? (
                         <iframe
-                            ref={iframeRef}
                             id="playerFocusOn"
-                            className="video_con_movie"
+                            className="Focus_Con_Movie"
                             frameBorder="0"
                             allowFullScreen
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -49,15 +58,16 @@ export default function Video() {
                             title="YouTube video player"
                             width="640"
                             height="360"
+                            ref={iframeRef}
                             src="https://www.youtube.com/embed/oOIOxysu0Vg?enablejsapi=1&origin=http://ticket.yes24.com"
                         ></iframe>
                     ) : (
-                        <div className="video_con_img">
-                            <a href="#" onClick={handlePlayVideo}>
+                        <div className="Focus_Con_Img">
+                            <a href="#" onClick={handlePlayVideo} style={{ display: "block", position: "relative" }}>
                                 <img
                                     src="http://tkfile.yes24.com/Upload2/Display/202501/20250117/dd.jpg/dims/quality/70/"
-                                    alt="Play Video"
-                                    style={{ width: "640px", height: "360px" }}
+                                    alt="뮤지컬 알라딘"
+                                    className="Focus_Lazyload"
                                 />
                             </a>
                         </div>

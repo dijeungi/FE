@@ -80,7 +80,7 @@ export default function Header() {
                     <div className="header_logo_navGroup">
                         <div className="header_logo">
                             <Link to="/">
-                                <img src="//tkfile.yes24.com/imgNew/common/pf-logoN.png" alt="로고" />
+                                <img src="https://dijeungi.github.io/imageHosting/images/CClogo.png" alt="로고" />
                             </Link>
                         </div>
                     </div>
