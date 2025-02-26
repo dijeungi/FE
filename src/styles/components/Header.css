@@ -24,6 +24,11 @@
     cursor: pointer;
 }
 
+.header_logo img {
+    width: 30%;
+    height: 30%;
+}
+
 /*.header_nav_item {*/
 /*    display: flex;*/
 /*    gap: 20px;*/
