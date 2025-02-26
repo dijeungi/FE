@@ -1,13 +1,12 @@
 .TabContainer {
-    width: auto;
-    margin: 0 auto;
+    width: 90%;
 }
 
 .TabList {
     display: flex;
     gap: 20px;
     border-bottom: 0.1rem solid #b6bdc7;
-    width: 90%;
+    width: 100%;
     padding-bottom: 1px;
 }
 
@@ -31,7 +30,7 @@
 }
 
 .TabItem.active::after {
-    content: '';
+    content: "";
     display: block;
     position: absolute;
     top: 30px;

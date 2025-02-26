@@ -1,35 +1,77 @@
-// src/redux/LoginSlice.js
+import { createSlice } from "@reduxjs/toolkit";
+import {
+    getUserIdCookie,
+    getAccessTokenCookie,
+    getRefreshTokenCookie,
+    setAccessTokenCookie,
+    removeAccessTokenCookie,
+    // setRefreshTokenCookie,
+    removeRefreshTokenCookie,
+    setUserIdCookie,
+    removeUserIdCookie,
+} from "../utils/Cookie";
 
-import { createSlice } from '@reduxjs/toolkit';
-
-// 초기 상태 정의
-const initState = {
-    id: '',
+// 새로고침 후 쿠키에서 로그인 상태 복원
+const initialState = {
+    id: getUserIdCookie() || null, // 쿠키에서 사용자 ID 불러오기
     roles: [],
-    accessToken: '',
+    accessToken: getAccessTokenCookie() || "",
+    // refreshToken: getRefreshTokenCookie() || "",
+    isAuthenticated: !!getAccessTokenCookie(), // 액세스 토큰이 있으면 로그인 상태 유지
 };
 
-// createSlice를 사용한 슬라이스 생성
 const loginSlice = createSlice({
-    name: 'loginSlice',
-    initialState: initState,
+    name: "loginSlice",
+    initialState,
     reducers: {
         login: (state, action) => {
-            console.log('login: {}', action.payload);
-            const payload = action.payload; // id, roles, accessToken으로 구성
-            return { ...payload };
+            console.log("🔹 login action:", action.payload);
+            const { id, roles, accessToken } = action.payload;
+
+            setAccessTokenCookie(accessToken, 30);
+            //setRefreshTokenCookie(refreshToken, 7);
+            setUserIdCookie(id, 7);
+
+            return {
+                id,
+                roles,
+                accessToken,
+                //refreshToken,
+                isAuthenticated: true,
+            };
         },
+        // 로그아웃 시 Redux 상태와 쿠키 삭제
         logout: (state) => {
-            // email 삭제
-            // accessToken 삭제
-            return { ...initState };
+            removeAccessTokenCookie();
+            // removeRefreshTokenCookie();
+            removeUserIdCookie();
+
+            return {
+                id: null,
+                roles: [],
+                accessToken: "",
+                // refreshToken: "",
+                isAuthenticated: false, // 로그아웃 상태 반영
+            };
         },
+        // 액세스 토큰 갱신 (자동 로그인 유지) + Cookie
         setAccessToken: (state, action) => {
-            console.log('setAccessToken: accessToken', action.payload);
             state.accessToken = action.payload;
+            setAccessTokenCookie(action.payload, 30);
+        },
+        // 새로고침 시 Redux 상태 초기화 (쿠키에서 불러오기)
+        initializeAuth: (state) => {
+            const accessToken = getAccessTokenCookie();
+            const id = getUserIdCookie();
+            console.log("📌LoginSlice.js: accessToken =", accessToken, ", userId =", id);
+            if (accessToken) {
+                state.id = id;
+                state.accessToken = accessToken;
+                state.isAuthenticated = true;
+            }
         },
     },
 });
 
-export const { login, logout, setAccessToken } = loginSlice.actions;
+export const { login, logout, setAccessToken, initializeAuth } = loginSlice.actions;
 export default loginSlice.reducer;

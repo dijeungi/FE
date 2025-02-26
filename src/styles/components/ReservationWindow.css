@@ -1,0 +1,161 @@
+.Reservation_Container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.Reservation_Poster {
+    width: 300px;
+    margin: auto 10px auto 15px;
+    padding: 20px;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border: 0.1px solid #ccc;
+}
+
+.Reservation_SeatWrap {
+    width: 650px;
+    margin: 15px 15px 15px 10px;
+    padding: 20px;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    border: 0.1px solid #ccc;
+}
+
+.Reservation_Header {
+    padding-bottom: 15px;
+    border-bottom: 1px solid #ccc;
+}
+
+.Reservation_Header h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.Reservation_Ul {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding: 0 2rem;
+    margin: 0;
+    gap: 10px;
+}
+
+.Reservation_Li:not(:first-child)::before {
+    content: "";
+    position: absolute;
+    left: -5px; /* 구분선 위치 조정 */
+    top: 50%;
+    width: 1px;
+    height: 12px;
+    background: #cfd0d7;
+    transform: translateY(-50%);
+}
+
+
+.Reservation_Li {
+    font-size: 14px;
+    margin-bottom: 6px;
+    text-align: left;
+    position: relative;
+    padding: 0 5px;
+}
+
+.Reservation_Li strong {
+    font-weight: bold;
+    color: #333;
+    margin-right: 6px;
+}
+
+.screen {
+    width: 400px;
+    height: 80px;
+    background-color: #000000;
+    box-shadow: 0 3px 10px rgba(176, 176, 176, 0.7);
+    transform: perspective(800px) rotateX(-30deg);
+}
+
+.seat-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    margin: 20px 0;
+}
+
+.seat-row {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
+.seat:nth-child(3) {
+    margin-left: 15px; /* 1과 2 사이 */
+}
+
+.seat:nth-child(9) {
+    margin-left: 15px; /* 9와 10 사이 */
+}
+
+.seat {
+    width: 40px;
+    height: 40px;
+    font-size: 14px;
+    font-weight: bold;
+    border: 2px solid #666;
+    background: #f8f8f8;
+    cursor: pointer;
+    border-radius: 10px 10px 5px 5px; /* 아래쪽 둥글게 */
+    transition: 0.3s;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+.seat:hover {
+    background: #ddd;
+}
+
+.seat.selected {
+    background: #ff6b6b;
+    color: #fff;
+    border-color: #d63031;
+    box-shadow: 2px 2px 10px rgba(255, 107, 107, 0.7);
+}
+
+
+.selected-seats {
+    margin-top: 15px;
+    font-size: 16px;
+}
+
+.reservation-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    background: #ff4757;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.reservation-button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+.reservation-button:hover:not(:disabled) {
+    background: #e84118;
+}
+
+.Reservation_Footer {
+    border-top: 1px solid #ccc;
+}
