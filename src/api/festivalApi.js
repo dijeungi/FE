@@ -27,6 +27,15 @@ export const getProductDetail = async (festivalId) => {
     return response.data;
 };
 
+// User Favorite Festival List
+export const getUserFavoriteList = async (userId) => {
+    if(userId == undefined){
+        return;
+    }
+    const response = await axiosInstance.get(`/festival/favorite/ranking-limit?userId=${userId}`);
+    return response.data;
+};
+
 // festival Category
 export const getCategoryList = async (categoryId) => {
     console.log("API 호출 시 전달된 categoryId:", categoryId); // 전달값 확인
