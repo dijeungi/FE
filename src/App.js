@@ -87,10 +87,11 @@ function App() {
                 {/* 로그인 & 회원가입 */}
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/register" element={<JoinSelectAuthorization />} />
-                <Route path="/register/join-user" element={<JoinUser />} />
-                <Route path="/register/join-team" element={<JoinTeam />} />
+                <Route path="/register/join/:userType" element={<JoinUser />} />
+                {/* <Route path="/register/join-user" element={<JoinUser />} /> */}
+                {/* <Route path="/register/join-team" element={<JoinTeam />} /> */}
                 <Route path="/register/agree/:userType" element={<Agree />} />
-                <Route path="/register/genre-select" element={<GenreSelect />} />
+                <Route path="/register/join/genreselect" element={<GenreSelect />} />
 
                 {/* 소셜 로그인 리다이렉트 */}
                 <Route path="/member/kakao" element={<KakaoRedirectPage />} />

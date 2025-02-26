@@ -26,16 +26,30 @@ export const logoutPost = async () => {
     return response.data;
 };
 
-// 회원가입
-export const signupPost = async (requestData) => {
+// User 회원가입
+export const joinUserPost = async (requestData) => {
     const response = await axios.post(`${host}/join/member`, {
         id: requestData.id,
-        name:requestData.userName,
-        email:requestData.email,
-        birth:requestData.userBirth,
-        password:requestData.password,
-        phone:requestData.phone,
-        mailYn:requestData.mailYn,
+        name: requestData.userName,
+        email: requestData.email,
+        birth: requestData.userBirth,
+        password: requestData.password,
+        phone: requestData.phone,
+        mailYn: requestData.mailYn,
+    });
+    return response.data;
+};
+
+// Team 회원가입
+export const joinTeamPost = async (requestData) => {
+    const response = await axios.post(`${host}/join/team`, {
+        id: requestData.id,
+        name: requestData.userName,
+        email: requestData.email,
+        birth: requestData.userBirth,
+        password: requestData.password,
+        phone: requestData.phone,
+        mailYn: requestData.mailYn,
     });
     return response.data;
 };

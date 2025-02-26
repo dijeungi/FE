@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "../../styles/login/JoinUser.css";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
-import { signupPost } from "../../api/LoginApi";
+import { joinUserPost } from "../../api/LoginApi";
 import { getCategoryList } from "../../api/CommonApi";
 import { auth } from "../../config/FirebaseConfig";
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
@@ -13,6 +13,8 @@ import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import PhoneIphoneIcon from "@mui/icons-material/PhoneIphone";
 import MobileFriendlyIcon from "@mui/icons-material/MobileFriendly";
 import EventNoteIcon from "@mui/icons-material/EventNote";
+import PeopleOutlineIcon from "@mui/icons-material/PeopleOutline";
+import SchoolIcon from "@mui/icons-material/School";
 
 const Toast = Swal.mixin({
     toast: true,
@@ -24,6 +26,7 @@ const Toast = Swal.mixin({
 });
 
 const JoinUser = () => {
+    const { userType } = useParams(); // "user" or "team"
     const navigate = useNavigate();
     const [otp, setOtp] = useState("");
     const [confirmation, setConfirmation] = useState(null);
@@ -90,6 +93,7 @@ const JoinUser = () => {
         setFormData((prev) => ({ ...prev, phone: value }));
     };
 
+    //
     const setupRecaptcha = () => {
         if (!window.recaptchaVerifier) {
             window.recaptchaVerifier = new RecaptchaVerifier(auth, "recaptcha-container", {
@@ -98,6 +102,7 @@ const JoinUser = () => {
         }
     };
 
+    // 휴대폰 인증 OTP 전송
     const sendOtp = async () => {
         if (!formData.phone || formData.phone.length < 10) {
             Toast.fire({ icon: "warning", title: "올바른 휴대폰 번호를 입력하세요." });
@@ -120,6 +125,7 @@ const JoinUser = () => {
         }
     };
 
+    //
     const validateId = (id) => {
         const idRegex = /^[a-z][a-z0-9]*([-_][a-z0-9]+)*$/;
 
@@ -152,6 +158,7 @@ const JoinUser = () => {
         return true;
     };
 
+    // OTP 인증 확인
     const verifyOtp = async () => {
         if (!otp) {
             Toast.fire({ icon: "warning", title: "인증번호를 입력하세요." });
@@ -173,6 +180,7 @@ const JoinUser = () => {
         }
     };
 
+    // 회원가입 제출
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -197,7 +205,7 @@ const JoinUser = () => {
         }
 
         try {
-            await signupPost({
+            await joinUserPost({
                 id: formData.id,
                 name: formData.userName,
                 email: formData.email,
@@ -208,6 +216,7 @@ const JoinUser = () => {
                 favorite1: formData.favorite1,
                 favorite2: formData.favorite2,
                 favorite3: formData.favorite3,
+                ...(userType === "team" && { teamName: formData.teamName, teamMembers: formData.teamMembers }),
             });
 
             Toast.fire({ icon: "success", title: "회원가입이 완료되었습니다." }).then(() => navigate("/login"));
@@ -236,10 +245,8 @@ const JoinUser = () => {
             return;
         }
 
-        // ✅ 전화번호에서 "-" 제거
         const cleanedPhone = formData.phone.replace(/-/g, "");
 
-        // ✅ 기존 formData를 복사 후, phone 값만 "-" 없는 형태로 업데이트
         const sendData = {
             ...formData,
             phone: cleanedPhone,
@@ -248,7 +255,7 @@ const JoinUser = () => {
         console.log("📢 GenreSelect로 보낼 데이터:", sendData);
 
         // 장르 선택 페이지로 이동하면서 데이터 전달
-        navigate("/register/genreselect", { state: sendData });
+        navigate("/register/join/genreselect", { state: sendData });
     };
 
     return (
@@ -326,6 +333,7 @@ const JoinUser = () => {
                 />
                 <div id="recaptcha-container"></div>
             </div>
+
             <div className="Top_Input">
                 <label>
                     <PhoneIphoneIcon />
@@ -356,6 +364,37 @@ const JoinUser = () => {
                 </div>
             )}
             {/* E : Top */}
+
+            {/* 팀 회원 전용 필드 */}
+            {userType === "team" && (
+                <>
+                    <br />
+                    <div className="Top_Input">
+                        <label>
+                            <SchoolIcon />
+                        </label>
+                        <input
+                            type="text"
+                            name="teamName"
+                            value={formData.teamName}
+                            onChange={handleChange}
+                            placeholder="소속"
+                        />
+                    </div>
+                    <div className="Top_Input">
+                        <label>
+                            <PeopleOutlineIcon />
+                        </label>
+                        <input
+                            type="text"
+                            name="teamMembers"
+                            value={formData.teamMembers}
+                            onChange={handleChange}
+                            placeholder="총 활동 인원"
+                        />
+                    </div>
+                </>
+            )}
 
             <br />
             <div className="Join_Essential">
