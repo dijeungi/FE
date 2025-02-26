@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../redux/LoginSlice";
 import { setAccessTokenCookie, removeRefreshTokenCookie } from "../../utils/Cookie";
@@ -17,9 +17,10 @@ import { logoutPost } from "../../api/LoginApi";
 export default function Header() {
     const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
     const [lastApiCallTime, setLastApiCallTime] = useState(Date.now());
-
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const accessToken = useSelector((state) => state.loginSlice.accessToken);
+    const [keyword, setKeyword] = useState("");
 
     useEffect(() => {
         // 화면 크기 변경 감지
@@ -49,6 +50,13 @@ export default function Header() {
     const updateApiCallTime = () => {
         setLastApiCallTime(Date.now());
     };
+    const keywordSearch = (event) => {
+        event.preventDefault(); // 폼 제출 시 새로고침 방지
+        console.log("🔍 검색어:", keyword);
+        navigate(`/search?keyword=${keyword}`);
+        // 여기서 검색어를 API 요청으로 보낼 수 있음
+    };
+
 
     const handleLogout = async () => {
         try {
@@ -134,10 +142,12 @@ export default function Header() {
                                 </Link>
                             </li>
                         </ul>
-                        <div className="header_searchBar">
-                            <input type="text" placeholder="검색어를 입력하세요" onFocus={updateApiCallTime} />
-                            <ManageSearchIcon className="header_searchIcon" />
-                        </div>
+                        <form onSubmit={keywordSearch}>
+                            <div className="header_searchBar">
+                                <input type="text" value={keyword} onChange={(e) => setKeyword(e.target.value)} placeholder="검색어를 입력하세요" onFocus={updateApiCallTime} />
+                                <ManageSearchIcon className="header_searchIcon" />
+                            </div>
+                        </form>
                     </nav>
                     <div className="header_viewportInfo">{viewportWidth}px</div>
                 </div>

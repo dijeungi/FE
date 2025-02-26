@@ -21,6 +21,16 @@ export const getRankingList = async () => {
     return response.data;
 };
 
+// KeywordSearch
+export const getKeywordSearch = async (keyword) => {
+    console.log("keyword",keyword);
+    if(keyword === undefined){
+        return;
+    }
+    const response = await axiosInstance.get(`/festival/search?searchKeyword=${keyword}`);
+    return response.data;
+};
+
 // Product Detail
 export const getProductDetail = async (festivalId) => {
     const response = await axiosInstance.get(`/festival/detail?festivalId=${festivalId}`);

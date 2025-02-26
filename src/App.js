@@ -41,6 +41,7 @@ import Like from "./components/mypage/Like";
 import Modify from "./components/mypage/Modify";
 import Secession from "./components/mypage/Secession";
 import Booking from "./components/mypage/Booking";
+import KeywordSearchPage from "./pages/search/KeywordSearchPage";
 
 function App() {
     const location = useLocation();
@@ -97,6 +98,8 @@ function App() {
                     <Route path="modify" element={<Modify />} />
                     <Route path="withdraw" element={<Secession />} />
                 </Route>
+                {/* 검색어 검색 */}
+                <Route path="/search" element={<KeywordSearchPage />} />
 
                 {/* 기타 페이지 */}
                 <Route path="/ranking" element={<Ranking />} />
