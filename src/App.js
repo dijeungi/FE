@@ -77,11 +77,11 @@ function App() {
                 {/* 로그인 & 회원가입 */}
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/register" element={<JoinSelectAuthorization />} />
-                <Route path="/register/JoinUser" element={<JoinUser />} />
-                <Route path="/register/JoinTeam" element={<JoinTeam />} />
-                <Route path="/register/AgreeUser" element={<UserAgree />} />
-                <Route path="/register/AgreeTeam" element={<TeamAgree />} />
-                <Route path="/register/genreselect" element={<GenreSelect />} />
+                <Route path="/register/join-user" element={<JoinUser />} />
+                <Route path="/register/join-team" element={<JoinTeam />} />
+                <Route path="/register/agree-user" element={<UserAgree />} />
+                <Route path="/register/agree-team" element={<TeamAgree />} />
+                <Route path="/register/genre-select" element={<GenreSelect />} />
 
                 {/* 소셜 로그인 리다이렉트 */}
                 <Route path="/member/kakao" element={<KakaoRedirectPage />} />
@@ -104,9 +104,9 @@ function App() {
                 <Route path="/reservation" element={<ReservationWindow />} />
 
                 {/* 계정 찾기 */}
-                <Route path="/account/findId" element={<FindAccountId />} />
-                <Route path="/account/findPassword" element={<FindAccountPassword />} />
-                <Route path="/account/findPassword/detail" element={<FindAccountPasswordDetail />} />
+                <Route path="/account/find-id" element={<FindAccountId />} />
+                <Route path="/account/find-password" element={<FindAccountPassword />} />
+                <Route path="/account/find-password/detail" element={<FindAccountPasswordDetail />} />
 
                 {/*토스페이먼츠*/}
                 <Route path="/payment/success" element={<PaymentSuccess />} />
