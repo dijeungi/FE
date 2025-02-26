@@ -358,17 +358,24 @@ const JoinUser = () => {
             {/* E : Top */}
 
             <br />
-            <div className="Join-form-box2">
-                <input type="checkbox" name="receiveInfo" value={formData.mailYn} onChange={handleChange} />
-                <label>SMS, 이메일로 상품 및 이벤트 정보를 받겠습니다. (선택)</label>
+            <div className="Join_Essential">
+                <input
+                    type="checkbox"
+                    className="Join_Checkbox"
+                    name="receiveInfo"
+                    value={formData.mailYn}
+                    onChange={handleChange}
+                />
+                <span>(선택)</span>이벤트 및 혜택 알림
+                <small>(마케팅 활용 동의 광고 수신 동의)</small>
             </div>
-            <div className="Join-form-box2">
+            {/* <div className="Join-form-box2">
                 <input type="checkbox" name="under14" />
                 <label>14세 미만입니다. (선택)</label>
             </div>
             <div className="Join-form-box3">
                 <p>만 14세 미만 회원은 법정대리인(부모님) 동의를 받은 경우만 회원가입이 가능합니다.</p>
-            </div>
+            </div> */}
 
             {buttonState === "confirmed" && <p style={{ color: "green" }}>✅ 확인되었습니다.</p>}
 
@@ -377,12 +384,9 @@ const JoinUser = () => {
             <button
                 type="button"
                 className="JoinButton"
-            //     onClick={handleNextStep}
-            // >
-            //     {"다음 단계"}
-                 onClick={buttonState === "sendOtp" ? sendOtp : buttonState === "verifyOtp" ? verifyOtp : handleNextStep}
-             >
-                 {buttonState === "sendOtp" ? "인증번호 받기" : buttonState === "verifyOtp" ? "인증하기" : "다음 단계"}
+                onClick={buttonState === "sendOtp" ? sendOtp : buttonState === "verifyOtp" ? verifyOtp : handleNextStep}
+            >
+                {buttonState === "sendOtp" ? "인증번호 받기" : buttonState === "verifyOtp" ? "인증하기" : "다음 단계"}
             </button>
         </form>
     );

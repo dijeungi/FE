@@ -1,0 +1,105 @@
+.Agree_Container {
+    width: 600px;
+    margin: 5rem auto;
+    position: relative;
+
+    border: 1px solid #ccc;
+    border-radius: 5%;
+
+    padding: 2.5rem 5rem;
+}
+
+.Agree_Title {
+    font-size: 25px;
+    font-weight: 700;
+}
+
+.Agree_Wrap {
+    padding-top: 20px;
+}
+
+.Agree_SubTitle {
+    font-size: 20px;
+    padding-bottom: 10px;
+}
+
+.Agree_Text {
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.Agree_Text span {
+    font-weight: bold;
+}
+
+.Agree_Text small {
+    color: #6e6e6e;
+    font-size: 13px;
+    line-height: 18px;
+    position: relative;
+    letter-spacing: -0.4px;
+}
+
+.Agree_Essential {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    padding: 1rem 1rem;
+    margin: 10px 0;
+}
+
+/* 체크박스 스타일 */
+.Agree_Checkbox {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 2px solid #ff9696;
+    appearance: none;
+    outline: none;
+    cursor: pointer;
+    position: relative;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 체크 상태 */
+.Agree_Checkbox:checked {
+    background-color: #ff9696;
+    border-color: #ff9696;
+}
+
+/* 체크 아이콘 추가 (✔ 표시) */
+.Agree_Checkbox:checked::after {
+    content: "✔";
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.Agree_NextButton {
+    flex: none;
+    padding: 20px;
+    width: 100%;
+    padding: 14px 0;
+    border-radius: 6px;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    background: #ccc;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 22px;
+    color: #fff;
+    margin: 25px 0px 0 0;
+}
+
+.Agree_NextButton.active {
+    background-color: #ff8364;
+    cursor: pointer;
+}
