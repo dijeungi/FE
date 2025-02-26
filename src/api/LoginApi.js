@@ -27,15 +27,15 @@ export const logoutPost = async () => {
 };
 
 // 회원가입
-export const signupPost = async (id, userName, email, userBirth, password, phone, mailYn) => {
+export const signupPost = async (requestData) => {
     const response = await axios.post(`${host}/join/member`, {
-        id,
-        userName,
-        email,
-        userBirth,
-        password,
-        phone,
-        mailYn,
+        id: requestData.id,
+        name:requestData.userName,
+        email:requestData.email,
+        birth:requestData.userBirth,
+        password:requestData.password,
+        phone:requestData.phone,
+        mailYn:requestData.mailYn,
     });
     return response.data;
 };

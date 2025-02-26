@@ -377,9 +377,12 @@ const JoinUser = () => {
             <button
                 type="button"
                 className="JoinButton"
-                onClick={buttonState === "sendOtp" ? sendOtp : buttonState === "verifyOtp" ? verifyOtp : handleNextStep}
-            >
-                {buttonState === "sendOtp" ? "인증번호 받기" : buttonState === "verifyOtp" ? "인증하기" : "다음 단계"}
+            //     onClick={handleNextStep}
+            // >
+            //     {"다음 단계"}
+                 onClick={buttonState === "sendOtp" ? sendOtp : buttonState === "verifyOtp" ? verifyOtp : handleNextStep}
+             >
+                 {buttonState === "sendOtp" ? "인증번호 받기" : buttonState === "verifyOtp" ? "인증하기" : "다음 단계"}
             </button>
         </form>
     );
