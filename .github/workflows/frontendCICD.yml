@@ -21,7 +21,7 @@ jobs:
 
       - name: Frontend Dockerfile build
         run: |
-          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/dockerfrontend .
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/cc-frontend-user .
 
       - name: Push Frontend Docker image
         run: |
