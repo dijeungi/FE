@@ -200,6 +200,8 @@ const ProductDetailPage = () => {
         }).toString();
 
         console.log("🔗 최종 URL 파라미터:", queryParams);
+        // 테스트용
+        // navigate(`/reservation?${queryParams}`);
         window.open(`/reservation?${queryParams}`, "_blank", "width=980,height=745,resizable=no,scrollbars=no");
     };
 

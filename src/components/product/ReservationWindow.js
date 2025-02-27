@@ -38,7 +38,7 @@ const ReservationWindow = () => {
                 const response = await getSeatTickets({ festivalId, dateId });
                 console.log("✅ 예약된 좌석 데이터:", response);
 
-                setReservedSeats(response.reservedSeats || []);
+                setReservedSeats(response || []);
             } catch (error) {
                 console.error("❌ 예약된 좌석 데이터를 불러오는 데 실패:", error);
             }
@@ -69,7 +69,7 @@ const ReservationWindow = () => {
 
             // tid-페스티벌Id/DateId/A03,A08,09 이런식으로
             // tid-1-2025-02-20T12:30:00-A03
-            const orderId = `tid-${festivalId}-${dateId}-${selectedSeats.join(",")}`;
+            const orderId = `tid-${festivalId}-${dateId}-${selectedSeats.join("_")}`;
 
             await tossPayments.requestPayment("카드", {
                 orderId,
