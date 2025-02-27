@@ -1,5 +1,8 @@
-import React, {useEffect} from "react";
-import { useLocation } from "react-router-dom";
+import React, {useEffect, useRef, useState} from "react";
+import {Link, useLocation} from "react-router-dom";
+import {useSelector} from "react-redux";
+import {addSeatTickets} from "../../api/TicketApi";
+import CreditScoreIcon from '@mui/icons-material/CreditScore';
 
 const PaymentSuccess = () => {
     const location = useLocation();
