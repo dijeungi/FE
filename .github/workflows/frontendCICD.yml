@@ -20,14 +20,14 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Load environment variables from .env
-    run: |
-      set -o allexport
-      source .env
-      set +o allexport
+        run: |
+          set -o allexport
+          source .env
+          set +o allexport
 
       - name: Frontend Dockerfile build with environment variables
-    run: |
-      docker build $(grep -v '^#' .env | sed 's/^/--build-arg /') -t ${{ secrets.DOCKERHUB_USERNAME }}/cc-frontend-user .
+        run: |
+          docker build $(grep -v '^#' .env | sed 's/^/--build-arg /') -t ${{ secrets.DOCKERHUB_USERNAME }}/cc-frontend-user .
 
       - name: Push Frontend Docker image
         run: |
