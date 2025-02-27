@@ -19,15 +19,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Load environment variables from .env
+      - name: Frontend Dockerfile build
         run: |
-          set -o allexport
-          source .env
-          set +o allexport
-
-      - name: Frontend Dockerfile build with environment variables
-        run: |
-          docker build $(grep -v '^#' .env | sed 's/^/--build-arg /') -t ${{ secrets.DOCKERHUB_USERNAME }}/cc-frontend-user .
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/dockerfrontend .
 
       - name: Push Frontend Docker image
         run: |
