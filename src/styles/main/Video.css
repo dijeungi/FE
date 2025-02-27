@@ -96,31 +96,31 @@
 
 .Focus_Con {
     position: absolute;
-    width: 981px;
-    height: 500px;
-    top: 0;
-    left: 210px;
+    width: 760px;
+    height: 400px;
+    top: 3rem;
+    left: 22rem;
 }
 
 .Focus_Con_Movie {
     position: absolute;
     top: 0;
     left: 0;
-    width: 981px;
-    height: 500px;
+    width: 760px;
+    height: 400px;
 }
 
 .Focus_Con_Movie iframe {
-    width: 981px;
-    height: 500px;
+    width: 760px;
+    height: 400px;
 }
 
 .Focus_Con_Img {
     position: absolute;
     top: 0;
     left: 0;
-    width: 981px;
-    height: 500px;
+    width: 760px;
+    height: 400px;
 }
 
 .Focus_Con_Img a {
@@ -128,8 +128,8 @@
 }
 
 .Focus_Lazyload {
-    width: 981px;
-    height: 500px;
+    width: 760px;
+    height: 400px;
 }
 
 .Focus_Con_Img a:after {
@@ -145,6 +145,6 @@
 }
 
 .Focus_Con_Img img {
-    width: 981px;
-    height: 500px;
+    width: 760px;
+    height: 400px;
 }

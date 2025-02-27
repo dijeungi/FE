@@ -8,7 +8,6 @@ import MainPages from "./pages/MainPages";
 import LoginPage from "./pages/login/Login";
 import JoinSelectAuthorization from "./pages/login/JoinSelectAuthorization";
 import JoinUser from "./pages/login/JoinUser";
-import JoinTeam from "./pages/login/JoinTeam";
 import Agree from "./pages/login/Agree";
 import GenreSelect from "./pages/login/GenreSelect";
 
@@ -59,6 +58,7 @@ function App() {
         "/register/agree-user",
         "/register/agree-team",
         "/register/genre-select",
+        "/payment/success",
     ];
 
     const isHiddenLayout = hiddenLayoutRoutes.some((path) => location.pathname.startsWith(path));

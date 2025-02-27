@@ -1,0 +1,108 @@
+.Success_Container {
+    padding: 5rem 0 3rem 0;
+    position: relative;
+    text-align: center;
+}
+
+.Success_header {
+    background-position: 50% -157px;
+    background-image: url(http://img.cgv.co.kr/CGV_RIA/Ticket/image/reservation/titles.png);
+    background-repeat: no-repeat;
+    position: relative;
+    height: 33px;
+    line-height: 33px;
+    text-align: center;
+    background-color: #333333;
+}
+
+.Success_Top {
+}
+
+.Success_Top svg {
+    font-size: 3rem;
+}
+
+.Success_Top h2 {
+    font-weight: normal;
+}
+
+.Success_Icon_txt {
+}
+
+.Success_Wrap {
+    width: 900px;
+    margin: 2.5rem auto 0 auto;
+    position: relative;
+    text-align: left;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    padding: 2.5rem 2.5rem;
+    display: flex;
+    gap: 5rem;
+}
+
+.Success_Poster {
+}
+
+.Success_Poster img {
+    width: 300px;
+    height: 400px;
+}
+
+.Success_Main_text p {
+    padding-bottom: 10px;
+}
+
+.Success_InfoItem {
+    margin-top: 0.35rem;
+
+    font-size: 0;
+    display: flex;
+}
+
+.Success_Strong {
+    display: inline-block;
+    width: 5.8rem;
+    color: #62676c;
+    font-size: 1rem;
+    font-weight: normal;
+    line-height: 160%;
+    vertical-align: top;
+    box-sizing: border-box;
+}
+
+.Success_InfoDesc {
+    position: relative;
+    max-width: 41.5rem;
+    color: #000;
+    font-size: 1rem;
+    line-height: 160%;
+}
+
+.Success_InfoDesc span {
+    color: #7e7e7e;
+    margin-left: 5px;
+}
+
+.Line {
+    border-bottom: 1px solid #878787;
+    top: 5px;
+}
+
+.Screen_Phone {
+    flex: none;
+    padding: 20px;
+    width: 47%;
+    padding: 14px 0;
+    border-radius: 6px;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    background: #ff8364;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 22px;
+    color: #fff;
+    margin: 10px 0px;
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+}

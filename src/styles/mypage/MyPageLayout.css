@@ -122,7 +122,7 @@ a {
 /* 왼쪽 메뉴 영역 */
 .MyPage_Wrap_Left {
     float: left;
-    width: 240px;
+    width: 220px;
     min-height: 37.5rem;
     padding: 40px 30px;
     background: #fff;

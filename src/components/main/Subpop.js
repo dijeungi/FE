@@ -4,10 +4,16 @@ import { Link } from "react-router-dom";
 
 export default function Subpop() {
     const [isHovered, setIsHovered] = useState(false);
+    const [isVisible, setIsVisible] = useState(true);
+
+    if (!isVisible) return null;
 
     return (
         <div className="float-bnr">
             <div className="float-bnrs" id="divCircle">
+                <button className="close-btn" onClick={() => setIsVisible(false)}>
+                    ✕
+                </button>
                 <Link
                     to="#"
                     className="float-bnr-btn"

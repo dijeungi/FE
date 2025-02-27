@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {Link, useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../redux/LoginSlice";
 import { setAccessTokenCookie, removeRefreshTokenCookie } from "../../utils/Cookie";
@@ -57,7 +57,6 @@ export default function Header() {
         // 여기서 검색어를 API 요청으로 보낼 수 있음
     };
 
-
     const handleLogout = async () => {
         try {
             await logoutPost();
@@ -102,7 +101,7 @@ export default function Header() {
                                     <LoginIcon className="header_icon" />
                                     <span>로그인</span>
                                 </Link>
-                                <Link to="/register" className="header_userMenuItem" title="회원가입">
+                                <Link to="/register/agree/user" className="header_userMenuItem" title="회원가입">
                                     <PersonAddAltIcon className="header_icon" />
                                     <span>회원가입</span>
                                 </Link>
@@ -144,7 +143,13 @@ export default function Header() {
                         </ul>
                         <form onSubmit={keywordSearch}>
                             <div className="header_searchBar">
-                                <input type="text" value={keyword} onChange={(e) => setKeyword(e.target.value)} placeholder="검색어를 입력하세요" onFocus={updateApiCallTime} />
+                                <input
+                                    type="text"
+                                    value={keyword}
+                                    onChange={(e) => setKeyword(e.target.value)}
+                                    placeholder="검색어를 입력하세요"
+                                    onFocus={updateApiCallTime}
+                                />
                                 <ManageSearchIcon className="header_searchIcon" />
                             </div>
                         </form>
