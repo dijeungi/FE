@@ -9,40 +9,56 @@ jobs:
   build_and_push:
     runs-on: ubuntu-latest
 
-    steps:      
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
       - name: Login to DockerHub
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Checkout repository
-        uses: actions/checkout@v3     
- 
-      - name: Frontend Dockerfile build
+      - name: Build Docker Image
         run: |
           docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/cc-frontend-user .
-      - name: Push Frontend Docker image
+
+      - name: Push Docker Image
         run: |
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/cc-frontend-user
 
-        
   deploy:
     needs: build_and_push
     runs-on: ubuntu-latest
-    steps:          
-      - name: Docker pull and run
+
+    steps:
+      - name: Deploy to EC2
         uses: appleboy/ssh-action@master
         with:
           username: ubuntu
           host: ${{ secrets.EC2_HOST_IP }}
-          key: ${{ secrets.SSH_KEY }}    
-          script: |          
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            if [ ! -f /home/ubuntu/.env.local ]; then
+              echo ".env.local file not found! Please check."
+              exit 1
+            fi
+
+            sudo chmod 644 /home/ubuntu/.env.local
+            sudo chown ubuntu:ubuntu /home/ubuntu/.env.local
+
             if [ "$(sudo docker ps -a -q -f name=cc-frontend-user)" ]; then
               sudo docker rm -f cc-frontend-user
             fi
+
             if [ "$(sudo docker images -q ${{ secrets.DOCKERHUB_USERNAME }}/cc-frontend-user)" ]; then
               sudo docker rmi -f ${{ secrets.DOCKERHUB_USERNAME }}/cc-frontend-user
-            fi          
-            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/cc-frontend-user         
-            sudo docker run -d -p 80:80 --name cc-frontend-user --env-file /home/ubuntu/.env.local ${{ secrets.DOCKERHUB_USERNAME }}/cc-frontend-user
+            fi
+
+            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/cc-frontend-user
+
+            sudo docker run -d -p 80:80 --name cc-frontend-user \
+              -v /home/ubuntu/.env.local:/usr/share/nginx/html/.env.local \
+              ${{ secrets.DOCKERHUB_USERNAME }}/cc-frontend-user
+
+            sudo docker logs cc-frontend-user
