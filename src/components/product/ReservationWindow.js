@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import { loadTossPayments } from "@tosspayments/payment-sdk";
 import { getSeatTickets } from "../../api/TicketApi";
 import "../../styles/components/ReservationWindow.css";
+import {useSelector} from "react-redux";
 
 const ReservationWindow = () => {
     const location = useLocation();
@@ -69,12 +70,13 @@ const ReservationWindow = () => {
 
             // tid-페스티벌Id/DateId/A03,A08,09 이런식으로
             // tid-1-2025-02-20T12:30:00-A03
-            const orderId = `tid-${festivalId}-${dateId}-${selectedSeats.join("_")}`;
+            const orderId = `tid-${festivalId}-${dateId}-${selectedSeats.join("_")}`; //${selectedSeats.join("_")}
 
             await tossPayments.requestPayment("카드", {
                 orderId,
                 amount: totalPrice,
                 orderName: "공연 티켓",
+                seat:selectedSeats,
                 customerName: "고객 이름",
                 successUrl: `${
                     window.location.origin
