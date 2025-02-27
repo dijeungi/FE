@@ -14,3 +14,15 @@ export const getTicketList = async (pageParam) => {
     });
     return response.data;
 };
+
+// Ticket Seat
+export const getSeatTickets = async (params) => {
+    const { festivalId, dateId } = params;
+    const response = await axiosInstance.get(`/ticket/seat`, {
+        params: {
+            festivalId: festivalId,
+            dateId: dateId,
+        },
+    });
+    return response.data;
+};

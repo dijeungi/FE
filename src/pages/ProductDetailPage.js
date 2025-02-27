@@ -1,36 +1,36 @@
 // src/pages/ProductDetailPage.js
 
-// ✅ React & 관련 라이브러리
+// React & 관련 라이브러리
 import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 
-// ✅ Redux 관련
+// Redux 관련
 import { fetchFestivalDetail } from "../redux/DetailSlice";
 
-// ✅ API 호출
+// API 호출
 import { getFestivalDetailTimeDate } from "../api/festivalApi";
 import { getLikeCount, getIsLiked, postLike, deleteLike } from "../api/likeApi";
 
-// ✅ 유틸리티 (쿠키, 로컬스토리지)
+// 유틸리티 (쿠키, 로컬스토리지)
 import { getUserIdCookie } from "../utils/Cookie";
 
-// ✅ 스타일
+// 스타일
 import "../styles/info/Information.css";
 import "../styles/info/Calendar.css";
 import "../styles/info/KakaoMap.css";
 
-// ✅ UI 라이브러리
+// UI 라이브러리
 import { Rating } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import { Favorite, FavoriteBorder } from "@mui/icons-material";
 import Calendar from "react-calendar";
 
-// ✅ 컴포넌트
+// 컴포넌트
 import DetailFooter from "../components/product/DetailFooter";
 
-// ✅ KakaoMap
+// KakaoMap
 const { kakao } = window;
 
 const ProductDetailPage = () => {
@@ -38,25 +38,26 @@ const ProductDetailPage = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    // ✅ 사용자 정보 가져오기 (Redux + 쿠키)
+    // 사용자 정보 가져오기 (Redux + 쿠키)
     const userId = useSelector((state) => state.loginSlice.id) || getUserIdCookie();
 
-    // ✅ Redux에서 공연 상세 정보 가져오기
+    // Redux에서 공연 상세 정보 가져오기
     const { festivalDetails, totalStar, placeLocation } = useSelector((state) => state.detail);
 
-    // ✅ 상태 관리
+    // 상태 관리
     const [isMapOpen, setIsMapOpen] = useState(false);
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [selectedTime, setSelectedTime] = useState(null);
     const [festivalTimeData, setFestivalTimeData] = useState([]);
     const [likeCount, setLikeCount] = useState(0);
     const [isLiked, setIsLiked] = useState(false);
+    const [selectedDateId, setSelectedDateId] = useState(null);
 
-    // ✅ Kakao 지도 관련 Ref
+    // Kakao 지도 관련 Ref
     const mapRef = useRef(null);
     const markerRef = useRef(null);
 
-    // ✅ festivalDetails 데이터 추출
+    // festivalDetails 데이터 추출
     const {
         festivalName = "",
         ranking = "",
@@ -73,38 +74,81 @@ const ProductDetailPage = () => {
         imgSrc3 = "",
     } = festivalDetails || {};
 
-    // ✅ Kakao 지도 열기/닫기
+    // Kakao 지도 열기/닫기
     const toggleMap = () => {
         setIsMapOpen((prevState) => !prevState);
     };
 
-    // ✅ 날짜 선택 시 공연 시간 불러오기
+    // 날짜 선택 시 공연 시간 불러오기
     const handleDateChange = async (date) => {
+        console.log("📅 선택한 날짜:", date);
+
         setSelectedDate(date);
         setSelectedTime(null);
+        setSelectedDateId(null); // ✅ 날짜 바뀌면 DateId 초기화 (주의)
 
         try {
-            const formattedDate = date.toISOString().split("T")[0];
+            const formattedDate = date
+                .toLocaleDateString("ko-KR", {
+                    year: "numeric",
+                    month: "2-digit",
+                    day: "2-digit",
+                })
+                .replace(/\. /g, "-")
+                .replace(".", "");
+
+            console.log("🕒 포맷팅된 날짜:", formattedDate);
+
             const timeData = await getFestivalDetailTimeDate(festivalId, formattedDate);
-            setFestivalTimeData(timeData?.timeDTOS?.map((item) => ({ ...item, time: item.time.slice(0, 5) })) || []);
+            console.log("📡 서버에서 받아온 timeData:", timeData);
+
+            setFestivalTimeData(
+                timeData?.timeDTOS?.map((item) => ({
+                    ...item,
+                    time: item.time.slice(0, 5),
+                    dateId: item.id,
+                })) || []
+            );
+
+            console.log("✅ 공연 시간 데이터 업데이트 완료:", timeData.timeDTOS);
         } catch (error) {
             console.error("❌ 공연 시간 데이터 불러오기 실패:", error);
             setFestivalTimeData([]);
         }
     };
 
-    // ✅ 공연 시간 선택
-    const handleTimeClick = (time) => {
-        setSelectedTime((prev) => (prev === time ? null : time));
+    // 공연 시간 선택
+    const handleTimeClick = (time, dateId) => {
+        console.log("⏰ 클릭한 시간:", time);
+        console.log("📌 클릭한 DateId:", dateId);
+
+        if (!dateId) {
+            console.error("❌ DateId가 undefined입니다! 데이터 확인 필요");
+            return;
+        }
+
+        setSelectedTime((prev) => {
+            const newTime = prev === time ? null : time;
+            console.log("🔄 선택한 시간 업데이트됨:", newTime);
+            return newTime;
+        });
+
+        setSelectedDateId((prev) => {
+            const newDateId = prev === dateId ? null : dateId;
+            console.log("🔄 선택한 DateId 업데이트됨:", newDateId);
+            return newDateId;
+        });
+
+        console.log("✅ 최종 저장된 selectedDateId:", dateId);
     };
 
-    // ✅ 예매 버튼 활성화 여부
+    // 예매 버튼 활성화 여부
     const isButtonEnabled = selectedDate && selectedTime;
 
-    // ✅ 별점 평균 계산
+    // 별점 평균 계산
     const ratingValue = totalStar?.["별점 총점"] || 0;
 
-    // ✅ 예매하기 버튼 클릭
+    // 예매하기 버튼 클릭
     const handleReservationClick = () => {
         if (!userId) {
             Swal.fire({
@@ -124,22 +168,42 @@ const ProductDetailPage = () => {
             return;
         }
 
-        if (!selectedDate || !selectedTime) return;
+        console.log("🛒 예매하기 버튼 클릭!");
+        console.log("📅 선택한 날짜 (로컬 시간):", selectedDate);
+        console.log("📌 선택한 DateId:", selectedDateId);
 
-        const formattedDate = selectedDate.toISOString().split("T")[0];
+        if (!selectedDate || !selectedTime || !selectedDateId) {
+            console.error("❌ 예매 실패: 날짜, 시간 또는 DateId가 없습니다.");
+            return;
+        }
+
+        // ✅ `toISOString()` 대신 `toLocaleDateString()` 사용
+        const formattedDate = selectedDate
+            .toLocaleDateString("ko-KR", {
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit",
+            })
+            .replace(/\. /g, "-")
+            .replace(".", "");
+
+        console.log("🚀 URL에 포함되는 날짜:", formattedDate);
+
         const queryParams = new URLSearchParams({
             festivalId,
             festivalName: encodeURIComponent(festivalDetails?.festivalName || ""),
-            selectedDate: formattedDate,
+            selectedDate: formattedDate, // ✅ 변환된 날짜 사용
             selectedTime: selectedTime || "",
+            dateId: selectedDateId,
             salePrice: festivalDetails?.salePrice || 0,
             poster: encodeURIComponent(festivalDetails?.postImage || ""),
         }).toString();
 
+        console.log("🔗 최종 URL 파라미터:", queryParams);
         window.open(`/reservation?${queryParams}`, "_blank", "width=980,height=745,resizable=no,scrollbars=no");
     };
 
-    // ✅ 좋아요 데이터 불러오기 & 공연 상세 정보 가져오기
+    // 좋아요 데이터 불러오기 & 공연 상세 정보 가져오기
     useEffect(() => {
         const fetchLikeData = async () => {
             if (!userId) return;
@@ -180,7 +244,7 @@ const ProductDetailPage = () => {
         }
     }, [festivalId, userId, selectedDate, isMapOpen, placeLocation]);
 
-    // ✅ 좋아요 버튼 클릭
+    // 좋아요 버튼 클릭
     const handleLikeClick = async () => {
         if (!userId) {
             Swal.fire({
@@ -487,7 +551,7 @@ const ProductDetailPage = () => {
                                                             className={`Calendar_TimeTableLabel ${
                                                                 selectedTime === time.time ? "selected" : ""
                                                             }`}
-                                                            onClick={() => handleTimeClick(time.time)}
+                                                            onClick={() => handleTimeClick(time.time, time.dateId)} // ✅ dateId 전달 확인!
                                                         >
                                                             {`${index + 1}회 ${time.time}`}
                                                         </button>

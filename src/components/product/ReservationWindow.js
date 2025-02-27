@@ -1,29 +1,63 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { loadTossPayments } from "@tosspayments/payment-sdk";
+import { getSeatTickets } from "../../api/TicketApi";
 import "../../styles/components/ReservationWindow.css";
 
 const ReservationWindow = () => {
     const location = useLocation();
     const params = new URLSearchParams(location.search);
 
+    const festivalId = params.get("festivalId") || "";
     const festivalName = decodeURIComponent(params.get("festivalName")) || "";
     const selectedDate = params.get("selectedDate") || "";
     const selectedTime = params.get("selectedTime") || "";
     const salePrice = Number(params.get("salePrice")) || 1000;
     const poster = decodeURIComponent(params.get("poster")) || "";
+    const dateId = params.get("dateId") || "";
+    const [reservedSeats, setReservedSeats] = useState([]);
+
+    console.log("🎭 공연명:", festivalName);
+    console.log("📅 날짜:", selectedDate);
+    console.log("⏰ 시간:", selectedTime);
+    console.log("💰 가격 (1석 기준):", salePrice);
+    console.log("🖼️ 포스터 URL:", poster);
+    console.log("📌 Date Id:", dateId);
 
     const rows = "ABCDEFG".split("");
     const seatsPerRow = 10;
     const [selectedSeats, setSelectedSeats] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0);
 
-    // 선택된 좌석 수에 따라 가격 업데이트
     useEffect(() => {
+        const fetchReservedSeats = async () => {
+            if (!festivalId || !dateId) return;
+
+            try {
+                console.log("🎟️ 예약된 좌석 불러오는 중...");
+                const response = await getSeatTickets({ festivalId, dateId });
+                console.log("✅ 예약된 좌석 데이터:", response);
+
+                setReservedSeats(response.reservedSeats || []);
+            } catch (error) {
+                console.error("❌ 예약된 좌석 데이터를 불러오는 데 실패:", error);
+            }
+        };
+
+        fetchReservedSeats();
+
+        console.log("📌 업데이트 발생! 좌석 개수:", selectedSeats.length, "| DateId:", dateId, "| 가격:", salePrice);
         setTotalPrice(salePrice * selectedSeats.length);
-    }, [selectedSeats, salePrice]);
+    }, [selectedSeats, salePrice, dateId, festivalId]);
 
     const handleSeatClick = (seat) => {
+        const isReserved = reservedSeats.includes(seat);
+
+        if (isReserved) {
+            console.warn(`⛔ 이미 예약된 좌석입니다: ${seat}`);
+            return;
+        }
+
         setSelectedSeats((prevSelected) =>
             prevSelected.includes(seat) ? prevSelected.filter((s) => s !== seat) : [...prevSelected, seat]
         );
@@ -33,7 +67,9 @@ const ReservationWindow = () => {
         try {
             const tossPayments = await loadTossPayments("test_ck_O6BYq7GWPVvPRjx6BQL8NE5vbo1d");
 
-            const orderId = `order_${new Date().getTime()}_${Math.random().toString(36).substr(2, 9)}`;
+            // tid-페스티벌Id/DateId/A03,A08,09 이런식으로
+            // tid-1-2025-02-20T12:30:00-A03
+            const orderId = `tid-${festivalId}-${dateId}-${selectedSeats.join(",")}`;
 
             await tossPayments.requestPayment("카드", {
                 orderId,
@@ -83,12 +119,17 @@ const ReservationWindow = () => {
                     {rows.map((row) => (
                         <div key={row} className="seat-row">
                             {Array.from({ length: seatsPerRow }, (_, i) => {
-                                const seat = `${row}${i + 1}`;
+                                const seat = `${row}${(i + 1).toString().padStart(2, "0")}`;
+                                const isReserved = reservedSeats.includes(seat);
+
                                 return (
                                     <button
                                         key={seat}
-                                        className={`seat ${selectedSeats.includes(seat) ? "selected" : ""}`}
+                                        className={`seat ${
+                                            isReserved ? "reserved" : selectedSeats.includes(seat) ? "selected" : ""
+                                        }`}
                                         onClick={() => handleSeatClick(seat)}
+                                        disabled={isReserved}
                                     >
                                         {seat}
                                     </button>

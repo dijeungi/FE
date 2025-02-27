@@ -25,7 +25,7 @@ import FindAccountPasswordDetail from "./pages/login/FindAccountPasswordDetail";
 
 import MyPageLayout from "./components/mypage/MyPageLayout";
 
-import ReservationWindow from "./components/share/ReservationWindow";
+import ReservationWindow from "./components/product/ReservationWindow";
 import PaymentSuccess from "./components/payments/PaymentSuccess";
 import PaymentFail from "./components/payments/PaymentFail";
 import ScrollToTop from "./components/ScrollToTop";
