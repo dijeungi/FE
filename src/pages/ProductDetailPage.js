@@ -353,7 +353,7 @@ const ProductDetailPage = () => {
                                                 ) : (
                                                     <FavoriteBorder className="Information_HeartOff" />
                                                 )}
-                                                티켓캐스트
+                                                찜
                                             </a>
                                             <div className="Information_HoverCast">
                                                 <div className="Information_PopupWrap">

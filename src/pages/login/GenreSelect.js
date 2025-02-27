@@ -2,34 +2,47 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useState } from "react";
 import { joinUserPost } from "../../api/LoginApi";
+import "../../styles/login/Genreselect.css";
 
 const GenreSelect = () => {
     const location = useLocation();
     const navigate = useNavigate();
 
-    // JoinUser에서 받은 데이터
     const [formData, setFormData] = useState(location.state || {});
-
-    console.log("📢 이전 단계에서 받은 데이터:", formData);
-
-    // 좋아하는 장르 선택
     const [selectedGenres, setSelectedGenres] = useState({
         favorite1: "",
         favorite2: "",
         favorite3: "",
     });
 
+    const genres = ["로맨틱코미디", "코믹", "드라마", "공포/스릴러", "어린이연극", "기타"];
+
     const handleGenreChange = (e, key) => {
-        setSelectedGenres((prev) => ({ ...prev, [key]: e.target.value }));
+        setSelectedGenres((prev) => {
+            const newSelection = { ...prev, [key]: e.target.value };
+            return newSelection;
+        });
+    };
+
+    const getFilteredGenres = (excludedKeys) => {
+        return genres.filter((genre) => !excludedKeys.includes(genre));
     };
 
     const handleSubmit = async () => {
         if (!selectedGenres.favorite1 || !selectedGenres.favorite2 || !selectedGenres.favorite3) {
-            Swal.fire({ icon: "warning", title: "좋아하는 장르를 모두 선택해주세요." });
+            Swal.fire({
+                icon: "warning",
+                title: "선호하는 장르를 모두 선택해주세요.",
+                toast: true,
+                position: "top",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+            });
+
             return;
         }
 
-        // 기본 데이터
         const requestData = {
             id: formData.id,
             userName: formData.name,
@@ -43,17 +56,13 @@ const GenreSelect = () => {
             mailYn: formData.mailYn || "N",
         };
 
-        // ✅ 팀 가입자의 경우 추가 데이터 포함
         if (formData.userType === "team") {
             requestData.teamName = formData.teamName;
             requestData.teamMembers = formData.teamMembers;
         }
 
-        console.log("📢 최종 전송 데이터:", requestData);
-
         try {
             await joinUserPost(requestData);
-
             Swal.fire({ icon: "success", title: "회원가입이 완료되었습니다!" }).then(() => {
                 navigate("/login");
             });
@@ -65,40 +74,49 @@ const GenreSelect = () => {
 
     return (
         <div className="GenreSelect_Container">
-            <h2>좋아하는 장르를 선택해주세요</h2>
+            <h2>
+                선호하는 장르를 선택해주세요.
+                <br />
+                <span>* 선택한 장르에 맞춘 맞춤 추천 서비스로 준비해드리겠습니다 !</span>
+            </h2>
 
-            <div>
-                <label>1순위</label>
+            <div className="Rank">
+                <label>1순위:</label>
                 <select onChange={(e) => handleGenreChange(e, "favorite1")}>
                     <option value="">선택</option>
-                    <option value="Rock">Rock</option>
-                    <option value="Pop">Pop</option>
-                    <option value="Jazz">Jazz</option>
+                    {genres.map((genre) => (
+                        <option key={genre} value={genre}>
+                            {genre}
+                        </option>
+                    ))}
                 </select>
             </div>
 
-            <div>
-                <label>2순위</label>
+            <div className="Rank">
+                <label>2순위:</label>
                 <select onChange={(e) => handleGenreChange(e, "favorite2")}>
                     <option value="">선택</option>
-                    <option value="Rock">Rock</option>
-                    <option value="Pop">Pop</option>
-                    <option value="Jazz">Jazz</option>
+                    {getFilteredGenres([selectedGenres.favorite1]).map((genre) => (
+                        <option key={genre} value={genre}>
+                            {genre}
+                        </option>
+                    ))}
                 </select>
             </div>
 
-            <div>
-                <label>3순위</label>
+            <div className="Rank">
+                <label>3순위:</label>
                 <select onChange={(e) => handleGenreChange(e, "favorite3")}>
                     <option value="">선택</option>
-                    <option value="Rock">Rock</option>
-                    <option value="Pop">Pop</option>
-                    <option value="Jazz">Jazz</option>
+                    {getFilteredGenres([selectedGenres.favorite1, selectedGenres.favorite2]).map((genre) => (
+                        <option key={genre} value={genre}>
+                            {genre}
+                        </option>
+                    ))}
                 </select>
             </div>
 
-            {/* 가입 완료 버튼 */}
-            <button className="JoinButton" onClick={handleSubmit}>
+            <button className="GenreSelect_Button" onClick={handleSubmit}>
                 가입 완료
             </button>
         </div>

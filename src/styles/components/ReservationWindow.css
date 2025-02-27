@@ -160,5 +160,6 @@
 
 .seat.reserved {
     background-color: gray !important;
+    color: #ccc;
     cursor: not-allowed;
 }

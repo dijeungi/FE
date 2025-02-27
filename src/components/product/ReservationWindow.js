@@ -67,18 +67,19 @@ const ReservationWindow = () => {
         try {
             const tossPayments = await loadTossPayments("test_ck_O6BYq7GWPVvPRjx6BQL8NE5vbo1d");
 
-            // tid-페스티벌Id/DateId/A03,A08,09 이런식으로
-            // tid-1-2025-02-20T12:30:00-A03
+            // tid-페스티벌Id/DateId/A03_A08_09 이런 식으로 설정
             const orderId = `tid-${festivalId}-${dateId}-${selectedSeats.join("_")}`;
 
-            await tossPayments.requestPayment("카드", {
+            tossPayments.requestPayment("카드", {
                 orderId,
                 amount: totalPrice,
                 orderName: "공연 티켓",
                 customerName: "고객 이름",
                 successUrl: `${
                     window.location.origin
-                }/payment/success?orderId=${orderId}&totalPrice=${totalPrice}&seats=${selectedSeats.join(",")}`,
+                }/payment/success?orderId=${orderId}&totalPrice=${totalPrice}&seats=${selectedSeats.join(
+                    ","
+                )}&poster=${encodeURIComponent(poster)}`,
                 failUrl: `${window.location.origin}/payment/fail`,
             });
         } catch (error) {
