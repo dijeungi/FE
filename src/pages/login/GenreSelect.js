@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useState } from "react";
-import { signupPost } from "../../api/LoginApi";
+import { joinUserPost } from "../../api/LoginApi";
 
 const GenreSelect = () => {
     const location = useLocation();
@@ -10,7 +10,7 @@ const GenreSelect = () => {
     // JoinUser에서 받은 데이터
     const [formData, setFormData] = useState(location.state || {});
 
-    console.log(formData);
+    console.log("📢 이전 단계에서 받은 데이터:", formData);
 
     // 좋아하는 장르 선택
     const [selectedGenres, setSelectedGenres] = useState({
@@ -29,6 +29,7 @@ const GenreSelect = () => {
             return;
         }
 
+        // 기본 데이터
         const requestData = {
             id: formData.id,
             userName: formData.name,
@@ -42,10 +43,16 @@ const GenreSelect = () => {
             mailYn: formData.mailYn || "N",
         };
 
+        // ✅ 팀 가입자의 경우 추가 데이터 포함
+        if (formData.userType === "team") {
+            requestData.teamName = formData.teamName;
+            requestData.teamMembers = formData.teamMembers;
+        }
+
         console.log("📢 최종 전송 데이터:", requestData);
 
         try {
-            await signupPost(requestData);
+            await joinUserPost(requestData);
 
             Swal.fire({ icon: "success", title: "회원가입이 완료되었습니다!" }).then(() => {
                 navigate("/login");

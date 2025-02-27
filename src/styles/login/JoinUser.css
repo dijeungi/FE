@@ -86,3 +86,64 @@
 }
 
 /* =========================== */
+
+.Join_Essential {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    padding: 1rem 1rem;
+    margin: 10px 0;
+}
+
+.Join_Checkbox {
+}
+
+.Join_Checkbox {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 2px solid #ff9696;
+    appearance: none;
+    outline: none;
+    cursor: pointer;
+    position: relative;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.Join_Checkbox:checked {
+    background-color: #ff9696;
+    border-color: #ff9696;
+}
+
+.Join_Checkbox:checked::after {
+    content: "✔";
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.Join_Essential {
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.Join_Essential span {
+    font-weight: bold;
+}
+
+.Join_Essential small {
+    color: #6e6e6e;
+    font-size: 13px;
+    line-height: 18px;
+    position: relative;
+    letter-spacing: -0.4px;
+}
