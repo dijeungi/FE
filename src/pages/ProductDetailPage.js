@@ -177,7 +177,7 @@ const ProductDetailPage = () => {
             return;
         }
 
-        // ✅ `toISOString()` 대신 `toLocaleDateString()` 사용
+        // `toISOString()` 대신 `toLocaleDateString()`
         const formattedDate = selectedDate
             .toLocaleDateString("ko-KR", {
                 year: "numeric",
@@ -353,13 +353,13 @@ const ProductDetailPage = () => {
                                                 ) : (
                                                     <FavoriteBorder className="Information_HeartOff" />
                                                 )}
-                                                찜
+                                                티켓 톡
                                             </a>
                                             <div className="Information_HoverCast">
                                                 <div className="Information_PopupWrap">
                                                     <div className="Information_PopupHead">
                                                         <strong className="Information_PopupTitle">
-                                                            티켓캐스트란?
+                                                            티켓 톡 이란?
                                                         </strong>
                                                     </div>
                                                     <div className="Information_PopupBody">

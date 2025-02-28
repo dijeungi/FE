@@ -27,8 +27,126 @@
     background-color: #fff;
 }
 .CategoryVideo__Wrapper:nth-child(1) button {
-    background-color: #ffa564;
+    background-color: #ff8364;
     color: #fff;
 }
 
 /* ================ 하단 =============== */
+
+.CCPlay_SwiperWrap {
+    width: 100%;
+    max-width: 1400px;
+    margin: auto;
+    position: relative;
+    overflow: hidden;
+}
+
+.CCPlay_PlayWrap {
+    position: relative;
+    padding: 20px 0;
+}
+
+.interpark-play_wrap {
+    width: 100%;
+    overflow: hidden;
+}
+
+.Slide_Item {
+    width: 360px;
+    margin: 0 10px;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.Video_Container {
+    width: 100%;
+    height: 200px;
+    position: relative;
+}
+
+.Video_Container iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.Video_Info_Container {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    gap: 10px;
+}
+
+.Video_Info_Container img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.Video_Info_Text {
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+}
+
+.custom-prev,
+.custom-next {
+    position: absolute;
+    top: 50%;
+
+    transform: translateY(-50%);
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.9);
+    color: black;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    border-radius: 50%;
+    z-index: 9999;
+    transition: background 0.3s ease, transform 0.2s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.custom-prev {
+    left: 10px;
+}
+
+.custom-next {
+    right: 10px;
+}
+
+.custom-prev:hover,
+.custom-next:hover {
+    background: rgba(255, 255, 255, 0.9);
+    color: black;
+    transform: translateY(-50%) scale(1.1);
+}
+
+.custom-prev::before,
+.custom-next::before {
+    content: "";
+    display: block;
+    width: 30px;
+    height: 30px;
+
+    background: url(//openimage.interpark.com/UI/tour/pages/main/slide_arrow.svg) no-repeat center;
+    background-size: contain;
+}
+
+/* 왼쪽(prev) 화살표: 90도 회전 */
+.custom-prev::before {
+    transform: rotate(180deg);
+}
+
+/* 오른쪽(next) 화살표: 원본 그대로 사용 */
+.custom-next::before {
+    transform: rotate(0deg);
+}

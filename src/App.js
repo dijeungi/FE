@@ -50,6 +50,7 @@ function App() {
 
     // Header와 Footer를 숨길 경로 목록
     const hiddenLayoutRoutes = [
+        "/login",
         "/register",
         "/reservation",
         "/register/joinuser",

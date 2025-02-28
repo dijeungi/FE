@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import "../../styles/login/Login.css";
-import Loginicon1 from "../../img/kakao_icon.png";
-import Loginicon2 from "../../img/naver_icon.png";
-import Loginicon3 from "../../img/google.png";
+import Naver_Login from "../../img/Naver_Login.png";
+import Kakao_Login from "../../img/Kakao_Login.png";
+import Google_Login from "../../img/Google_Login.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import Swal from "sweetalert2";
@@ -12,15 +12,17 @@ import { getKakaoLoginLink } from "../../api/KakaoApi";
 import { getNaverLoginLink } from "../../api/NaverApi";
 import { getGoogleLoginLink } from "../../api/GoogleApi";
 
+import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
+import PasswordIcon from "@mui/icons-material/Password";
+
 const LoginPage = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const [idError, setIdError] = useState("");
     const [loginForm, setLoginForm] = useState({
         id: "",
         password: "",
     });
-
-    const [isOpen, setIsOpen] = useState(false);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -70,64 +72,62 @@ const LoginPage = () => {
         window.location.href = link;
     };
     return (
-        <div className="Login-container">
-            <div className="Login-logo">logo</div>
-            <input
-                type="text"
-                name="id"
-                placeholder="아이디"
-                className="Login-input1 Login-input"
-                value={loginForm.id}
-                onChange={handleChange}
-            />
-            <input
-                type="password"
-                name="password"
-                placeholder="비밀번호"
-                className="Login-input2 Login-input"
-                value={loginForm.password}
-                onChange={handleChange}
-            />
-            <div className="Login-keep-logged-in">
-                <label htmlFor="chk">
-                    <input type="checkbox" />
-                    <span className="Login-text">로그인 상태 유지</span>
-                </label>
-            </div>
-            <button className="Login-button" onClick={handleSubmit}>
-                로그인
-            </button>
-
-            <div className="Login-links">
-                <Link to="/account/findId" className="Login-link">
-                    아이디 찾기
-                </Link>
-                <span>|</span>
-                <Link to="/account/findPassword" className="Login-link">
-                    비밀번호 찾기
-                </Link>
-                <span>|</span>
-                <Link to="/register" className="Login-link">
-                    회원가입
+        <>
+            <div className="Login_Logo">
+                <Link to="/">
+                    <img src="https://dijeungi.github.io/imageHosting/images/CClogo.png" alt="로고" />
                 </Link>
             </div>
+            <div className="Login_Container">
+                <div className="Login_Input">
+                    <label>
+                        <PersonOutlineIcon />
+                    </label>
+                    <input type="text" name="id" placeholder="아이디" value={loginForm.id} onChange={handleChange} />
+                    {idError && <p className="Error_Message">{idError}</p>}
+                </div>
 
-            <div className="Login-social-icons">
-                <img src={Loginicon1} alt="KakaoTalk" className="Login-icon" onClick={handleKakaoLogin} />
-                <img src={Loginicon2} alt="Naver" className="Login-icon" onClick={handleNaverLogin} />
-                <img src={Loginicon3} alt="Google" className="Login-icon" onClick={handleGoogleLogin} />
+                <div className="Login_Input">
+                    <label>
+                        <PasswordIcon />
+                    </label>
+                    <input
+                        type="password"
+                        name="password"
+                        placeholder="비밀번호"
+                        value={loginForm.password}
+                        onChange={handleChange}
+                    />
+                </div>
+                <div className="Login_Essential">
+                    <input type="checkbox" className="Login_Checkbox" name="receiveInfo" />
+                    <span>로그인 상태 유지</span>
+                </div>
+                <button className="Login_Button" onClick={handleSubmit}>
+                    로그인
+                </button>
+
+                <div className="Login_Link">
+                    <Link to="/account/findId" className="Login-link">
+                        아이디 찾기
+                    </Link>
+                    <span>|</span>
+                    <Link to="/account/findPassword" className="Login-link">
+                        비밀번호 찾기
+                    </Link>
+                    <span>|</span>
+                    <Link to="/register/agree/user" className="Login-link">
+                        회원가입
+                    </Link>
+                </div>
+
+                <div className="Social_Login_Icon">
+                    <img src={Naver_Login} alt="KakaoTalk" className="Login-icon Naver" onClick={handleKakaoLogin} />
+                    <img src={Kakao_Login} alt="Naver" className="Login-icon" onClick={handleNaverLogin} />
+                    <img src={Google_Login} alt="Google" className="Login-icon1" onClick={handleGoogleLogin} />
+                </div>
             </div>
-            {/*<button className="Reservation" onClick={() => setIsOpen(true)}>*/}
-            {/*    예매하기*/}
-            {/*</button>*/}
-
-            {/*{isOpen && (*/}
-            {/*    <ReservationPopup onClose={() => setIsOpen(false)}>*/}
-            {/*        <h2>새 창에서 렌더링된 컴포넌트</h2>*/}
-            {/*        <button onClick={() => setIsOpen(false)}>닫기</button>*/}
-            {/*    </ReservationPopup>*/}
-            {/*)}*/}
-        </div>
+        </>
     );
 };
 

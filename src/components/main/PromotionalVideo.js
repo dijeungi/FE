@@ -286,7 +286,8 @@ const CategoryVideo = () => {
 
     useEffect(() => {
         if (swiperInstance) {
-            swiperInstance.slideTo(0); // 카테고리 변경 시 첫 번째 슬라이드로 이동
+            swiperInstance.slideTo(0);
+            swiperInstance.update();
             setCurrentIndex(0);
         }
     }, [selectedCategory, swiperInstance]);
@@ -309,61 +310,63 @@ const CategoryVideo = () => {
                         ))}
                     </menu>
                 </div>
-                <div className="interpark-play_swiperWrap">
-                    <Swiper
-                        className="interpark-play_wrap swiper-backface-hidden swiper-pointer-events"
-                        modules={[Pagination, Navigation]}
-                        loop={false}
-                        slidesPerView={1}
-                        spaceBetween={30}
-                        autoplay={{ delay: 3000, disableOnInteraction: false }}
-                        navigation={{
-                            prevEl: ".custom-prev",
-                            nextEl: ".custom-next",
-                        }}
-                        onSwiper={setSwiperInstance}
-                        onSlideChange={(swiper) => setCurrentIndex(swiper.activeIndex)}
-                    >
-                        {groupedData.map((group, index) => (
-                            <SwiperSlide key={index} className="swiper-slide">
-                                <div className="slide-group" style={{ display: "flex" }}>
-                                    {group.map((item) => (
-                                        <div key={item.id} className="Slide_Item">
-                                            <div className="Video_Container">
-                                                <iframe
-                                                    width="100%"
-                                                    height="200px"
-                                                    src={`${item.videoUrl}?autoplay=0&mute=1&controls=0`}
-                                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                                    allowFullScreen
-                                                ></iframe>
+                {/* CC PLAY */}
+                <div className="CCPlay_SwiperWrap">
+                    <div className="CCPlay_PlayWrap">
+                        {/* Swiper */}
+                        <Swiper
+                            key={selectedCategory}
+                            className="interpark-play_wrap swiper-backface-hidden swiper-pointer-events"
+                            modules={[Pagination, Navigation]}
+                            loop={false}
+                            slidesPerView={1}
+                            spaceBetween={30}
+                            autoplay={{ delay: 3000, disableOnInteraction: false }}
+                            navigation={{
+                                prevEl: ".custom-prev",
+                                nextEl: ".custom-next",
+                            }}
+                            onSwiper={setSwiperInstance}
+                            onSlideChange={(swiper) => setCurrentIndex(swiper.activeIndex)}
+                            allowTouchMove={false}
+                        >
+                            {groupedData.map((group, index) => (
+                                <SwiperSlide key={index} className="swiper-slide">
+                                    <div className="slide-group" style={{ display: "flex" }}>
+                                        {group.map((item) => (
+                                            <div key={item.id} className="Slide_Item">
+                                                <div className="Video_Container">
+                                                    <iframe
+                                                        width="100%"
+                                                        height="200px"
+                                                        src={`${item.videoUrl}?autoplay=0&mute=1&controls=1&loop=1&playsinline=1&modestbranding=1`}
+                                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                        allowFullScreen
+                                                    ></iframe>
+                                                </div>
+                                                <div className="Video_Info_Container">
+                                                    <img src={item.imgSrc} alt={item.title} />
+                                                    <div className="Video_Info_Text">{item.title}</div>
+                                                </div>
                                             </div>
-                                            <div className="Video_Info_Container">
-                                                <img src={item.imgSrc} alt={item.title} />
-                                                <div className="Video_Info_Text">{item.title}</div>
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
-                            </SwiperSlide>
-                        ))}
+                                        ))}
+                                    </div>
+                                </SwiperSlide>
+                            ))}
+                        </Swiper>
+
+                        {/* 네비게이션 버튼 */}
                         <button
                             className="custom-prev"
                             onClick={() => swiperInstance?.slidePrev()}
                             style={{ display: currentIndex === 0 ? "none" : "block" }}
-                        >
-                            ←
-                        </button>
-
-                        {/* 오른쪽 버튼 */}
+                        ></button>
                         <button
                             className="custom-next"
                             onClick={() => swiperInstance?.slideNext()}
                             style={{ display: currentIndex === groupedData.length - 1 ? "none" : "block" }}
-                        >
-                            →
-                        </button>
-                    </Swiper>
+                        ></button>
+                    </div>
                 </div>
             </div>
         </section>
