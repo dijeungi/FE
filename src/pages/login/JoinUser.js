@@ -45,10 +45,11 @@ const JoinUser = () => {
     const [idError, setIdError] = useState(""); // 아이디 입력 에러 메시지
     const [passwordError, setPasswordError] = useState(""); // 비밀번호 입력 에러 메시지
     const [formData, setFormData] = useState(location.state || {}); // 폼 입력 데이터
+    const [isOtpButtonDisabled, setIsOtpButtonDisabled] = useState(true); // 유효성 검사
 
-    // 카테고리 목록 불러오기
+    // 카테고리 목록 불러오기 + 유효성 검사
     useEffect(() => {
-        const fetchCategories = async () => {
+        const fetchCategory = async () => {
             try {
                 const response = await getCategoryList("CT");
                 setCategory(response || []);
@@ -57,16 +58,32 @@ const JoinUser = () => {
                 setCategory([]);
             }
         };
-        fetchCategories();
-    }, []);
+
+        fetchCategory();
+
+        const isIdValid = formData.id ? validateId(formData.id) : false;
+        const isPasswordValid = formData.password ? validatePassword(formData.password) : false;
+        const isNameValid = formData.name && formData.name.trim().length > 1; // 이름 최소 2자 이상
+        const isBirthValid = formData.userBirth && /^\d{8}$/.test(formData.userBirth.replace(/\./g, "")); // 8자리 숫자 (YYYYMMDD)
+        const isPhoneValid = formData.phone && /^010-\d{3,4}-\d{4}$/.test(formData.phone); // 최소 10자리 숫자
+
+        console.log("ID 유효성:", isIdValid);
+        console.log("비밀번호 유효성:", isPasswordValid);
+        console.log("이름 유효성:", isNameValid);
+        console.log("생년월일 유효성:", isBirthValid);
+        console.log("전화번호 유효성:", isPhoneValid);
+
+        // 모든 조건이 충족될 경우에만 버튼 활성화
+        setIsOtpButtonDisabled(!(isIdValid && isPasswordValid && isNameValid && isBirthValid && isPhoneValid));
+    }, [formData]);
 
     // 입력 필드 변경 처리
     const handleChange = (e) => {
         const { name, value } = e.target;
         let newValue = value;
 
-        // 아이디, 비밀번호, 이메일, 생년월일에 한글 입력 방지
-        if (["id", "password", "email", "userBirth"].includes(name)) {
+        // 아이디, 이메일, 생년월일 입력 시 한글 제거
+        if (["id", "email"].includes(name)) {
             newValue = newValue.replace(/[ㄱ-ㅎ|가-힣]/g, ""); // 한글 제거
         }
 
@@ -75,13 +92,22 @@ const JoinUser = () => {
             [name]: newValue,
         }));
 
-        if (name === "password") {
-            validatePassword(newValue);
-        }
-
         if (name === "id") {
             validateId(newValue);
         }
+    };
+
+    // 비밀번호 입력이 끝난 후(onBlur) 유효성 검사 실행
+    const handlePasswordBlur = () => {
+        validatePassword(formData.password);
+    };
+
+    // 비밀번호 입력 시 (입력 중에는 유효성 검사 X)
+    const handlePasswordChange = (e) => {
+        setFormData((prev) => ({
+            ...prev,
+            password: e.target.value,
+        }));
     };
 
     const handlePasswordFocus = () => {
@@ -91,6 +117,7 @@ const JoinUser = () => {
             setIdError("");
         }
     };
+
     const handlePhoneChange = (e) => {
         let value = e.target.value.replace(/[^0-9]/g, "");
 
@@ -159,41 +186,80 @@ const JoinUser = () => {
 
     // 아이디 유효성 검사
     const validateId = (id) => {
+        if (!id) {
+            setIdError("아이디: 필수 정보입니다.");
+            return false;
+        }
+
         const idRegex = /^[a-z][a-z0-9]*([-_][a-z0-9]+)*$/;
 
-        // 5글자 미만일 경우 유효성 검사 실행 안 함
-        if (id.length < 5) return true;
+        if (id.length < 5) {
+            setIdError("아이디는 최소 5자 이상이어야 합니다.");
+            return false;
+        }
 
         if (id.length > 20) {
+            setIdError("아이디는 5~20자여야 합니다.");
             Swal.fire({ icon: "error", title: "아이디는 5~20자여야 합니다." });
             return false;
         }
 
         if (!idRegex.test(id)) {
+            setIdError("사용할 수 없는 아이디입니다. 영문 소문자로 시작하고, 영문·숫자·'-'·'_'만 사용할 수 있습니다.");
             Swal.fire({ icon: "error", title: "사용할 수 없는 아이디입니다." });
             return false;
         }
 
+        setIdError(""); // 에러 메시지 초기화
         return true;
     };
 
     // 비밀번호 유효성 검사 함수
     const validatePassword = (password) => {
-        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$/;
-
-        if (!passwordRegex.test(password)) {
-            setPasswordError("비밀번호: 8~16자의 영문 대/소문자, 숫자, 특수문자를 사용해 주세요.");
+        if (!password) {
+            setPasswordError("비밀번호: 필수 정보입니다.");
             return false;
         }
 
-        setPasswordError("");
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$/;
+
+        if (password.length < 8 || password.length > 16) {
+            setPasswordError("비밀번호는 8~16자여야 합니다.");
+            return false;
+        }
+
+        if (!passwordRegex.test(password)) {
+            setPasswordError("비밀번호: 영문 대/소문자, 숫자, 특수문자를 포함해야 합니다.");
+            return false;
+        }
+
+        setPasswordError(""); // 유효성 검사 통과 시 에러 메시지 제거
         return true;
+    };
+
+    // 생년월일 . 자동 입력 합수
+    const handleBirthChange = (e) => {
+        let value = e.target.value.replace(/[^0-9]/g, ""); // 숫자만 입력
+
+        if (value.length > 4 && value.length <= 6) {
+            value = value.replace(/(\d{4})(\d{1,2})/, "$1.$2");
+        } else if (value.length > 6) {
+            value = value.replace(/(\d{4})(\d{2})(\d{2})/, "$1.$2.$3");
+        }
+
+        // 최대 8자리까지만 허용 . 포함
+        if (value.length > 10) {
+            value = value.slice(0, 10);
+        }
+
+        setFormData((prev) => ({ ...prev, userBirth: value }));
     };
 
     // 회원가입 제출
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        // 필수 입력값 검증
         if (!formData.id) {
             Toast.fire({ icon: "warning", title: "아이디를 입력하세요." });
             return;
@@ -214,14 +280,18 @@ const JoinUser = () => {
             return;
         }
 
+        // 휴대폰 번호와 생년월일 정리 ('-'과 '.' 제거)
+        const cleanedPhone = formData.phone.replace(/-/g, "");
+        const cleanedBirth = formData.userBirth.replace(/\./g, "");
+
         try {
             await joinUserPost({
                 id: formData.id,
                 name: formData.userName,
                 email: formData.email,
                 password: formData.password,
-                phone: formData.phone,
-                userBirth: formData.userBirth,
+                phone: cleanedPhone,
+                userBirth: cleanedBirth,
                 mailYn: formData.mailYn,
                 favorite1: formData.favorite1,
                 favorite2: formData.favorite2,
@@ -293,8 +363,9 @@ const JoinUser = () => {
                     type="password"
                     name="password"
                     value={formData.password}
-                    onChange={handleChange}
+                    onChange={handlePasswordChange}
                     placeholder="비밀번호"
+                    onBlur={handlePasswordBlur}
                     onFocus={handlePasswordFocus}
                 />
             </div>
@@ -337,8 +408,8 @@ const JoinUser = () => {
                     type="text"
                     name="userBirth"
                     value={formData.userBirth}
-                    onChange={handleChange}
-                    maxLength="8"
+                    onChange={handleBirthChange}
+                    maxLength="9"
                     placeholder="생년월일"
                 />
                 <div id="recaptcha-container"></div>
@@ -434,6 +505,7 @@ const JoinUser = () => {
                 type="button"
                 className="JoinButton"
                 onClick={buttonState === "sendOtp" ? sendOtp : buttonState === "verifyOtp" ? verifyOtp : handleNextStep}
+                disabled={buttonState === "sendOtp" && isOtpButtonDisabled}
             >
                 {buttonState === "sendOtp" ? "인증번호 받기" : buttonState === "verifyOtp" ? "인증하기" : "다음 단계"}
             </button>
