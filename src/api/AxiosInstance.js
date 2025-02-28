@@ -50,7 +50,6 @@ axiosInstance.interceptors.response.use(
         // const navigate = useNavigate();
         console.log("interceptor error: ", error);
         if (error.response.data && error.response.data.error === "ERROR_ACCESS_TOKEN") {
-            console.log("error.response.data.error: " + error.response.data.error);
             const result = await refreshJWT();
             console.log("refreshJWT RESULT", result);
 
