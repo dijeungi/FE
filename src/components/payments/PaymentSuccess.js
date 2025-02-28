@@ -3,6 +3,7 @@ import {Link, useLocation} from "react-router-dom";
 import {useSelector} from "react-redux";
 import {addSeatTickets} from "../../api/TicketApi";
 import CreditScoreIcon from '@mui/icons-material/CreditScore';
+import "../../styles/Payment/PaymentSuccess.css";
 
 const PaymentSuccess = () => {
     const location = useLocation();
@@ -63,17 +64,36 @@ const PaymentSuccess = () => {
                     seats: params.get("seats").split(",")
                 }
                 console.log(requestBody);
-                addSeatTickets(requestBody);
+                console.log("DB Insert 전 : "+params.get("closed"));
+                if (window.opener) {
+
+                    addSeatTickets(requestBody);
+                    window.close();
+                    console.log("opener 테스트 성공");
+                }else {
+                    console.log("closed 실행 완료");
+                }
             }
         }
     }, []);
-    const orderId = params.get("orderId") || "N/A";
+    const orderId = params.get("id") || "N/A";
     const totalPrice = params.get("totalPrice") || 0;
     const seats = params.get("seats") ? params.get("seats").split(",") : [];
     const paymentMethod = params.get("paymentMethod") || "신용카드";
 
     const rawPoster = params.get("poster");
     const poster = rawPoster ? decodeURIComponent(rawPoster) : "https://via.placeholder.com/150";
+    console.log("DB Insert 밖 : "+params.get("closed"));
+    if (window.opener) {
+        window.opener.location.href = `${
+            window.location.origin
+        }/payment/success?orderId=${orderId}&totalPrice=${totalPrice}&seats=${params.get("seats")}&poster=${encodeURIComponent(poster)}&closed=${true}`;
+        console.log("성공");
+
+    }
+    else{
+        console.log("실패");
+    }
 
     console.log("🖼️ URL에서 가져온 포스터 (원본):", rawPoster);
     console.log("📸 디코딩된 포스터 URL:", poster);
@@ -94,8 +114,8 @@ const PaymentSuccess = () => {
                     <div className="Success_Info">
                         <div className="Success_Main_text">
                             <li className="Success_InfoItem Line">
-                                <strong className="Success_Strong">예매번호:</strong>
-                                <p className="Success_InfoDesc">{orderId}</p>
+                                <strong className="Success_Strong">구매해주신 티켓 정보입니다.</strong>
+                                {/*<p className="Success_InfoDesc"></p>*/}
                             </li>
                             <li className="Success_InfoItem">
                                 <strong className="Success_Strong">좌석:</strong>

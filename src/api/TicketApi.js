@@ -40,7 +40,7 @@ export const addSeatTickets = async (requestBody) => {
             locationNum: requestBody.seats
         });
 
-        return  response.data();
+        return  response.data;
 
 
 };

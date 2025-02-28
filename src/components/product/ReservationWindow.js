@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import { loadTossPayments } from "@tosspayments/payment-sdk";
 import { getSeatTickets } from "../../api/TicketApi";
 import "../../styles/components/ReservationWindow.css";
@@ -16,7 +16,7 @@ const ReservationWindow = () => {
     const poster = decodeURIComponent(params.get("poster")) || "";
     const dateId = params.get("dateId") || "";
     const [reservedSeats, setReservedSeats] = useState([]);
-
+    const navigate = useNavigate();
     console.log("🎭 공연명:", festivalName);
     console.log("📅 날짜:", selectedDate);
     console.log("⏰ 시간:", selectedTime);
@@ -81,9 +81,13 @@ const ReservationWindow = () => {
                     window.location.origin
                 }/payment/success?orderId=${orderId}&totalPrice=${totalPrice}&seats=${selectedSeats.join(
                     ","
-                )}&poster=${encodeURIComponent(poster)}`,
+                )}&poster=${encodeURIComponent(poster)}&closed=${false}`,
                 failUrl: `${window.location.origin}/payment/fail`,
+
             });
+
+
+
         } catch (error) {
             console.error("결제 오류:", error);
             alert(`결제 실패: ${error.message}`);

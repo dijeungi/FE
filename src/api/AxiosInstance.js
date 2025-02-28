@@ -53,7 +53,7 @@ axiosInstance.interceptors.response.use(
       error.response.data &&
       error.response.data.error === "ERROR_ACCESS_TOKEN"
     ) {
-      console.log("error.response.data.error: " + error.response.data.error);
+      // console.log("error.response.data.error: " + error.response.data.error);
       const result = await refreshJWT();
       console.log("refreshJWT RESULT", result);
 
