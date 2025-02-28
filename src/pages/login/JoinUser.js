@@ -252,6 +252,7 @@ const JoinUser = () => {
             value = value.slice(0, 10);
         }
 
+
         setFormData((prev) => ({ ...prev, userBirth: value }));
     };
 
@@ -283,6 +284,11 @@ const JoinUser = () => {
         // 휴대폰 번호와 생년월일 정리 ('-'과 '.' 제거)
         const cleanedPhone = formData.phone.replace(/-/g, "");
         const cleanedBirth = formData.userBirth.replace(/\./g, "");
+        // const num = e.target.value.split(".");
+        // const num1 = num[0];
+        // const num2 = num[1];
+        // const num3 = num[2];
+        // const birthDay = num1+num2+num3;
 
         try {
             await joinUserPost({
@@ -326,10 +332,11 @@ const JoinUser = () => {
         }
 
         const cleanedPhone = formData.phone.replace(/-/g, "");
-
+        const cleanedBirth = formData.userBirth.replace(/\./g, "");
         const sendData = {
             ...formData,
             phone: cleanedPhone,
+            userBirth: cleanedBirth,
         };
 
         console.log("📢 GenreSelect로 보낼 데이터:", sendData);
