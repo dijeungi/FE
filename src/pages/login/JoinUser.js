@@ -145,8 +145,6 @@ const JoinUser = () => {
 
   // Firebase Recaptcha 설정
   const setupRecaptcha = () => {
-    window.RECAPTCHA_DEBUG = true; // ✅ HTTP에서도 reCAPTCHA가 동작하도록 설정
-
     if (!window.recaptchaVerifier) {
       window.recaptchaVerifier = new RecaptchaVerifier(
         auth,
