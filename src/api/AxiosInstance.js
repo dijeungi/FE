@@ -15,9 +15,7 @@ const axiosInstance = axios.create({
 
 // JWT 토큰 갱신 함수
 const refreshJWT = async () => {
-  const res = await axiosInstance.get(`/member/refresh`, {
-    withCredentials: true,
-  });
+  const res = await axiosInstance.get(`/member/refresh`);
 
   console.log("----------------------");
   console.log(res.data);
@@ -55,6 +53,7 @@ axiosInstance.interceptors.response.use(
       error.response.data &&
       error.response.data.error === "ERROR_ACCESS_TOKEN"
     ) {
+      console.log("error.response.data.error: " + error.response.data.error);
       const result = await refreshJWT();
       console.log("refreshJWT RESULT", result);
 
