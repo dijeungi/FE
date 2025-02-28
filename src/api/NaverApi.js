@@ -4,8 +4,8 @@ import axios from "axios";
 
 import { API_SERVER_HOST, FRONT_HOST } from "../config/ApiConfig";
 
-const client_id = process.env.REACT_APP_NAVER_CLIENT_ID;
-const client_secret = process.env.REACT_APP_NAVER_CLIENT_SECRET;
+const client_id = window.env.REACT_APP_NAVER_CLIENT_ID;
+const client_secret = window.env.REACT_APP_NAVER_CLIENT_SECRET;
 
 // 리다이렉트 uri => naverRedirectPage로 이동
 const redirect_uri = `${FRONT_HOST}/member/naver`; // http://43.200.239.220:3000/member/kakao

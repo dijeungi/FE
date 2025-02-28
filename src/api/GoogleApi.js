@@ -4,9 +4,9 @@ import axios from "axios";
 
 import { API_SERVER_HOST, FRONT_HOST } from "../config/ApiConfig";
 
-// const rest_api_key = process.env.REACT_APP_GOOGLE_REST_API_KEY;
-const client_id = process.env.REACT_APP_GOOGLE_CLIENT_ID;
-const client_secret = process.env.REACT_APP_GOOGLE_CLIENT_SECRET;
+// const rest_api_key = window.env.REACT_APP_GOOGLE_REST_API_KEY;
+const client_id = window.env.REACT_APP_GOOGLE_CLIENT_ID;
+const client_secret = window.env.REACT_APP_GOOGLE_CLIENT_SECRET;
 
 // 리다이렉트 uri => googleRedirectPage로 이동
 const redirect_uri = `${FRONT_HOST}/member/google`; // http://43.200.239.220:3000/member/google
