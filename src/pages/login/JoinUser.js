@@ -185,7 +185,6 @@ const JoinUser = () => {
         title: "OTP 전송 완료! 문자로 인증번호를 확인하세요.",
       });
     } catch (error) {
-      console.log(`${window.env.REACT_APP_FIREBASE_API_KEY}`);
       console.error("OTP 전송 실패:", error);
       Toast.fire({
         icon: "error",
