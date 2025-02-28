@@ -36,6 +36,9 @@ export const joinUserPost = async (requestData) => {
         password: requestData.password,
         phone: requestData.phone,
         mailYn: requestData.mailYn,
+        favorite1: requestData.favorite1,
+        favorite2: requestData.favorite2,
+        favorite3: requestData.favorite3,
     });
     return response.data;
 };

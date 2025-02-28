@@ -42,7 +42,46 @@ const videoData = {
             imgSrc: "http://ticketimage.interpark.com/Play/image/large/24/24017978_p.gif",
         },
     ],
-    뮤지컬: [
+    로맨틱코미디: [
+        {
+            id: 1,
+            title: "뮤지컬 <베르테르> 25주년 공연",
+            videoUrl:
+                "https://www.youtube.com/embed/tA1ID8J5k0M?autoplay=0&mute=1&controls=0&origin=https%3A%2F%2Ftickets.interpark.com&playsinline=1&showinfo=0&rel=0&iv_load_policy=3&modestbranding=0&disablekb=1&enablejsapi=1&widgetid=37",
+            imgSrc: "https://ticketimage.interpark.com/Play/image/large/24/24017198_p.gif",
+        },
+        {
+            id: 2,
+            title: "뮤지컬 알라딘",
+            videoUrl: "https://www.youtube.com/embed/S_l-EPvirwc",
+            imgSrc: "http://ticketimage.interpark.com/Play/image/large/24/24012498_p.gif",
+        },
+        {
+            id: 3,
+            title: "뮤지컬 베르테르",
+            videoUrl: "https://www.youtube.com/embed/9SG7eRD_j0M",
+            imgSrc: "http://ticketimage.interpark.com/Play/image/large/24/24017198_p.gif",
+        },
+        {
+            id: 4,
+            title: "뮤지컬 여신님이 보고 계셔",
+            videoUrl: "https://www.youtube.com/embed/lW5pz6uDIvk",
+            imgSrc: "http://ticketimage.interpark.com/Play/image/large/24/24014618_p.gif",
+        },
+        {
+            id: 5,
+            title: "뮤지컬 이프덴",
+            videoUrl: "https://www.youtube.com/embed/3XGHq6P8wsk",
+            imgSrc: "http://ticketimage.interpark.com/Play/image/large/24/24014511_p.gif",
+        },
+        {
+            id: 6,
+            title: "뮤지컬 오지게 재밌는 가시나들",
+            videoUrl: "https://www.youtube.com/embed/1hJj2gHh4HU",
+            imgSrc: "http://ticketimage.interpark.com/Play/image/large/24/24017978_p.gif",
+        },
+    ],
+    코믹: [
         {
             id: 1,
             title: "뮤지컬 알라딘",
@@ -80,7 +119,7 @@ const videoData = {
             imgSrc: "http://ticketimage.interpark.com/Play/image/large/24/24017978_p.gif",
         },
     ],
-    콘서트: [
+    드라마: [
         {
             id: 1,
             title: "뮤지컬 알라딘",
@@ -118,7 +157,7 @@ const videoData = {
             imgSrc: "http://ticketimage.interpark.com/Play/image/large/24/24017978_p.gif",
         },
     ],
-    "전시/행사": [
+    "공포/스릴러": [
         {
             id: 1,
             title: "뮤지컬 알라딘",
@@ -156,7 +195,7 @@ const videoData = {
             imgSrc: "http://ticketimage.interpark.com/Play/image/large/24/24017978_p.gif",
         },
     ],
-    "클래식/무용": [
+    어린이연극: [
         {
             id: 1,
             title: "뮤지컬 알라딘",
@@ -194,45 +233,7 @@ const videoData = {
             imgSrc: "http://ticketimage.interpark.com/Play/image/large/24/24017978_p.gif",
         },
     ],
-    "아동/가족": [
-        {
-            id: 1,
-            title: "뮤지컬 알라딘",
-            videoUrl: "https://www.youtube.com/embed/S_l-EPvirwc",
-            imgSrc: "http://ticketimage.interpark.com/Play/image/large/24/24012498_p.gif",
-        },
-        {
-            id: 2,
-            title: "뮤지컬 지킬앤하이드",
-            videoUrl: "https://www.youtube.com/embed/O0H5cknTcAA",
-            imgSrc: "http://ticketimage.interpark.com/Play/image/large/24/24013928_p.gif",
-        },
-        {
-            id: 3,
-            title: "뮤지컬 베르테르",
-            videoUrl: "https://www.youtube.com/embed/9SG7eRD_j0M",
-            imgSrc: "http://ticketimage.interpark.com/Play/image/large/24/24017198_p.gif",
-        },
-        {
-            id: 4,
-            title: "뮤지컬 여신님이 보고 계셔",
-            videoUrl: "https://www.youtube.com/embed/lW5pz6uDIvk",
-            imgSrc: "http://ticketimage.interpark.com/Play/image/large/24/24014618_p.gif",
-        },
-        {
-            id: 5,
-            title: "뮤지컬 이프덴",
-            videoUrl: "https://www.youtube.com/embed/3XGHq6P8wsk",
-            imgSrc: "http://ticketimage.interpark.com/Play/image/large/24/24014511_p.gif",
-        },
-        {
-            id: 6,
-            title: "뮤지컬 오지게 재밌는 가시나들",
-            videoUrl: "https://www.youtube.com/embed/1hJj2gHh4HU",
-            imgSrc: "http://ticketimage.interpark.com/Play/image/large/24/24017978_p.gif",
-        },
-    ],
-    연극: [
+    기타: [
         {
             id: 1,
             title: "뮤지컬 알라딘",
@@ -274,11 +275,15 @@ const videoData = {
 
 const CategoryVideo = () => {
     const [selectedCategory, setSelectedCategory] = useState("추천영상");
-    const [currentIndex, setCurrentIndex] = useState(0); // 현재 슬라이드 인덱스 상태
-    const [swiperInstance, setSwiperInstance] = useState(null); // Swiper 인스턴스 저장
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const [swiperInstance, setSwiperInstance] = useState(null);
 
     const selectedVideos = videoData[selectedCategory] || [];
     const groupedData = [];
+
+    const handleCategoryClick = (category) => {
+        setSelectedCategory(category);
+    };
 
     for (let i = 0; i < selectedVideos.length; i += 3) {
         groupedData.push(selectedVideos.slice(i, i + 3));
@@ -299,17 +304,17 @@ const CategoryVideo = () => {
                 <div role="presentation" className="CategoryVideo_Category">
                     <menu className="CategoryVideo_Menu">
                         {Object.keys(videoData).map((category) => (
-                            <div key={category} className="CategoryVideo__Wrapper">
-                                <button
-                                    className={`CategoryVideo_Button ${selectedCategory === category ? "active" : ""}`}
-                                    onClick={() => setSelectedCategory(category)}
-                                >
-                                    {category}
-                                </button>
-                            </div>
+                            <button
+                                key={category}
+                                className={`CategoryVideo_Button ${selectedCategory === category ? "active" : ""}`}
+                                onClick={() => handleCategoryClick(category)}
+                            >
+                                {category}
+                            </button>
                         ))}
                     </menu>
                 </div>
+
                 {/* CC PLAY */}
                 <div className="CCPlay_SwiperWrap">
                     <div className="CCPlay_PlayWrap">

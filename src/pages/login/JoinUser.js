@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
-import "../../styles/login/JoinUser.css";
+// React 관련 Hooks
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import Swal from "sweetalert2";
-import { joinUserPost } from "../../api/LoginApi";
-import { getCategoryList } from "../../api/CommonApi";
-import { auth } from "../../config/FirebaseConfig";
-import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 
+// 스타일 및 CSS
+import "../../styles/login/JoinUser.css";
+
+// 라이브러리 및 UI 관련
+import Swal from "sweetalert2";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import PasswordIcon from "@mui/icons-material/Password";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
@@ -16,6 +16,13 @@ import EventNoteIcon from "@mui/icons-material/EventNote";
 import PeopleOutlineIcon from "@mui/icons-material/PeopleOutline";
 import SchoolIcon from "@mui/icons-material/School";
 
+// API 및 Firebase 관련 함수
+import { joinUserPost } from "../../api/LoginApi";
+import { getCategoryList } from "../../api/CommonApi";
+import { auth } from "../../config/FirebaseConfig";
+import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
+
+// SweetAlert2 설정
 const Toast = Swal.mixin({
     toast: true,
     position: "top-end",
@@ -26,15 +33,20 @@ const Toast = Swal.mixin({
 });
 
 const JoinUser = () => {
-    const { userType } = useParams(); // "user" or "team"
+    const { userType } = useParams(); // URL의 userType 파라미터 ("user" 또는 "team")
     const navigate = useNavigate();
-    const [otp, setOtp] = useState("");
-    const [confirmation, setConfirmation] = useState(null);
-    const [buttonState, setButtonState] = useState("sendOtp");
-    const [category, setCategory] = useState([]);
-    const [idError, setIdError] = useState("");
-    const [passwordError, setPasswordError] = useState("");
+    const location = useLocation();
 
+    // 상태 변수
+    const [otp, setOtp] = useState(""); // OTP 코드 입력값
+    const [confirmation, setConfirmation] = useState(null); // Firebase 인증 결과 저장
+    const [buttonState, setButtonState] = useState("sendOtp"); // OTP 버튼 상태 관리
+    const [category, setCategory] = useState([]); // 카테고리 목록
+    const [idError, setIdError] = useState(""); // 아이디 입력 에러 메시지
+    const [passwordError, setPasswordError] = useState(""); // 비밀번호 입력 에러 메시지
+    const [formData, setFormData] = useState(location.state || {}); // 폼 입력 데이터
+
+    // 카테고리 목록 불러오기
     useEffect(() => {
         const fetchCategories = async () => {
             try {
@@ -48,9 +60,7 @@ const JoinUser = () => {
         fetchCategories();
     }, []);
 
-    const location = useLocation();
-    const [formData, setFormData] = useState(location.state || {});
-
+    // 입력 필드 변경 처리
     const handleChange = (e) => {
         const { name, value } = e.target;
         let newValue = value;
@@ -93,7 +103,7 @@ const JoinUser = () => {
         setFormData((prev) => ({ ...prev, phone: value }));
     };
 
-    //
+    // Firebase Recaptcha 설정
     const setupRecaptcha = () => {
         if (!window.recaptchaVerifier) {
             window.recaptchaVerifier = new RecaptchaVerifier(auth, "recaptcha-container", {
@@ -125,7 +135,29 @@ const JoinUser = () => {
         }
     };
 
-    //
+    // OTP 인증 확인
+    const verifyOtp = async () => {
+        if (!otp) {
+            Toast.fire({ icon: "warning", title: "인증번호를 입력하세요." });
+            return;
+        }
+
+        try {
+            if (!confirmation) {
+                Toast.fire({ icon: "warning", title: "먼저 인증번호를 받아주세요." });
+                return;
+            }
+
+            await confirmation.confirm(otp);
+
+            setButtonState("confirmed");
+            Toast.fire({ icon: "success", title: "휴대폰 인증이 완료되었습니다." });
+        } catch (error) {
+            Toast.fire({ icon: "error", title: "OTP 인증 실패", text: "입력한 인증번호가 올바르지 않습니다." });
+        }
+    };
+
+    // 아이디 유효성 검사
     const validateId = (id) => {
         const idRegex = /^[a-z][a-z0-9]*([-_][a-z0-9]+)*$/;
 
@@ -156,28 +188,6 @@ const JoinUser = () => {
 
         setPasswordError("");
         return true;
-    };
-
-    // OTP 인증 확인
-    const verifyOtp = async () => {
-        if (!otp) {
-            Toast.fire({ icon: "warning", title: "인증번호를 입력하세요." });
-            return;
-        }
-
-        try {
-            if (!confirmation) {
-                Toast.fire({ icon: "warning", title: "먼저 인증번호를 받아주세요." });
-                return;
-            }
-
-            await confirmation.confirm(otp);
-
-            setButtonState("confirmed");
-            Toast.fire({ icon: "success", title: "휴대폰 인증이 완료되었습니다." });
-        } catch (error) {
-            Toast.fire({ icon: "error", title: "OTP 인증 실패", text: "입력한 인증번호가 올바르지 않습니다." });
-        }
     };
 
     // 회원가입 제출

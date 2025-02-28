@@ -31,6 +31,21 @@
     color: #fff;
 }
 
+.CategoryVideo_Button {
+    padding: 10px 20px;
+    border: 1px solid #777;
+    border-radius: 20px;
+    background-color: #fff;
+    cursor: pointer;
+    width: 7rem;
+}
+
+.CategoryVideo_Button.active {
+    background-color: #ff8364;
+    color: #fff;
+    border-color: #ff8364;
+}
+
 /* ================ 하단 =============== */
 
 .CCPlay_SwiperWrap {
@@ -134,11 +149,13 @@
 .custom-next::before {
     content: "";
     display: block;
-    width: 30px;
-    height: 30px;
+    width: 48px;
+    height: 20px;
 
     background: url(//openimage.interpark.com/UI/tour/pages/main/slide_arrow.svg) no-repeat center;
     background-size: contain;
+
+    background-position: center center;
 }
 
 /* 왼쪽(prev) 화살표: 90도 회전 */
