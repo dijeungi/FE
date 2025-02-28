@@ -1,95 +1,158 @@
-.Login-text{
+.Login-text {
     font-size: 14px;
 }
 
-.Login-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 50px;
-}
-  
-.Login-logo {
-    font-size: 24px;
-    margin-bottom: 20px;
-}
-  
-.Login-input {
-    margin-bottom: 10px;
-    padding: 10px;
-    width: 375px;
-}
-  
-.Login-keep-logged-in {
-    display: flex;
-    margin-bottom: 20px;
-}
-  
-.Login-button {
-    padding: 10px 20px;
-    background-color: black;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    width: 375px;
+.Login_Logo {
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    transform: translate(-50%, 0);
+    width: 150px;
+    height: 1px;
+    z-index: 1000;
 }
 
-.Login-links {
-    margin-top: 20px;
-    text-align: center;
-    display: flex;
-    gap: 20px;
-    color: #767676;
-    font-size: 16px;
+.Login_Logo img {
+    position: relative;
+    /* top: 100%; */
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 200%;
+    height: auto;
 }
 
-.Login-link {
-    text-decoration: none;
-    color: #767676;
-    margin: 0 10px;
-}
-
-  
-.Login-social-icons {
-    margin-top: 10px;
-    padding-bottom: 100px;
-}
-  
-.Login-icon {
-    margin-right: 10px;
-}
-
-.Login-input{
+.Login_Container {
+    width: 500px;
+    margin: 2.5rem auto;
+    position: relative;
     border: 1px solid #ccc;
+    border-radius: 30px;
+    padding: 2.5rem 5rem;
+    top: 15rem;
 }
-  
 
-.Join-form-box{ 
+.Login_Input {
+    color: #797979;
+    padding-bottom: 5px;
+
     border-bottom: 1px solid #ccc;
     height: 50px;
     display: flex;
     align-items: flex-end;
 }
-.Join-form-box-category{
-    border-bottom: 1px solid #ccc;
-    height: 200px;
-    display: flex;
-    align-items: flex-end;
-}
-.Join-form-box-header{
 
-    height: 20px;
-    /*align-items: flex-end;*/
-    text-align: center;
-
-    display: block;
-}
-
-
-
-input{
-    border: none;
-}
-.Login-link{
+.Login_Input label {
+    width: 2rem;
     font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    margin-right: 10px;
+}
+
+.Login_Input input {
+    height: 30px;
+    width: 100%;
+    font-size: 16px;
+    /* margin-right: 10px; */
+}
+
+.Login_Input input:hover {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.Login_Checkbox {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 2px solid #ff9696;
+    appearance: none;
+    outline: none;
+    cursor: pointer;
+    position: relative;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.Login_Checkbox:checked {
+    background-color: #ff9696;
+    border-color: #ff9696;
+}
+
+.Login_Checkbox:checked::after {
+    content: "✔";
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.Login_Essential {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    padding: 1rem 1rem;
+    margin: 20px 0;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.Login_Essential span {
+    font-weight: bold;
+    text-align: center;
+}
+
+.Login_Button {
+    flex: none;
+    padding: 20px;
+    width: 100%;
+    padding: 14px 0;
+    border-radius: 6px;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    background: #ff8364;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 22px;
+    color: #fff;
+}
+.Login_Link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 15px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.Login_Link span {
+    color: #ccc;
+    font-weight: normal;
+}
+
+.Login_Link {
+    text-decoration: none;
+    color: #555;
+    transition: color 0.3s ease-in-out;
+}
+
+.Login_Link:hover {
+    color: #ff8364;
+}
+
+.Social_Login_Icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-top: 20px;
 }

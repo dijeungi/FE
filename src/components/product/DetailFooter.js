@@ -1,7 +1,4 @@
 import { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { fetchFestivalDetail } from "../../redux/DetailSlice";
-import { useEffect } from "react";
 import "../../styles/info/Tabs.css";
 import "../../styles/info/Casting.css";
 
@@ -14,33 +11,7 @@ const tabs = [
 ];
 
 const DetailFooter = (props) => {
-    const {
-        festivalId,
-        festivalDetails,
-        totalStar,
-        isLiked,
-        likeCount,
-        placeLocation,
-        selectedDate,
-        selectedTime,
-        festivalTimeData,
-        festivalName,
-        ranking,
-        fromDate,
-        toDate,
-        festivalPrice,
-        salePrice,
-        postImage,
-        runningTime,
-        age,
-        placeDetailName,
-        isMapOpen,
-        castingList,
-
-        imgSrc1,
-        imgSrc2,
-        imgSrc3,
-    } = props;
+    const { castingList, imgSrc1, imgSrc2, imgSrc3 } = props;
 
     const [showAll, setShowAll] = useState(false);
     const [currentTab, setCurrentTab] = useState("FestivalInfo");
@@ -63,7 +34,7 @@ const DetailFooter = (props) => {
                                             <img
                                                 src={
                                                     casting.profileImage ||
-                                                    "//ticketimage.interpark.com/PlayDictionary/DATA/PlayDic/PlayDicUpload/040004/19/08/0400041908_45194_02803.gif"
+                                                    "https://hkapp.kr/common/img/default_profile.png"
                                                 }
                                                 alt={`${casting.actorName} 프로필 사진`}
                                                 className="Casting_Image"

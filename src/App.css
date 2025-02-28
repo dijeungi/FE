@@ -49,3 +49,16 @@ main {
 .Container {
     min-width: 100vh;
 }
+
+input {
+    border: none;
+}
+
+img {
+    user-drag: none; /* 드래그 방지 */
+    user-select: none; /* 텍스트 선택 방지 */
+    -webkit-user-drag: none; /* 크롬, 사파리 */
+    -webkit-user-select: none; /* 크롬, 사파리 */
+    -moz-user-select: none; /* 파이어폭스 */
+    -ms-user-select: none; /* 익스플로러 */
+}
