@@ -8,7 +8,7 @@
     height: 130px;
     margin: auto;
     margin-top: 30px;
-    border: 1px solid #ff7b14;
+    border: 1px solid #ff8364;
     border-radius: 10px;
     /* box-sizing: border-box; */
     overflow: hidden;
@@ -16,7 +16,7 @@
 
 .MyPage_Top_Left {
     float: left;
-    background: #ff7b14;
+    background: #ff8364;
     width: 240px;
     height: 130px;
     border-radius: 8px 0 0 8px;

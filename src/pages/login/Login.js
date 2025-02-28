@@ -122,8 +122,8 @@ const LoginPage = () => {
                 </div>
 
                 <div className="Social_Login_Icon">
-                    <img src={Naver_Login} alt="KakaoTalk" className="Login-icon Naver" onClick={handleKakaoLogin} />
-                    <img src={Kakao_Login} alt="Naver" className="Login-icon" onClick={handleNaverLogin} />
+                    <img src={Naver_Login} alt="KakaoTalk" className="Login-icon Naver" onClick={handleNaverLogin} />
+                    <img src={Kakao_Login} alt="Naver" className="Login-icon" onClick={handleKakaoLogin} />
                     <img src={Google_Login} alt="Google" className="Login-icon1" onClick={handleGoogleLogin} />
                 </div>
             </div>

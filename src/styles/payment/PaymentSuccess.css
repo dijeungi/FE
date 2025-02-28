@@ -44,6 +44,10 @@
 .Success_Poster {
 }
 
+.Success_Info {
+    width: 100%;
+}
+
 .Success_Poster img {
     width: 300px;
     height: 400px;
@@ -57,7 +61,19 @@
     margin-top: 0.35rem;
 
     font-size: 0;
+
     display: flex;
+}
+
+.Success_Strong_Title {
+    display: inline-block;
+    width: 100%;
+    color: #62676c;
+    font-size: 1rem;
+    font-weight: normal;
+    line-height: 160%;
+    vertical-align: top;
+    box-sizing: border-box;
 }
 
 .Success_Strong {
