@@ -205,7 +205,11 @@ const ProductDetailPage = () => {
         // const [newWindow, setNewWindow] = useState(null);
         // const [isWindowOpen, setIsWindowOpen] = useState(false);
 
-        const win = window.open(`/reservation?${queryParams}`, "_blank", "width=980,height=745,resizable=no,scrollbars=no");
+        const win = window.open(
+            `/reservation?${queryParams}`,
+            "_blank",
+            "width=980,height=745,resizable=no,scrollbars=no"
+        );
     };
 
     // 좋아요 데이터 불러오기 & 공연 상세 정보 가져오기

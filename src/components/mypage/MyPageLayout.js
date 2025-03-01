@@ -1,14 +1,31 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, Link, Outlet } from "react-router-dom";
 import "../../styles/mypage/MyPageLayout.css";
-import {useSelector} from "react-redux";
+import { useSelector } from "react-redux";
+import { getMemberInfo } from "../../api/MemberApi";
 
 export default function MyPageLayout() {
-    // 기본적으로 예매내역이 active 상태입니다.
     const [activeMenu, setActiveMenu] = useState("예매내역");
+    const [memberInfo, setMemberInfo] = useState(null);
     const navigate = useNavigate();
 
-    const userName = useSelector((state) => state.loginSlice.id);
+    const userId = useSelector((state) => state.loginSlice.id);
+
+    useEffect(() => {
+        const fetchMemberInfo = async () => {
+            if (userId) {
+                try {
+                    const data = await getMemberInfo(userId);
+                    setMemberInfo(data);
+                } catch (error) {
+                    console.error("회원 정보를 불러오는 중 오류 발생:", error);
+                }
+            }
+        };
+
+        fetchMemberInfo();
+    }, [userId]);
+
     // 각 메뉴 항목에 대해 표시할 이름과 이동할 URL 경로를 정의합니다.
     const menuRoutes = {
         예매내역: "booking",
@@ -32,54 +49,55 @@ export default function MyPageLayout() {
         <div className="MyPage_Container clearfix">
             <div className="MyPage_Top">
                 <div className="MyPage_Top_Left">
-
-                    {/*<img src="https://dijeungi.github.io/imageHosting/images/CClogo.png" alt="로고"/>*/}
+                    <span>Campus Concert</span>
+                    <span>청춘극장</span>
+                    {/* <img src="https://dijeungi.github.io/imageHosting/images/CClogo.png" alt="로고" /> */}
                 </div>
                 <div className="MyPage_Top_Right">
-                    <div className="MyPage_Contents" style={{marginLeft: "10px"}}>
-                            <div className="MyPage_Title" style={{fontWeight: "noraml", paddingTop: "2px"}}>
-                                어서오세요&nbsp;🧩
+                    <div className="MyPage_Contents" style={{ marginLeft: "10px" }}>
+                        <div className="MyPage_Title" style={{ fontWeight: "noraml", paddingTop: "2px" }}>
+                            어서오세요&nbsp;🧩
+                        </div>
+                        <Link to="/mypage/userinfo">
+                            <div style={{ marginTop: "6px" }}>
+                                <span className="MyPage_Top_Name">{memberInfo ? memberInfo.name : "로딩 중..."}</span>
+                                <span className="MyPage_Top_Nim">님</span>
                             </div>
-                            <Link to="/mypage/userinfo">
-                                <div style={{marginTop: "6px"}}>
-                                    <span className="MyPage_Top_Name">{userName}</span>
-                                    <span className="MyPage_Top_Nim">님</span>
-                                </div>
-                            </Link>
-                        </div>
-                        <div className="MyPage_Contents">
-                            {/*<Link to="/">*/}
-                                <div className="MyPage_Top_Title">
-                                    티켓 구매 횟수&nbsp;
-                                    {/*<span className="Arrow_gt">&gt;</span>*/}
-                                </div>
-                                <div className="MyPage_Top_Number">0</div>
-                            {/*</Link>*/}
-                        </div>
-                        <div className="MyPage_Contents">
-                            {/*<Link to="/">*/}
-                                <div className="MyPage_Top_Title">
-                                    리뷰 횟수&nbsp;
-                                    {/*<span className="Arrow_gt">&gt;</span>*/}
-                                </div>
-                                <div className="MyPage_Top_Number">0</div>
-                            {/*</Link>*/}
-                        </div>
-                        <div className="MyPage_Contents">
-                            {/*<Link to="/">*/}
-                                <div className="MyPage_Top_Title">
-                                    좋아요 횟수&nbsp;
-                                    {/*<span className="Arrow_gt">&gt;</span>*/}
-                                </div>
-                                <div className="MyPage_Top_Number">0</div>
-                            {/*</Link>*/}
-                        </div>
-                        <div className="MyPage_Contents"></div>
-                        {/* 예비칸 */}
+                        </Link>
                     </div>
+                    <div className="MyPage_Contents">
+                        {/*<Link to="/">*/}
+                        <div className="MyPage_Top_Title">
+                            티켓 구매 횟수&nbsp;
+                            {/*<span className="Arrow_gt">&gt;</span>*/}
+                        </div>
+                        <div className="MyPage_Top_Number">0</div>
+                        {/*</Link>*/}
+                    </div>
+                    <div className="MyPage_Contents">
+                        {/*<Link to="/">*/}
+                        <div className="MyPage_Top_Title">
+                            리뷰 횟수&nbsp;
+                            {/*<span className="Arrow_g t">&gt;</span>*/}
+                        </div>
+                        <div className="MyPage_Top_Number">0</div>
+                        {/*</Link>*/}
+                    </div>
+                    <div className="MyPage_Contents">
+                        {/*<Link to="/">*/}
+                        <div className="MyPage_Top_Title">
+                            좋아요 횟수&nbsp;
+                            {/*<span className="Arrow_gt">&gt;</span>*/}
+                        </div>
+                        <div className="MyPage_Top_Number">0</div>
+                        {/*</Link>*/}
+                    </div>
+                    <div className="MyPage_Contents"></div>
+                    {/* 예비칸 */}
                 </div>
-                <div className="MyPage_Wrap">
-                    {/* S : 왼쪽 메뉴 영역 */}
+            </div>
+            <div className="MyPage_Wrap">
+                {/* S : 왼쪽 메뉴 영역 */}
                 <div className="MyPage_Wrap_Left">
                     <div className="MyPage_Left_Title">마이티켓</div>
                     <ul>

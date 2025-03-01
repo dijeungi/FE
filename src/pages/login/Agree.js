@@ -18,7 +18,7 @@ const Agree = () => {
         setCheckedItems((prev) => ({ ...prev, [key]: !prev[key] }));
     };
 
-    // ✅ "다음단계" 클릭 시 단순히 페이지 이동만 수행 (state 제거)
+    // "다음단계" 클릭 시 단순히 페이지 이동만 수행 (state 제거)
     const handleNextStep = () => {
         if (!isAllChecked) return;
         navigate(`/register/join/${userType}`);

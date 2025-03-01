@@ -1,5 +1,5 @@
 import "swiper/css";
-import "swiper/css/grid"; // ✅ grid 스타일 추가
+import "swiper/css/grid";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Grid, Autoplay } from "swiper/modules";
 import { Link, useNavigate } from "react-router-dom";
@@ -23,11 +23,11 @@ const Slide = ({ data, title, link }) => {
 
             <Swiper
                 className="ticketOpen_swiper type_col5"
-                modules={[Autoplay, Grid]} // ✅ Grid 모듈 추가
-                loop={false} // 그리드에서는 loop 비활성화
-                slidesPerView={4} // ✅ 한 줄에 4개씩 배치
-                grid={{ rows: 2, fill: "row" }} // ✅ 2줄로 정렬
-                spaceBetween={20} // ✅ 간격 조절
+                modules={[Autoplay, Grid]}
+                loop={false}
+                slidesPerView={4}
+                grid={{ rows: 2, fill: "row" }}
+                spaceBetween={20}
                 autoplay={{
                     delay: 5000,
                     disableOnInteraction: false,

@@ -17,16 +17,32 @@
 .MyPage_Top_Left {
     float: left;
     background: #ff8364;
+    border-right: 1px solid #ff8364;
     width: 240px;
     height: 130px;
     border-radius: 8px 0 0 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
-.MyPage_Top_Left img {
-    position: relative;
-    top: 25px;
-    left: 30 px;
+.MyPage_Top_Left span {
+    font-size: 25px;
+    font-weight: 700;
+    color: white;
+    text-align: center;
+    display: block;
+    margin-top: -2.5px;
 }
+
+/* .MyPage_Top_Left img {
+    display: block;
+    margin: -55px auto 0 auto;
+    /* transform: rotate(11deg);
+    max-width: 100%;
+    height: auto;
+} */
 
 .MyPage_Top_Right {
     float: left;
@@ -110,7 +126,7 @@ a {
     margin-top: 3px;
     font-size: 22px;
     font-weight: bold;
-    color: #ff7b14;
+    color: #ff8364;
 }
 
 .MyPage_Wrap {
@@ -127,7 +143,7 @@ a {
     padding: 40px 30px;
     background: #fff;
     border-radius: 10px;
-    border: 0.1px solid #ff7b14;
+    border: 0.1px solid #ff8364;
 
     margin-left: -9.25px;
 }
