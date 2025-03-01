@@ -66,6 +66,8 @@ export default function Header() {
                 icon: "success",
                 title: "로그아웃 성공",
                 text: "정상적으로 로그아웃되었습니다.",
+            }).then(() => {
+                navigate("/");
             });
         } catch (error) {
             console.error("로그아웃 실패:", error);
