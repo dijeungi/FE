@@ -85,7 +85,7 @@ const ProductDetailPage = () => {
 
         setSelectedDate(date);
         setSelectedTime(null);
-        setSelectedDateId(null); // ✅ 날짜 바뀌면 DateId 초기화 (주의)
+        setSelectedDateId(null);
 
         try {
             const formattedDate = date
@@ -192,7 +192,7 @@ const ProductDetailPage = () => {
         const queryParams = new URLSearchParams({
             festivalId,
             festivalName: encodeURIComponent(festivalDetails?.festivalName || ""),
-            selectedDate: formattedDate, // ✅ 변환된 날짜 사용
+            selectedDate: formattedDate,
             selectedTime: selectedTime || "",
             dateId: selectedDateId,
             salePrice: festivalDetails?.salePrice || 0,

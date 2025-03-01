@@ -2,11 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
     getUserIdCookie,
     getAccessTokenCookie,
-    getRefreshTokenCookie,
     setAccessTokenCookie,
     removeAccessTokenCookie,
-    // setRefreshTokenCookie,
-    removeRefreshTokenCookie,
     setUserIdCookie,
     removeUserIdCookie,
 } from "../utils/Cookie";
