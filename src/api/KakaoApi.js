@@ -4,8 +4,8 @@ import axios from "axios";
 
 import { API_SERVER_HOST, FRONT_HOST, B } from "../config/ApiConfig";
 
-const rest_api_key = process.env.REACT_APP_KAKAO_REST_API_KEY;
-const client_secret = process.env.REACT_APP_KAKAO_CLIENT_SECRET;
+const rest_api_key = window.env.REACT_APP_KAKAO_REST_API_KEY;
+const client_secret = window.env.REACT_APP_KAKAO_CLIENT_SECRET;
 
 // 리다이렉트 uri => kakaoRedirectPage로 이동
 const redirect_uri = `${FRONT_HOST}/member/kakao`; // http://43.200.239.220:3000/member/kakao
