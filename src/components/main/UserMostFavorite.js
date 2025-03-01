@@ -19,7 +19,7 @@ const UserMostFavorite = ({ userId }) => {
     return (
         <Slide
             data={userRanking.slice(0, 10)}
-            title="좋아하는 장르 추천 🌟"
+            title="좋아하는 장르 추천 👀"
             link="/user/favorite/list"
             isRanking={false}
         />

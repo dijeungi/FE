@@ -240,6 +240,10 @@ const ProductDetailPage = () => {
                 level: 3,
             });
 
+            // 줌 컨트롤
+            const zoomControl = new kakao.maps.ZoomControl();
+            map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+
             const geocoder = new kakao.maps.services.Geocoder();
             geocoder.addressSearch(placeLocation, (result, status) => {
                 if (status === kakao.maps.services.Status.OK && result.length > 0) {
@@ -581,8 +585,6 @@ const ProductDetailPage = () => {
                                         <br />
                                         공연 24시간 전까지만 가능합니다.
                                         <br />
-                                        <br />
-                                        모바일 티켓을 사용하면 빠른 입장이 가능합니다.
                                     </p>
                                 </div>
                             </div>
