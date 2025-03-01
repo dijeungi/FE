@@ -25,7 +25,7 @@ const GenreSelect = () => {
         기타: "CT07",
     };
 
-    const genres = Object.keys(genreMapping); // ["로맨틱코미디", "코믹", ...]
+    const genres = Object.keys(genreMapping);
 
     const handleGenreChange = (e, key) => {
         setSelectedGenres((prev) => ({
@@ -53,7 +53,6 @@ const GenreSelect = () => {
             return;
         }
 
-        // 선택된 장르를 코드로 변환
         const requestData = {
             id: formData.id,
             userName: formData.name,
@@ -61,9 +60,9 @@ const GenreSelect = () => {
             password: formData.password,
             phone: formData.phone,
             userBirth: formData.userBirth,
-            favorite1: genreMapping[selectedGenres.favorite1], // 코드 변환
-            favorite2: genreMapping[selectedGenres.favorite2], // 코드 변환
-            favorite3: genreMapping[selectedGenres.favorite3], // 코드 변환
+            favorite1: genreMapping[selectedGenres.favorite1],
+            favorite2: genreMapping[selectedGenres.favorite2],
+            favorite3: genreMapping[selectedGenres.favorite3],
             mailYn: formData.mailYn || "N",
         };
 
