@@ -1,7 +1,5 @@
 // src/api/reviewApi.js
 import axiosInstance from "../api/AxiosInstance";
-import axios from "axios";
-import {useSelector} from "react-redux";
 
 // Ticket
 export const getTicketList = async (pageParam) => {
@@ -31,16 +29,14 @@ export const getSeatTickets = async (params) => {
 // Ticket Add
 export const addSeatTickets = async (requestBody) => {
     console.log(requestBody);
-        const response = await axiosInstance.post(`/ticket/add`, {
-            orderId: requestBody.orderId,
-            festivalId: requestBody.festivalId,
-            dateId: requestBody.dateId,
-            memberId: requestBody.memberId,
-            reFundStateName: "YET",
-            locationNum: requestBody.seats
-        });
+    const response = await axiosInstance.post(`/ticket/add`, {
+        orderId: requestBody.orderId,
+        festivalId: requestBody.festivalId,
+        dateId: requestBody.dateId,
+        memberId: requestBody.memberId,
+        reFundStateName: "YET",
+        locationNum: requestBody.seats,
+    });
 
-        return  response.data;
-
-
+    return response.data;
 };

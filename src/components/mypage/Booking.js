@@ -68,10 +68,9 @@ const Booking = () => {
                         <div key={index} className="booking-card">
                             <div className="status">예매완료</div>
                             <div className="date">{booking.date}</div>
-                            <hr/>
+                            <hr />
                             <div className="content">
-
-                                <img src={booking.postImage} alt={booking.festivalName} className="thumbnail"/>
+                                <img src={booking.postImage} alt={booking.festivalName} className="thumbnail" />
                                 <div className="info">
                                     <h3>{booking.festivalName}</h3>
                                     <p>1매</p>
@@ -79,9 +78,7 @@ const Booking = () => {
                                     <div className="buttons">
                                         {/*<button className="detail-btn">좌석번호</button>*/}
                                         {/*{booking.isReviewable && (*/}
-                                        <button className="review-btn">
-                                            좌석번호 : {booking.locationNum}
-                                        </button>
+                                        <button className="review-btn">좌석번호 : {booking.locationNum}</button>
                                         {/*// )}*/}
                                     </div>
                                 </div>
@@ -97,12 +94,11 @@ const Booking = () => {
                         //     <div>예매완료</div>
                         // </div>
                     ))
-            )}
-        </div>
-    <Paginations page={page} totalPages={totalPages} handlePageChange={handlePageChange}/>
-</>
-)
-    ;
+                )}
+            </div>
+            <Paginations page={page} totalPages={totalPages} handlePageChange={handlePageChange} />
+        </>
+    );
 };
 
 export default Booking;

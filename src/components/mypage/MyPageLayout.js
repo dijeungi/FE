@@ -51,7 +51,6 @@ export default function MyPageLayout() {
                 <div className="MyPage_Top_Left">
                     <span>Campus Concert</span>
                     <span>청춘극장</span>
-                    {/* <img src="https://dijeungi.github.io/imageHosting/images/CClogo.png" alt="로고" /> */}
                 </div>
                 <div className="MyPage_Top_Right">
                     <div className="MyPage_Contents" style={{ marginLeft: "10px" }}>
@@ -66,13 +65,8 @@ export default function MyPageLayout() {
                         </Link>
                     </div>
                     <div className="MyPage_Contents">
-                        {/*<Link to="/">*/}
-                        <div className="MyPage_Top_Title">
-                            티켓 구매 횟수&nbsp;
-                            {/*<span className="Arrow_gt">&gt;</span>*/}
-                        </div>
+                        <div className="MyPage_Top_Title">티켓 구매 횟수&nbsp;</div>
                         <div className="MyPage_Top_Number">0</div>
-                        {/*</Link>*/}
                     </div>
                     <div className="MyPage_Contents">
                         {/*<Link to="/">*/}

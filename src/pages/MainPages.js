@@ -29,7 +29,6 @@ export default function MainPages() {
             <TicketOpen />
             <Video />
             <CCPlay />
-            <SubBanner1 />
         </div>
     );
 }

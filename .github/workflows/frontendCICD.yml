@@ -44,8 +44,5 @@ jobs:
             if [ "$(sudo docker images -q ${{ secrets.DOCKERHUB_USERNAME }}/cc-frontend-user)" ]; then
               sudo docker rmi -f ${{ secrets.DOCKERHUB_USERNAME }}/cc-frontend-user
             fi          
-
-            sudo rm -f /home/ubuntu/frontend/env-config.js
-            
-            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/cc-frontend-user         
+                
             sudo docker run -d -p 80:80 --name cc-frontend-user -v /home/ubuntu/frontend/env-config.js:/usr/share/nginx/html/env-config.js ${{ secrets.DOCKERHUB_USERNAME }}/cc-frontend-user
