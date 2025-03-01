@@ -15,13 +15,23 @@ const GenreSelect = () => {
         favorite3: "",
     });
 
-    const genres = ["로맨틱코미디", "코믹", "드라마", "공포/스릴러", "어린이연극", "기타"];
+    // 장르와 코드 매핑
+    const genreMapping = {
+        로맨틱코미디: "CT02",
+        코믹: "CT03",
+        드라마: "CT04",
+        "공포/스릴러": "CT05",
+        어린이연극: "CT06",
+        기타: "CT07",
+    };
+
+    const genres = Object.keys(genreMapping); // ["로맨틱코미디", "코믹", ...]
 
     const handleGenreChange = (e, key) => {
-        setSelectedGenres((prev) => {
-            const newSelection = { ...prev, [key]: e.target.value };
-            return newSelection;
-        });
+        setSelectedGenres((prev) => ({
+            ...prev,
+            [key]: e.target.value,
+        }));
     };
 
     const getFilteredGenres = (excludedKeys) => {
@@ -43,6 +53,7 @@ const GenreSelect = () => {
             return;
         }
 
+        // 선택된 장르를 코드로 변환
         const requestData = {
             id: formData.id,
             userName: formData.name,
@@ -50,9 +61,9 @@ const GenreSelect = () => {
             password: formData.password,
             phone: formData.phone,
             userBirth: formData.userBirth,
-            favorite1: selectedGenres.favorite1,
-            favorite2: selectedGenres.favorite2,
-            favorite3: selectedGenres.favorite3,
+            favorite1: genreMapping[selectedGenres.favorite1], // 코드 변환
+            favorite2: genreMapping[selectedGenres.favorite2], // 코드 변환
+            favorite3: genreMapping[selectedGenres.favorite3], // 코드 변환
             mailYn: formData.mailYn || "N",
         };
 
