@@ -84,7 +84,7 @@ const Booking = () => {
                 />
                 <div className="info">
                   <h3>{booking.festivalName}</h3>
-                  <p>{booking.locationNum.size}매</p>
+                  <p>{booking.locationNum.size()}매</p>
                   <strong>
                     {booking.totalPrice.toLocaleString("ko-KR")}원
                   </strong>
