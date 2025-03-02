@@ -119,12 +119,16 @@ const PaymentSuccess = () => {
 
   // 결제 성공 후 부모 창 URL 업데이트
   if (window.opener) {
-    window.opener.location.href = `${
-      window.location.origin
-    }/payment/success?orderId=${orderId}&totalPrice=${totalPrice}&seats=${params.get(
-      "seats"
-    )}&poster=${encodeURIComponent(poster)}&closed=${true}`;
-    console.log("성공");
+    setTimeout(() => {
+      console.log("부모 창 URL 업데이트 시작");
+      console.log("orderId: " + orderId);
+      window.opener.location.href = `${
+        window.location.origin
+      }/payment/success?orderId=${orderId}&totalPrice=${totalPrice}&seats=${params.get(
+        "seats"
+      )}&poster=${encodeURIComponent(poster)}&closed=${true}`;
+      console.log("성공");
+    }, 500);
   } else {
     console.log("실패");
   }
