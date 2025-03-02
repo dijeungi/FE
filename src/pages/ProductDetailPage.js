@@ -233,6 +233,10 @@ const ProductDetailPage = () => {
         console.log("✅ 공연 가능한 날짜 목록:", validDates);
 
         setAvailableDates(validDates); // 🎯 상태 업데이트
+
+        if (selectedDate != validDates[0]) {
+          setSelectedDate(validDates[0]);
+        }
       } catch (error) {
         console.error("❌ 공연 날짜 데이터 불러오기 실패:", error);
       }
@@ -572,8 +576,8 @@ const ProductDetailPage = () => {
                       formatDay={(locale, date) => date.getDate()}
                       tileClassName={({ date }) => {
                         const today = new Date().setHours(0, 0, 0, 0);
-                        // const isSelected =
-                        //   selectedDate?.toDateString() === date.toDateString();
+                        const isSelected =
+                          selectedDate?.toDateString() === date.toDateString();
                         const isPastDate = date < today;
                         const isSunday = date.getDay() === 0;
                         const threeMonthsLater = new Date(today);
@@ -589,26 +593,6 @@ const ProductDetailPage = () => {
                         console.log("formattedDate: " + formattedDate);
                         const isAvailable =
                           availableDates.includes(formattedDate);
-
-                        if (
-                          !availableDates.includes(
-                            selectedDate?.toISOString().split("T")[0]
-                          )
-                        ) {
-                          const today = new Date();
-                          const closestDate = availableDates
-                            .map((d) => new Date(d)) // 문자열을 Date 객체로 변환
-                            .filter((d) => d >= today) // 오늘 이후 날짜만 필터링
-                            .sort((a, b) => a - b)[0]; // 가장 가까운 날짜 찾기
-
-                          if (closestDate) {
-                            setSelectedDate(closestDate); // 🎯 자동으로 가장 가까운 날짜 선택
-                          }
-                        }
-
-                        const isSelected =
-                          selectedDate?.toISOString().split("T")[0] ===
-                          formattedDate;
 
                         if (isSelected) return "selected-date";
                         if (isPastDate && isSunday) return "past-sunday";
