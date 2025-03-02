@@ -83,8 +83,54 @@ const ProductDetailPage = () => {
     setIsMapOpen((prevState) => !prevState);
   };
 
+  // 공연 없는 날짜
+  const fetchDisabledDates = async () => {
+    if (!festivalId) return;
+
+    let tempDisabledDates = []; // 공연이 없는 날짜를 담을 배열
+
+    // ✅ 공연 기간 가져오기
+    const startDate = new Date(fromDate);
+    const endDate = new Date(toDate !== "9999-12-31" ? toDate : new Date()); // 오픈런 예외 처리
+
+    // ✅ 공연 기간 내 모든 날짜 확인
+    for (
+      let d = new Date(startDate);
+      d <= endDate;
+      d.setDate(d.getDate() + 1)
+    ) {
+      const formattedDate = d
+        .toLocaleDateString("ko-KR", {
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+        })
+        .replace(/\. /g, "-")
+        .replace(".", "");
+
+      try {
+        const timeData = await getFestivalDetailTimeDate(
+          festivalId,
+          formattedDate
+        );
+        if (!timeData?.timeDTOS?.length)
+          throw new Error("해당 날짜는 공연이 없습니다.");
+      } catch (error) {
+        console.log(`🚫 공연 없음: ${formattedDate}`);
+        tempDisabledDates.push(d.toDateString()); // 🎯 공연 없는 날짜 저장
+      }
+    }
+
+    setDisabledDates(tempDisabledDates); // 🚀 상태 업데이트
+  };
+
   // 날짜 선택 시 공연 시간 불러오기
   const handleDateChange = async (date) => {
+    if (disabledDates.includes(date.toDateString())) {
+      console.warn("🚫 선택 불가: 해당 날짜는 공연이 없습니다.");
+      return; // ✅ 공연 없는 날짜 클릭 방지!
+    }
+
     console.log("📅 선택한 날짜:", date);
 
     setSelectedDate(date);
@@ -120,19 +166,7 @@ const ProductDetailPage = () => {
       console.log("✅ 공연 시간 데이터 업데이트 완료:", timeData.timeDTOS);
     } catch (error) {
       console.error("❌ 공연 시간 데이터 불러오기 실패:", error);
-
-      if (
-        error?.response?.status === 404 ||
-        error.message === "해당 날짜는 공연이 없습니다."
-      ) {
-        console.log("⚠️ 공연이 없는 날짜이므로 비활성화 처리");
-        setDisabledDates((prev) => [...prev, date.toDateString()]);
-      } else {
-        console.log("🚨 서버 에러 발생: 선택된 날짜 초기화");
-        setSelectedDate(null); // 심각한 서버 오류 발생 시 날짜 선택 해제
-      }
-
-      setFestivalTimeData([]); // 공연 시간 데이터 초기화
+      setFestivalTimeData([]);
     }
   };
 
@@ -232,6 +266,7 @@ const ProductDetailPage = () => {
   };
 
   // 좋아요 데이터 불러오기 & 공연 상세 정보 가져오기
+  // ✅ 좋아요 데이터 & Kakao 지도 설정 (기존 유지)
   useEffect(() => {
     const fetchLikeData = async () => {
       if (!userId) return;
@@ -247,12 +282,10 @@ const ProductDetailPage = () => {
     };
 
     if (festivalId) {
-      dispatch(fetchFestivalDetail({ festivalId, userId }));
-      handleDateChange(selectedDate);
       fetchLikeData();
     }
 
-    handleDateChange(selectedDate);
+    handleDateChange(selectedDate); // ✅ 날짜 변경 시 공연 시간 불러오기
 
     if (isMapOpen && kakao && kakao.maps && mapRef.current) {
       const map = new kakao.maps.Map(mapRef.current, {
@@ -278,14 +311,15 @@ const ProductDetailPage = () => {
         }
       });
     }
-  }, [
-    festivalId,
-    userId,
-    selectedDate,
-    isMapOpen,
-    placeLocation,
-    selectedDate,
-  ]);
+  }, [festivalId, userId, selectedDate, isMapOpen, placeLocation]);
+
+  // ✅ 공연 상세 정보 & 공연 없는 날짜 불러오기 (새로운 useEffect 추가)
+  useEffect(() => {
+    if (festivalId && festivalDetails?.fromDate) {
+      dispatch(fetchFestivalDetail({ festivalId, userId }));
+      fetchDisabledDates(); // 🚀 공연 없는 날짜 미리 불러오기
+    }
+  }, [festivalId, festivalDetails?.fromDate]); // ✅ 공연 정보 변경 시 실행
 
   // 좋아요 버튼 클릭
   const handleLikeClick = async () => {
@@ -596,9 +630,9 @@ const ProductDetailPage = () => {
                         );
 
                         return (
-                          disabledDates.includes(date.toDateString()) || // 🎯 배열 체크 방식으로 변경
-                          date < today ||
-                          date > threeMonthsLater
+                          disabledDates.includes(date.toDateString()) || // 🎯 이미 비활성화된 날짜
+                          date < today || // 과거 날짜 선택 불가
+                          date > threeMonthsLater // 3개월 이후 날짜 선택 불가
                         );
                       }}
                       navigationLabel={({ date }) => (
