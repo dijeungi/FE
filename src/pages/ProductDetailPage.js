@@ -126,7 +126,7 @@ const ProductDetailPage = () => {
         error.message === "해당 날짜는 공연이 없습니다."
       ) {
         console.log("⚠️ 공연이 없는 날짜이므로 비활성화 처리");
-        setDisabledDates((prev) => new Set([...prev, date.toDateString()]));
+        setDisabledDates((prev) => [...prev, date.toDateString()]);
       } else {
         console.log("🚨 서버 에러 발생: 선택된 날짜 초기화");
         setSelectedDate(null); // 심각한 서버 오류 발생 시 날짜 선택 해제
