@@ -234,7 +234,7 @@ const ProductDetailPage = () => {
 
         setAvailableDates(validDates); // 🎯 상태 업데이트
 
-        if (selectedDate != validDates[0]) {
+        if (selectedDate !== validDates[0]) {
           setSelectedDate(validDates[0]);
         }
       } catch (error) {
