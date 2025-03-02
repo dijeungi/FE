@@ -590,7 +590,7 @@ const ProductDetailPage = () => {
                         const isAvailable =
                           availableDates.includes(formattedDate);
 
-                        if (isSelected && isAvailable) return "selected-date";
+                        if (isSelected) return "selected-date";
                         if (isPastDate && isSunday) return "past-sunday";
                         if (isPastDate) return "past-date";
                         if (date > threeMonthsLater && isSunday)
