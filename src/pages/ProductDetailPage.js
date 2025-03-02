@@ -580,7 +580,12 @@ const ProductDetailPage = () => {
                         threeMonthsLater.setMonth(
                           threeMonthsLater.getMonth() + 1
                         );
-                        const formattedDate = date.toISOString().split("T")[0]; // 🎯 YYYY-MM-DD 포맷 변환
+                        const formattedDate =
+                          date.getFullYear() +
+                          "-" +
+                          String(date.getMonth() + 1).padStart(2, "0") +
+                          "-" +
+                          String(date.getDate()).padStart(2, "0");
                         console.log("formattedDate: " + formattedDate);
                         const isAvailable =
                           availableDates.includes(formattedDate);
@@ -601,7 +606,12 @@ const ProductDetailPage = () => {
                         threeMonthsLater.setMonth(
                           threeMonthsLater.getMonth() + 1
                         );
-                        const formattedDate = date.toISOString().split("T")[0];
+                        const formattedDate =
+                          date.getFullYear() +
+                          "-" +
+                          String(date.getMonth() + 1).padStart(2, "0") +
+                          "-" +
+                          String(date.getDate()).padStart(2, "0");
 
                         return (
                           !availableDates.includes(formattedDate) ||
