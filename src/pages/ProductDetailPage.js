@@ -234,9 +234,11 @@ const ProductDetailPage = () => {
 
         setAvailableDates(validDates); // 🎯 상태 업데이트
 
-        if (selectedDate !== validDates[0]) {
-          setSelectedDate(validDates[0]);
-        }
+        validDates.map((date) => {
+          if (date !== selectedDate && date > selectedDate) {
+            setSelectedDate(date);
+          }
+        });
       } catch (error) {
         console.error("❌ 공연 날짜 데이터 불러오기 실패:", error);
       }
