@@ -47,6 +47,8 @@ const ProductDetailPage = () => {
     (state) => state.detail
   );
 
+  const [availableDates, setAvailableDates] = useState([]);
+
   // 상태 관리
   const [isMapOpen, setIsMapOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -55,7 +57,6 @@ const ProductDetailPage = () => {
   const [likeCount, setLikeCount] = useState(0);
   const [isLiked, setIsLiked] = useState(false);
   const [selectedDateId, setSelectedDateId] = useState(null);
-  const [disabledDates, setDisabledDates] = useState([]);
 
   // Kakao 지도 관련 Ref
   const mapRef = useRef(null);
@@ -83,54 +84,8 @@ const ProductDetailPage = () => {
     setIsMapOpen((prevState) => !prevState);
   };
 
-  // 공연 없는 날짜
-  const fetchDisabledDates = async () => {
-    if (!festivalId) return;
-
-    let tempDisabledDates = []; // 공연이 없는 날짜를 담을 배열
-
-    // ✅ 공연 기간 가져오기
-    const startDate = new Date(fromDate);
-    const endDate = new Date(toDate !== "9999-12-31" ? toDate : new Date()); // 오픈런 예외 처리
-
-    // ✅ 공연 기간 내 모든 날짜 확인
-    for (
-      let d = new Date(startDate);
-      d <= endDate;
-      d.setDate(d.getDate() + 1)
-    ) {
-      const formattedDate = d
-        .toLocaleDateString("ko-KR", {
-          year: "numeric",
-          month: "2-digit",
-          day: "2-digit",
-        })
-        .replace(/\. /g, "-")
-        .replace(".", "");
-
-      try {
-        const timeData = await getFestivalDetailTimeDate(
-          festivalId,
-          formattedDate
-        );
-        if (!timeData?.timeDTOS?.length)
-          throw new Error("해당 날짜는 공연이 없습니다.");
-      } catch (error) {
-        console.log(`🚫 공연 없음: ${formattedDate}`);
-        tempDisabledDates.push(d.toDateString()); // 🎯 공연 없는 날짜 저장
-      }
-    }
-
-    setDisabledDates(tempDisabledDates); // 🚀 상태 업데이트
-  };
-
   // 날짜 선택 시 공연 시간 불러오기
   const handleDateChange = async (date) => {
-    if (disabledDates.includes(date.toDateString())) {
-      console.warn("🚫 선택 불가: 해당 날짜는 공연이 없습니다.");
-      return; // ✅ 공연 없는 날짜 클릭 방지!
-    }
-
     console.log("📅 선택한 날짜:", date);
 
     setSelectedDate(date);
@@ -266,11 +221,31 @@ const ProductDetailPage = () => {
   };
 
   // 좋아요 데이터 불러오기 & 공연 상세 정보 가져오기
-  // ✅ 좋아요 데이터 & Kakao 지도 설정 (기존 유지)
+  // 🎯 **공연 가능한 날짜를 가져오는 API 호출 (Step 2)**
+  useEffect(() => {
+    const fetchAvailableDates = async () => {
+      if (!festivalId) return;
+
+      try {
+        const response = await getFestivalDetailTimeDate(festivalId);
+        console.log("🎭 API 응답 데이터:", response);
+
+        const validDates = response?.timeDTOS?.map((item) => item.date) || [];
+        console.log("✅ 공연이 있는 날짜 목록:", validDates);
+
+        setAvailableDates(validDates); // 🎯 공연 가능한 날짜만 저장
+      } catch (error) {
+        console.error("❌ 공연 날짜 데이터 불러오기 실패:", error);
+      }
+    };
+
+    fetchAvailableDates();
+  }, [festivalId]);
+
+  // ✅ 기존 useEffect 유지 (좋아요 데이터, 공연 상세 정보 가져오기)
   useEffect(() => {
     const fetchLikeData = async () => {
       if (!userId) return;
-
       try {
         const count = await getLikeCount(festivalId);
         const likedStatus = await getIsLiked(userId, festivalId);
@@ -282,44 +257,12 @@ const ProductDetailPage = () => {
     };
 
     if (festivalId) {
+      dispatch(fetchFestivalDetail({ festivalId, userId }));
       fetchLikeData();
     }
 
-    handleDateChange(selectedDate); // ✅ 날짜 변경 시 공연 시간 불러오기
-
-    if (isMapOpen && kakao && kakao.maps && mapRef.current) {
-      const map = new kakao.maps.Map(mapRef.current, {
-        center: new kakao.maps.LatLng(37.5665, 126.978), // 기본 위치: 서울시청
-        level: 3,
-      });
-
-      // 줌 컨트롤
-      const zoomControl = new kakao.maps.ZoomControl();
-      map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
-
-      const geocoder = new kakao.maps.services.Geocoder();
-      geocoder.addressSearch(placeLocation, (result, status) => {
-        if (status === kakao.maps.services.Status.OK && result.length > 0) {
-          const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-          map.setCenter(coords);
-
-          if (markerRef.current) markerRef.current.setMap(null);
-          markerRef.current = new kakao.maps.Marker({
-            position: coords,
-            map: map,
-          });
-        }
-      });
-    }
-  }, [festivalId, userId, selectedDate, isMapOpen, placeLocation]);
-
-  // ✅ 공연 상세 정보 & 공연 없는 날짜 불러오기 (새로운 useEffect 추가)
-  useEffect(() => {
-    if (festivalId && festivalDetails?.fromDate) {
-      dispatch(fetchFestivalDetail({ festivalId, userId }));
-      fetchDisabledDates(); // 🚀 공연 없는 날짜 미리 불러오기
-    }
-  }, [festivalId, festivalDetails?.fromDate]); // ✅ 공연 정보 변경 시 실행
+    handleDateChange(selectedDate);
+  }, [festivalId, userId, selectedDate]);
 
   // 좋아요 버튼 클릭
   const handleLikeClick = async () => {
@@ -612,10 +555,14 @@ const ProductDetailPage = () => {
                         threeMonthsLater.setMonth(
                           threeMonthsLater.getMonth() + 1
                         );
+                        const isAvailable = availableDates.includes(
+                          date.toISOString().split("T")[0] // 🎯 YYYY-MM-DD 변환
+                        );
 
                         if (isSelected) return "selected-date";
                         if (isPastDate && isSunday) return "past-sunday";
                         if (isPastDate) return "past-date";
+                        if (!isAvailable) return "disabled-date";
                         if (date > threeMonthsLater && isSunday)
                           return "future-sunday-disabled";
                         if (date > threeMonthsLater) return "future-disabled";
@@ -630,9 +577,11 @@ const ProductDetailPage = () => {
                         );
 
                         return (
-                          disabledDates.includes(date.toDateString()) || // 🎯 이미 비활성화된 날짜
-                          date < today || // 과거 날짜 선택 불가
-                          date > threeMonthsLater // 3개월 이후 날짜 선택 불가
+                          !availableDates.includes(
+                            date.toISOString().split("T")[0]
+                          ) ||
+                          date < today ||
+                          date > threeMonthsLater
                         );
                       }}
                       navigationLabel={({ date }) => (
