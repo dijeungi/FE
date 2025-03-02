@@ -23,7 +23,7 @@
 
 .Login_Container {
     width: 500px;
-    margin: 2.5rem auto;
+    margin: 0 auto;
     position: relative;
     border: 1px solid #ccc;
     border-radius: 30px;

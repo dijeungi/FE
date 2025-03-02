@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, Link, Outlet } from "react-router-dom";
 import "../../styles/mypage/MyPageLayout.css";
 import { useSelector } from "react-redux";
-import { getMemberInfo } from "../../api/MemberApi";
+import { getMemberInfo } from "../../api/UserApi";
+import Modify from "./Modify";
 
 export default function MyPageLayout() {
     const [activeMenu, setActiveMenu] = useState("예매내역");
@@ -32,7 +33,7 @@ export default function MyPageLayout() {
         "나의 이용후기": "reviews",
         "나의 좋아요": "likes",
         "회원정보 수정": "modify",
-        회원탈퇴: "secession",
+        회원탈퇴: "password-change",
         공지사항: "notice",
         // 자주묻는질문: "faq",
         // "1:1 문의": "inquiry",
@@ -123,7 +124,7 @@ export default function MyPageLayout() {
                         </li>
                         <li className="MyPage_Left_Sub" onClick={() => handleMenuClick("회원탈퇴")}>
                             <span className={activeMenu === "회원탈퇴" ? "MyPage_Left_SubOn" : "MyPage_Left_SubOff"}>
-                                회원탈퇴
+                                비밀번호 변경
                             </span>
                         </li>
                     </ul>
@@ -187,7 +188,7 @@ export default function MyPageLayout() {
                 {/* E : 왼쪽 메뉴 영역 */}
                 {/* S : 오른쪽 컨텐츠 영역 */}
                 <div className="MyPageLayout_Wrap_Right">
-                    <Outlet />
+                    {activeMenu === "회원정보 수정" ? <Modify userId={userId} /> : <Outlet />}
                 </div>
                 {/* E : 오른쪽 메뉴 영역 */}
             </div>
