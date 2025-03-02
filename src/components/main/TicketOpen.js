@@ -13,7 +13,7 @@ const TicketOpen = () => {
         fetchTickets();
     }, []);
 
-    return <Slide data={tickets} title="티켓오픈 🎉" link="/ticketopen" isRanking={false} />;
+    return <Slide data={tickets} title="티켓오픈 🎉" link="/ranking" isRanking={false} />;
 };
 
 export default TicketOpen;
