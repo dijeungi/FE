@@ -55,7 +55,7 @@ const ProductDetailPage = () => {
   const [likeCount, setLikeCount] = useState(0);
   const [isLiked, setIsLiked] = useState(false);
   const [selectedDateId, setSelectedDateId] = useState(null);
-  const [disabledDates, setDisabledDates] = useState(new Set());
+  const [disabledDates, setDisabledDates] = useState([]);
 
   // Kakao 지도 관련 Ref
   const mapRef = useRef(null);
@@ -596,7 +596,7 @@ const ProductDetailPage = () => {
                         );
 
                         return (
-                          disabledDates.has(date.toDateString()) ||
+                          disabledDates.includes(date.toDateString()) || // 🎯 배열 체크 방식으로 변경
                           date < today ||
                           date > threeMonthsLater
                         );
