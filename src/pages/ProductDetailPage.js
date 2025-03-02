@@ -592,7 +592,7 @@ const ProductDetailPage = () => {
                           return "future-sunday-disabled";
                         if (date > threeMonthsLater) return "future-disabled";
                         if (isSunday) return "future-sunday";
-                        if (!isAvailable) return "future-disabled";
+                        if (!isAvailable) return "disabled-date";
                         return "future-date";
                       }}
                       tileDisabled={({ date }) => {
