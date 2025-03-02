@@ -41,12 +41,20 @@ import PasswordChange from "./components/mypage/PasswordChange";
 import Booking from "./components/mypage/Booking";
 import KeywordSearchPage from "./pages/search/KeywordSearchPage";
 
+import ChannelService from "./api/ChannelService";
+
 function App() {
     const location = useLocation();
     const dispatch = useDispatch();
     const isReservationPage = location.pathname.startsWith("/reservation");
     const isJoinUserPage = location.pathname === "/register/joinuser";
     const [loading, setLoading] = useState(true);
+
+    ChannelService.loadScript();
+
+    ChannelService.boot({
+        pluginKey: window.env.REACT_APP_CHANNELTALK_PLUGIN_KEY,
+    });
 
     // Header와 Footer를 숨길 경로 목록
     const hiddenLayoutRoutes = [
@@ -125,9 +133,7 @@ function App() {
                 <Route path="/payment/success" element={<PaymentSuccess />} />
                 <Route path="/payment/fail" element={<PaymentFail />} />
             </Routes>
-
             {location.pathname === "/" && <KakaoChannelButton />}
-
             {!isHiddenLayout && <Footer />}
         </div>
     );
