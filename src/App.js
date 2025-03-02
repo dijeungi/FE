@@ -37,7 +37,7 @@ import { initializeAuth } from "./redux/LoginSlice";
 import Reviews from "./components/mypage/Reviews";
 import Like from "./components/mypage/Like";
 import Modify from "./components/mypage/Modify";
-import Secession from "./components/mypage/Secession";
+import PasswordChange from "./components/mypage/PasswordChange";
 import Booking from "./components/mypage/Booking";
 import KeywordSearchPage from "./pages/search/KeywordSearchPage";
 
@@ -106,7 +106,7 @@ function App() {
                     <Route path="reviews" element={<Reviews />} />
                     <Route path="likes" element={<Like />} />
                     <Route path="modify" element={<Modify />} />
-                    <Route path="withdraw" element={<Secession />} />
+                    <Route path="password-change" element={<PasswordChange />} />
                 </Route>
                 {/* 검색어 검색 */}
                 <Route path="/search" element={<KeywordSearchPage />} />

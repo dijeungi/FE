@@ -1,0 +1,84 @@
+/* .Modify_Container {
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: 700;
+    color: #555;
+} */
+
+.Modify_Container {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    /* background-color: #f9f9f9; */
+}
+
+.Modify_Title {
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: 700;
+    color: #555;
+}
+
+.Modify_Form {
+    display: flex;
+    flex-direction: column;
+}
+
+.Modify_Form label {
+    margin: 10px 0 5px;
+    font-weight: bold;
+}
+
+.Modify_Form input,
+.Modify_Form select {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.Modify_Form input:disabled {
+    background-color: #e9ecef;
+    cursor: not-allowed;
+}
+
+.Modify_Button {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #ff8364;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.Modify_Button:hover {
+    background-color: #ff8364;
+}
+
+.Delete_Button_Wrap {
+    display: flex;
+    justify-content: flex-end; /* 버튼을 오른쪽으로 정렬 */
+    width: 100%;
+    margin-top: 20px;
+}
+
+.Delete_Button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: rgb(255, 133, 133);
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.Delete_Button:hover {
+    background-color: darkred;
+}
