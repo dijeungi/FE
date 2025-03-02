@@ -10,7 +10,7 @@ import Swal from "sweetalert2";
 import { fetchFestivalDetail } from "../redux/DetailSlice";
 
 // API 호출
-import { getFestivalDetailTimeDate } from "../api/festivalApi";
+import { getFestivalDetailTimeDate, getFestivalDate } from "../api/festivalApi";
 import { getLikeCount, getIsLiked, postLike, deleteLike } from "../api/likeApi";
 
 // 유틸리티 (쿠키, 로컬스토리지)
@@ -47,8 +47,6 @@ const ProductDetailPage = () => {
     (state) => state.detail
   );
 
-  const [availableDates, setAvailableDates] = useState([]);
-
   // 상태 관리
   const [isMapOpen, setIsMapOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -57,6 +55,8 @@ const ProductDetailPage = () => {
   const [likeCount, setLikeCount] = useState(0);
   const [isLiked, setIsLiked] = useState(false);
   const [selectedDateId, setSelectedDateId] = useState(null);
+
+  const [availableDates, setAvailableDates] = useState([]);
 
   // Kakao 지도 관련 Ref
   const mapRef = useRef(null);
@@ -220,32 +220,32 @@ const ProductDetailPage = () => {
     );
   };
 
-  // 좋아요 데이터 불러오기 & 공연 상세 정보 가져오기
-  // 🎯 **공연 가능한 날짜를 가져오는 API 호출 (Step 2)**
   useEffect(() => {
     const fetchAvailableDates = async () => {
       if (!festivalId) return;
 
       try {
-        const response = await getFestivalDetailTimeDate(festivalId);
+        const response = await getFestivalDate(festivalId);
         console.log("🎭 API 응답 데이터:", response);
 
+        // ✅ API에서 받은 공연 날짜 리스트만 추출
         const validDates = response?.timeDTOS?.map((item) => item.date) || [];
-        console.log("✅ 공연이 있는 날짜 목록:", validDates);
+        console.log("✅ 공연 가능한 날짜 목록:", validDates);
 
-        setAvailableDates(validDates); // 🎯 공연 가능한 날짜만 저장
+        setAvailableDates(validDates); // 🎯 상태 업데이트
       } catch (error) {
         console.error("❌ 공연 날짜 데이터 불러오기 실패:", error);
       }
     };
 
     fetchAvailableDates();
-  }, [festivalId]);
+  }, [festivalId]); // ✅ festivalId 변경될 때마다 실행
 
-  // ✅ 기존 useEffect 유지 (좋아요 데이터, 공연 상세 정보 가져오기)
+  // 좋아요 데이터 불러오기 & 공연 상세 정보 가져오기
   useEffect(() => {
     const fetchLikeData = async () => {
       if (!userId) return;
+
       try {
         const count = await getLikeCount(festivalId);
         const likedStatus = await getIsLiked(userId, festivalId);
@@ -262,7 +262,32 @@ const ProductDetailPage = () => {
     }
 
     handleDateChange(selectedDate);
-  }, [festivalId, userId, selectedDate]);
+
+    if (isMapOpen && kakao && kakao.maps && mapRef.current) {
+      const map = new kakao.maps.Map(mapRef.current, {
+        center: new kakao.maps.LatLng(37.5665, 126.978), // 기본 위치: 서울시청
+        level: 3,
+      });
+
+      // 줌 컨트롤
+      const zoomControl = new kakao.maps.ZoomControl();
+      map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+
+      const geocoder = new kakao.maps.services.Geocoder();
+      geocoder.addressSearch(placeLocation, (result, status) => {
+        if (status === kakao.maps.services.Status.OK && result.length > 0) {
+          const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+          map.setCenter(coords);
+
+          if (markerRef.current) markerRef.current.setMap(null);
+          markerRef.current = new kakao.maps.Marker({
+            position: coords,
+            map: map,
+          });
+        }
+      });
+    }
+  }, [festivalId, userId, selectedDate, isMapOpen, placeLocation]);
 
   // 좋아요 버튼 클릭
   const handleLikeClick = async () => {
@@ -555,18 +580,19 @@ const ProductDetailPage = () => {
                         threeMonthsLater.setMonth(
                           threeMonthsLater.getMonth() + 1
                         );
-                        const isAvailable = availableDates.includes(
-                          date.toISOString().split("T")[0] // 🎯 YYYY-MM-DD 변환
-                        );
+                        const formattedDate = date.toISOString().split("T")[0]; // 🎯 YYYY-MM-DD 포맷 변환
+                        console.log("formattedDate: " + formattedDate);
+                        const isAvailable =
+                          availableDates.includes(formattedDate);
 
                         if (isSelected) return "selected-date";
                         if (isPastDate && isSunday) return "past-sunday";
                         if (isPastDate) return "past-date";
-                        if (!isAvailable) return "disabled-date";
                         if (date > threeMonthsLater && isSunday)
                           return "future-sunday-disabled";
                         if (date > threeMonthsLater) return "future-disabled";
                         if (isSunday) return "future-sunday";
+                        if (!isAvailable) return "future-disabled";
                         return "future-date";
                       }}
                       tileDisabled={({ date }) => {
@@ -575,11 +601,10 @@ const ProductDetailPage = () => {
                         threeMonthsLater.setMonth(
                           threeMonthsLater.getMonth() + 1
                         );
+                        const formattedDate = date.toISOString().split("T")[0];
 
                         return (
-                          !availableDates.includes(
-                            date.toISOString().split("T")[0]
-                          ) ||
+                          !availableDates.includes(formattedDate) ||
                           date < today ||
                           date > threeMonthsLater
                         );
