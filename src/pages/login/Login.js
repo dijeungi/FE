@@ -35,7 +35,7 @@ const LoginPage = () => {
         e.preventDefault();
         try {
             const response = await loginPost(loginForm.id, loginForm.password);
-            console.log("로그인 성공:", response);
+            // console.log("로그인 성공:", response);
 
             dispatch(login(response));
             Swal.fire({

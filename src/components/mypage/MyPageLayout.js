@@ -4,10 +4,13 @@ import "../../styles/mypage/MyPageLayout.css";
 import { useSelector } from "react-redux";
 import { getMemberInfo } from "../../api/UserApi";
 import Modify from "./Modify";
+import Booking from "./Booking";
 
 export default function MyPageLayout() {
     const [activeMenu, setActiveMenu] = useState("예매내역");
     const [memberInfo, setMemberInfo] = useState(null);
+    const [ticketCount, setTicketCount] = useState(0);
+
     const navigate = useNavigate();
 
     const userId = useSelector((state) => state.loginSlice.id);
@@ -26,6 +29,11 @@ export default function MyPageLayout() {
 
         fetchMemberInfo();
     }, [userId]);
+
+    // 예매 개수를 업데이트하는 함수
+    const updateTicketCount = (count) => {
+        setTicketCount(count);
+    };
 
     // 각 메뉴 항목에 대해 표시할 이름과 이동할 URL 경로를 정의합니다.
     const menuRoutes = {
@@ -67,7 +75,7 @@ export default function MyPageLayout() {
                     </div>
                     <div className="MyPage_Contents">
                         <div className="MyPage_Top_Title">티켓 구매 횟수&nbsp;</div>
-                        <div className="MyPage_Top_Number">0</div>
+                        <div className="MyPage_Top_Number">{ticketCount}</div>
                     </div>
                     <div className="MyPage_Contents">
                         {/*<Link to="/">*/}
@@ -188,8 +196,15 @@ export default function MyPageLayout() {
                 {/* E : 왼쪽 메뉴 영역 */}
                 {/* S : 오른쪽 컨텐츠 영역 */}
                 <div className="MyPageLayout_Wrap_Right">
-                    {activeMenu === "회원정보 수정" ? <Modify userId={userId} /> : <Outlet />}
+                    {activeMenu === "회원정보 수정" ? (
+                        <Modify userId={userId} />
+                    ) : activeMenu === "예매내역" ? (
+                        <Booking updateTicketCount={updateTicketCount} />
+                    ) : (
+                        <Outlet />
+                    )}
                 </div>
+
                 {/* E : 오른쪽 메뉴 영역 */}
             </div>
             <div style={{ clear: "both" }}></div>

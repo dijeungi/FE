@@ -12,14 +12,14 @@ const RankingPages = () => {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        console.log("현재 선택된 카테고리:", activeCategory);
+        // console.log("현재 선택된 카테고리:", activeCategory);
         setLoading(true);
 
         const fetchData = activeCategory === "CT01" ? getRankingList : () => getCategoryList(activeCategory);
 
         fetchData()
             .then((data) => {
-                console.log("API 응답 데이터:", data);
+                // console.log("API 응답 데이터:", data);
                 setRankings(data);
                 setLoading(false);
             })

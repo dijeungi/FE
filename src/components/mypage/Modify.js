@@ -38,7 +38,7 @@ export default function Modify({ userId }) {
             if (userId) {
                 try {
                     const data = await getMemberInfo(userId);
-                    console.log("API 응답 데이터:", data);
+                    // console.log("API 응답 데이터:", data);
 
                     setUserData({
                         userId: data.id || "",
@@ -106,7 +106,7 @@ export default function Modify({ userId }) {
                 userFavorite3: genreMapping[userData.userFavorite3] || "",
             };
 
-            console.log("수정완료된 데이터들:", formattedData);
+            // console.log("수정완료된 데이터들:", formattedData);
 
             await updateMemberInfo(formattedData);
             alert("회원 정보가 성공적으로 수정되었습니다.");

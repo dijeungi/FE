@@ -17,8 +17,8 @@ const axiosInstance = axios.create({
 const refreshJWT = async () => {
     const res = await axiosInstance.get(`/member/refresh`);
 
-    console.log("----------------------");
-    console.log(res.data);
+    // console.log("----------------------");
+    // console.log(res.data);
 
     return res.data;
 };

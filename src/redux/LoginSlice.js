@@ -22,7 +22,7 @@ const loginSlice = createSlice({
     initialState,
     reducers: {
         login: (state, action) => {
-            console.log("🔹 login action:", action.payload);
+            // console.log("🔹 login action:", action.payload);
             const { id, roles, accessToken } = action.payload;
 
             setAccessTokenCookie(accessToken, 30);
@@ -60,7 +60,7 @@ const loginSlice = createSlice({
         initializeAuth: (state) => {
             const accessToken = getAccessTokenCookie();
             const id = getUserIdCookie();
-            console.log("📌LoginSlice.js: accessToken =", accessToken, ", userId =", id);
+            // console.log("📌LoginSlice.js: accessToken =", accessToken, ", userId =", id);
             if (accessToken) {
                 state.id = id;
                 state.accessToken = accessToken;

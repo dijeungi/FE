@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import {getKeywordSearch, getRankingList} from "../../api/festivalApi";
+import { getKeywordSearch, getRankingList } from "../../api/festivalApi";
 // import Slide from "./Slide";
 import GridSlide from "./GridSlide";
-import {useLocation, useParams} from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 
 const KeywordSearchPage = () => {
     const location = useLocation();
@@ -15,18 +15,15 @@ const KeywordSearchPage = () => {
             return;
         }
         const fetchKeywordSearch = async () => {
-            console.log("검색어", searchKeyword);
+            // console.log("검색어", searchKeyword);
             const data = await getKeywordSearch(searchKeyword);
             setSearchKeywordResult(data.festivalResults);
         };
 
         fetchKeywordSearch();
-
     }, [searchKeyword]);
 
-    return <GridSlide data={searchKeywordResult} title="검색결과 👁" link={`/search`}
-                      isRanking={false}/>;
-
+    return <GridSlide data={searchKeywordResult} title="검색결과 👁" link={`/search`} isRanking={false} />;
 };
 
 export default KeywordSearchPage;

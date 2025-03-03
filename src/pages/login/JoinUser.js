@@ -67,11 +67,11 @@ const JoinUser = () => {
         const isBirthValid = formData.userBirth && /^\d{8}$/.test(formData.userBirth.replace(/\./g, "")); // 8자리 숫자 (YYYYMMDD)
         const isPhoneValid = formData.phone && /^010-\d{3,4}-\d{4}$/.test(formData.phone); // 최소 10자리 숫자
 
-        console.log("ID 유효성:", isIdValid);
-        console.log("비밀번호 유효성:", isPasswordValid);
-        console.log("이름 유효성:", isNameValid);
-        console.log("생년월일 유효성:", isBirthValid);
-        console.log("전화번호 유효성:", isPhoneValid);
+        // console.log("ID 유효성:", isIdValid);
+        // console.log("비밀번호 유효성:", isPasswordValid);
+        // console.log("이름 유효성:", isNameValid);
+        // console.log("생년월일 유효성:", isBirthValid);
+        // console.log("전화번호 유효성:", isPhoneValid);
 
         // 모든 조건이 충족될 경우에만 버튼 활성화
         setIsOtpButtonDisabled(!(isIdValid && isPasswordValid && isNameValid && isBirthValid && isPhoneValid));
@@ -365,7 +365,7 @@ const JoinUser = () => {
             userBirth: cleanedBirth,
         };
 
-        console.log("📢 GenreSelect로 보낼 데이터:", sendData);
+        // console.log("📢 GenreSelect로 보낼 데이터:", sendData);
 
         // 장르 선택 페이지로 이동하면서 데이터 전달
         navigate("/register/join/genreselect", { state: sendData });

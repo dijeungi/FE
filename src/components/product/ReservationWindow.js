@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {useLocation, useNavigate} from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { loadTossPayments } from "@tosspayments/payment-sdk";
 import { getSeatTickets } from "../../api/TicketApi";
 import "../../styles/components/ReservationWindow.css";
@@ -17,12 +17,12 @@ const ReservationWindow = () => {
     const dateId = params.get("dateId") || "";
     const [reservedSeats, setReservedSeats] = useState([]);
     const navigate = useNavigate();
-    console.log("🎭 공연명:", festivalName);
-    console.log("📅 날짜:", selectedDate);
-    console.log("⏰ 시간:", selectedTime);
-    console.log("💰 가격 (1석 기준):", salePrice);
-    console.log("🖼️ 포스터 URL:", poster);
-    console.log("📌 Date Id:", dateId);
+    // console.log("🎭 공연명:", festivalName);
+    // console.log("📅 날짜:", selectedDate);
+    // console.log("⏰ 시간:", selectedTime);
+    // console.log("💰 가격 (1석 기준):", salePrice);
+    // console.log("🖼️ 포스터 URL:", poster);
+    // console.log("📌 Date Id:", dateId);
 
     const rows = "ABCDEFG".split("");
     const seatsPerRow = 10;
@@ -34,9 +34,9 @@ const ReservationWindow = () => {
             if (!festivalId || !dateId) return;
 
             try {
-                console.log("🎟️ 예약된 좌석 불러오는 중...");
+                // console.log("🎟️ 예약된 좌석 불러오는 중...");
                 const response = await getSeatTickets({ festivalId, dateId });
-                console.log("✅ 예약된 좌석 데이터:", response);
+                // console.log("✅ 예약된 좌석 데이터:", response);
 
                 setReservedSeats(response || []);
             } catch (error) {
@@ -46,7 +46,7 @@ const ReservationWindow = () => {
 
         fetchReservedSeats();
 
-        console.log("📌 업데이트 발생! 좌석 개수:", selectedSeats.length, "| DateId:", dateId, "| 가격:", salePrice);
+        // console.log("📌 업데이트 발생! 좌석 개수:", selectedSeats.length, "| DateId:", dateId, "| 가격:", salePrice);
         setTotalPrice(salePrice * selectedSeats.length);
     }, [selectedSeats, salePrice, dateId, festivalId]);
 
@@ -66,28 +66,21 @@ const ReservationWindow = () => {
     const handlePayment = async () => {
         try {
             const tossPayments = await loadTossPayments("test_ck_O6BYq7GWPVvPRjx6BQL8NE5vbo1d");
-
-            // tid-페스티벌Id/DateId/A03,A08,09 이런식으로
-            // tid-1-2025-02-20T12:30:00-A03
             const orderId = `tid-${festivalId}-${dateId}-${selectedSeats.join("_")}`;
 
             tossPayments.requestPayment("카드", {
                 orderId,
                 amount: totalPrice,
                 orderName: "공연 티켓",
-                seat:selectedSeats,
+                seat: selectedSeats,
                 customerName: "고객 이름",
                 successUrl: `${
                     window.location.origin
                 }/payment/success?orderId=${orderId}&totalPrice=${totalPrice}&seats=${selectedSeats.join(
                     ","
-                )}&poster=${encodeURIComponent(poster)}&closed=${false}`,
+                )}&poster=${encodeURIComponent(poster)}&closed=${true}`,
                 failUrl: `${window.location.origin}/payment/fail`,
-
             });
-
-
-
         } catch (error) {
             console.error("결제 오류:", error);
             alert(`결제 실패: ${error.message}`);

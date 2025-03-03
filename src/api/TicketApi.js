@@ -26,16 +26,15 @@ export const getSeatTickets = async (params) => {
     });
     return response.data;
 };
+
 // Ticket Add
 export const addSeatTickets = async (requestBody) => {
-    console.log(requestBody);
     const response = await axiosInstance.post(`/ticket/add`, {
         orderId: requestBody.orderId,
         festivalId: requestBody.festivalId,
         dateId: requestBody.dateId,
         memberId: requestBody.memberId,
-        reFundStateName: "YET",
-        locationNum: requestBody.seats,
+        locationNum: requestBody.locationNum,
     });
 
     return response.data;

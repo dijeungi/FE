@@ -83,7 +83,7 @@ const ProductDetailPage = () => {
 
     // 날짜 선택 시 공연 시간 불러오기
     const handleDateChange = async (date) => {
-        console.log("📅 선택한 날짜:", date);
+        // console.log("📅 선택한 날짜:", date);
 
         setSelectedDate(date);
         setSelectedTime(null);
@@ -99,10 +99,10 @@ const ProductDetailPage = () => {
                 .replace(/\. /g, "-")
                 .replace(".", "");
 
-            console.log("🕒 포맷팅된 날짜:", formattedDate);
+            // console.log("🕒 포맷팅된 날짜:", formattedDate);
 
             const timeData = await getFestivalDetailTimeDate(festivalId, formattedDate);
-            console.log("📡 서버에서 받아온 timeData:", timeData);
+            // console.log("📡 서버에서 받아온 timeData:", timeData);
 
             setFestivalTimeData(
                 timeData?.timeDTOS?.map((item) => ({
@@ -112,7 +112,7 @@ const ProductDetailPage = () => {
                 })) || []
             );
 
-            console.log("✅ 공연 시간 데이터 업데이트 완료:", timeData.timeDTOS);
+            // console.log("✅ 공연 시간 데이터 업데이트 완료:", timeData.timeDTOS);
         } catch (error) {
             console.error("❌ 공연 시간 데이터 불러오기 실패:", error);
             setFestivalTimeData([]);
@@ -121,8 +121,8 @@ const ProductDetailPage = () => {
 
     // 공연 시간 선택
     const handleTimeClick = (time, dateId) => {
-        console.log("⏰ 클릭한 시간:", time);
-        console.log("📌 클릭한 DateId:", dateId);
+        // console.log("⏰ 클릭한 시간:", time);
+        // console.log("📌 클릭한 DateId:", dateId);
 
         if (!dateId) {
             console.error("❌ DateId가 undefined입니다! 데이터 확인 필요");
@@ -131,17 +131,17 @@ const ProductDetailPage = () => {
 
         setSelectedTime((prev) => {
             const newTime = prev === time ? null : time;
-            console.log("🔄 선택한 시간 업데이트됨:", newTime);
+            // console.log("🔄 선택한 시간 업데이트됨:", newTime);
             return newTime;
         });
 
         setSelectedDateId((prev) => {
             const newDateId = prev === dateId ? null : dateId;
-            console.log("🔄 선택한 DateId 업데이트됨:", newDateId);
+            // console.log("🔄 선택한 DateId 업데이트됨:", newDateId);
             return newDateId;
         });
 
-        console.log("✅ 최종 저장된 selectedDateId:", dateId);
+        // console.log("✅ 최종 저장된 selectedDateId:", dateId);
     };
 
     // 예매 버튼 활성화 여부
@@ -170,16 +170,11 @@ const ProductDetailPage = () => {
             return;
         }
 
-        console.log("🛒 예매하기 버튼 클릭!");
-        console.log("📅 선택한 날짜 (로컬 시간):", selectedDate);
-        console.log("📌 선택한 DateId:", selectedDateId);
-
         if (!selectedDate || !selectedTime || !selectedDateId) {
             console.error("❌ 예매 실패: 날짜, 시간 또는 DateId가 없습니다.");
             return;
         }
 
-        // `toISOString()` 대신 `toLocaleDateString()`
         const formattedDate = selectedDate
             .toLocaleDateString("ko-KR", {
                 year: "numeric",
@@ -188,8 +183,6 @@ const ProductDetailPage = () => {
             })
             .replace(/\. /g, "-")
             .replace(".", "");
-
-        console.log("🚀 URL에 포함되는 날짜:", formattedDate);
 
         const queryParams = new URLSearchParams({
             festivalId,
@@ -201,12 +194,6 @@ const ProductDetailPage = () => {
             poster: encodeURIComponent(festivalDetails?.postImage || ""),
         }).toString();
 
-        console.log("🔗 최종 URL 파라미터:", queryParams);
-        // 테스트용
-        // // navigate(`/reservation?${queryParams}`);
-        // const [newWindow, setNewWindow] = useState(null);
-        // const [isWindowOpen, setIsWindowOpen] = useState(false);
-
         const win = window.open(
             `/reservation?${queryParams}`,
             "_blank",
@@ -215,78 +202,60 @@ const ProductDetailPage = () => {
     };
 
     useEffect(() => {
-        const fetchAvailableDates = async () => {
+        const fetchData = async () => {
             if (!festivalId) return;
 
             try {
+                // 🎭 공연 가능한 날짜 가져오기
                 const response = await getFestivalDate(festivalId);
-                console.log("🎭 API 응답 데이터:", response);
-
-                // ✅ API에서 받은 공연 날짜 리스트만 추출
                 const validDates = response?.timeDTOS?.map((item) => item.date) || [];
-                console.log("✅ 공연 가능한 날짜 목록:", validDates);
+                setAvailableDates(validDates);
 
-                setAvailableDates(validDates); // 🎯 상태 업데이트
+                // 👍 좋아요 데이터 가져오기 (로그인 사용자만)
+                if (userId) {
+                    const count = await getLikeCount(festivalId);
+                    const likedStatus = await getIsLiked(userId, festivalId);
+                    setLikeCount(count);
+                    setIsLiked(likedStatus);
+                }
 
-                // validDates.map((date) => {
-                //   if (date !== selectedDate && date > selectedDate) {
-                //     setSelectedDate(date);
-                //   }
-                // });
-            } catch (error) {
-                console.error("❌ 공연 날짜 데이터 불러오기 실패:", error);
-            }
-        };
+                // 🎟️ 공연 상세 정보 가져오기
+                dispatch(fetchFestivalDetail({ festivalId, userId }));
 
-        fetchAvailableDates();
-    }, [festivalId]);
+                // 📅 선택한 날짜에 대한 공연 시간 불러오기
+                handleDateChange(selectedDate);
 
-    // 좋아요 데이터 불러오기 & 공연 상세 정보 가져오기
-    useEffect(() => {
-        const fetchLikeData = async () => {
-            if (!userId) return;
+                // 🗺️ Kakao 지도 설정
+                if (isMapOpen && kakao && kakao.maps && mapRef.current) {
+                    const map = new kakao.maps.Map(mapRef.current, {
+                        center: new kakao.maps.LatLng(37.5665, 126.978), // 기본 위치: 서울시청
+                        level: 3,
+                    });
 
-            try {
-                const count = await getLikeCount(festivalId);
-                const likedStatus = await getIsLiked(userId, festivalId);
-                setLikeCount(count);
-                setIsLiked(likedStatus);
-            } catch (error) {
-                console.error("❌ 좋아요 데이터 불러오기 실패:", error);
-            }
-        };
+                    // 줌 컨트롤 추가
+                    const zoomControl = new kakao.maps.ZoomControl();
+                    map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 
-        if (festivalId) {
-            dispatch(fetchFestivalDetail({ festivalId, userId }));
-            fetchLikeData();
-        }
+                    const geocoder = new kakao.maps.services.Geocoder();
+                    geocoder.addressSearch(placeLocation, (result, status) => {
+                        if (status === kakao.maps.services.Status.OK && result.length > 0) {
+                            const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+                            map.setCenter(coords);
 
-        handleDateChange(selectedDate);
-
-        if (isMapOpen && kakao && kakao.maps && mapRef.current) {
-            const map = new kakao.maps.Map(mapRef.current, {
-                center: new kakao.maps.LatLng(37.5665, 126.978), // 기본 위치: 서울시청
-                level: 3,
-            });
-
-            // 줌 컨트롤
-            const zoomControl = new kakao.maps.ZoomControl();
-            map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
-
-            const geocoder = new kakao.maps.services.Geocoder();
-            geocoder.addressSearch(placeLocation, (result, status) => {
-                if (status === kakao.maps.services.Status.OK && result.length > 0) {
-                    const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-                    map.setCenter(coords);
-
-                    if (markerRef.current) markerRef.current.setMap(null);
-                    markerRef.current = new kakao.maps.Marker({
-                        position: coords,
-                        map: map,
+                            if (markerRef.current) markerRef.current.setMap(null);
+                            markerRef.current = new kakao.maps.Marker({
+                                position: coords,
+                                map: map,
+                            });
+                        }
                     });
                 }
-            });
-        }
+            } catch (error) {
+                console.error("❌ 데이터 불러오기 실패:", error);
+            }
+        };
+
+        fetchData();
     }, [festivalId, userId, selectedDate, isMapOpen, placeLocation]);
 
     // 좋아요 버튼 클릭
@@ -557,7 +526,7 @@ const ProductDetailPage = () => {
                                                     String(date.getMonth() + 1).padStart(2, "0") +
                                                     "-" +
                                                     String(date.getDate()).padStart(2, "0");
-                                                console.log("formattedDate: " + formattedDate);
+                                                // console.log("formattedDate: " + formattedDate);
                                                 const isAvailable = availableDates.includes(formattedDate);
 
                                                 if (isSelected) return "selected-date";
