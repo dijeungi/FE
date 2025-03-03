@@ -1,15 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { lazy, Suspense, useEffect, useState } from "react";
 import { useNavigate, Link, Outlet } from "react-router-dom";
 import "../../styles/mypage/MyPageLayout.css";
 import { useSelector } from "react-redux";
 import { getMemberInfo } from "../../api/UserApi";
-import Modify from "./Modify";
-import Booking from "./Booking";
+
+import LoadingSpinner from "../LoadingSpinner";
+
+const Modify = lazy(() => import("./Modify"));
+const Booking = lazy(() => import("./Booking"));
 
 export default function MyPageLayout() {
     const [activeMenu, setActiveMenu] = useState("예매내역");
     const [memberInfo, setMemberInfo] = useState(null);
-    const [ticketCount, setTicketCount] = useState(0);
+    const [ticketCount, setTicketCount] = useState(null);
 
     const navigate = useNavigate();
 
@@ -21,6 +24,7 @@ export default function MyPageLayout() {
                 try {
                     const data = await getMemberInfo(userId);
                     setMemberInfo(data);
+                    setTicketCount(data.ticketCount || 0);
                 } catch (error) {
                     console.error("회원 정보를 불러오는 중 오류 발생:", error);
                 }
@@ -53,6 +57,11 @@ export default function MyPageLayout() {
         const targetRoute = menuRoutes[menuName];
         navigate(`/mypage/${targetRoute}`);
     };
+
+    // 🚀 데이터가 로드되기 전까지 스피너 유지
+    if (memberInfo === null || ticketCount === null) {
+        return <LoadingSpinner />;
+    }
 
     return (
         <div className="MyPage_Container clearfix">
@@ -196,13 +205,15 @@ export default function MyPageLayout() {
                 {/* E : 왼쪽 메뉴 영역 */}
                 {/* S : 오른쪽 컨텐츠 영역 */}
                 <div className="MyPageLayout_Wrap_Right">
-                    {activeMenu === "회원정보 수정" ? (
-                        <Modify userId={userId} />
-                    ) : activeMenu === "예매내역" ? (
-                        <Booking updateTicketCount={updateTicketCount} />
-                    ) : (
-                        <Outlet />
-                    )}
+                    <Suspense fallback={<LoadingSpinner />}>
+                        {activeMenu === "회원정보 수정" ? (
+                            <Modify userId={userId} />
+                        ) : activeMenu === "예매내역" ? (
+                            <Booking updateTicketCount={updateTicketCount} />
+                        ) : (
+                            <Outlet />
+                        )}
+                    </Suspense>
                 </div>
 
                 {/* E : 오른쪽 메뉴 영역 */}

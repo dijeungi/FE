@@ -20,7 +20,7 @@ export const updateMemberInfo = async (userData) => {
         userFavorite3: userData.userFavorite3,
     }).toString();
 
-    const url = `/member/update?${queryString}`; // 요청 URL
+    const url = `/member/update?${queryString}`;
 
     const response = await axiosInstance.put(url);
     return response.data;

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "../../styles/ranking/RankingList.css";
 import QueryStatsIcon from "@mui/icons-material/QueryStats";
+import LoadingSpinner from "../LoadingSpinner";
 
 const RankingList = ({ rankings }) => {
     const [ranking, setRanking] = useState(rankings);
@@ -50,7 +51,7 @@ const RankingList = ({ rankings }) => {
         );
     }, [rankings]);
 
-    if (ranking.length === 0) return <div>해당 카테고리의 데이터가 없습니다.</div>;
+    if (ranking.length === 0) return <LoadingSpinner />;
 
     return (
         <article className="RankingList_Container">

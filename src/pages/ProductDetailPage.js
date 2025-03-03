@@ -1,13 +1,13 @@
 // src/pages/ProductDetailPage.js
 
 // React & 관련 라이브러리
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, lazy, Suspense } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 
 // Redux 관련
-import { fetchFestivalDetail } from "../redux/DetailSlice";
+import { clearFestivalDetails, fetchFestivalDetail } from "../redux/DetailSlice";
 
 // API 호출
 import { getFestivalDetailTimeDate, getFestivalDate } from "../api/festivalApi";
@@ -26,9 +26,10 @@ import { Rating } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import { Favorite, FavoriteBorder } from "@mui/icons-material";
 import Calendar from "react-calendar";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 // 컴포넌트
-import DetailFooter from "../components/product/DetailFooter";
+const DetailFooter = lazy(() => import("../components/product/DetailFooter"));
 
 // KakaoMap
 const { kakao } = window;
@@ -38,13 +39,13 @@ const ProductDetailPage = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    // 사용자 정보 가져오기 (Redux + 쿠키)
+    // Redux에서 공연 상세 정보 / 사용자 정보 / 카테고리 정보 + 쿠키
+    const { festivalDetails, totalStar, placeLocation } = useSelector((state) => state.detail);
+    const castingList = useSelector((state) => state.detail.castingList);
     const userId = useSelector((state) => state.loginSlice.id) || getUserIdCookie();
 
-    // Redux에서 공연 상세 정보 가져오기
-    const { festivalDetails, totalStar, placeLocation } = useSelector((state) => state.detail);
-
     // 상태 관리
+    const [loading, setLoading] = useState(true);
     const [isMapOpen, setIsMapOpen] = useState(false);
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [selectedTime, setSelectedTime] = useState(null);
@@ -112,7 +113,7 @@ const ProductDetailPage = () => {
                 })) || []
             );
 
-            // console.log("✅ 공연 시간 데이터 업데이트 완료:", timeData.timeDTOS);
+            // console.log("공연 시간 데이터 업데이트 완료:", timeData.timeDTOS);
         } catch (error) {
             console.error("❌ 공연 시간 데이터 불러오기 실패:", error);
             setFestivalTimeData([]);
@@ -205,13 +206,16 @@ const ProductDetailPage = () => {
         const fetchData = async () => {
             if (!festivalId) return;
 
+            dispatch(clearFestivalDetails());
+            setLoading(true);
+
             try {
-                // 🎭 공연 가능한 날짜 가져오기
+                await dispatch(fetchFestivalDetail({ festivalId, userId }));
+
                 const response = await getFestivalDate(festivalId);
                 const validDates = response?.timeDTOS?.map((item) => item.date) || [];
                 setAvailableDates(validDates);
 
-                // 👍 좋아요 데이터 가져오기 (로그인 사용자만)
                 if (userId) {
                     const count = await getLikeCount(festivalId);
                     const likedStatus = await getIsLiked(userId, festivalId);
@@ -219,44 +223,75 @@ const ProductDetailPage = () => {
                     setIsLiked(likedStatus);
                 }
 
-                // 🎟️ 공연 상세 정보 가져오기
-                dispatch(fetchFestivalDetail({ festivalId, userId }));
-
-                // 📅 선택한 날짜에 대한 공연 시간 불러오기
-                handleDateChange(selectedDate);
-
-                // 🗺️ Kakao 지도 설정
-                if (isMapOpen && kakao && kakao.maps && mapRef.current) {
-                    const map = new kakao.maps.Map(mapRef.current, {
-                        center: new kakao.maps.LatLng(37.5665, 126.978), // 기본 위치: 서울시청
-                        level: 3,
-                    });
-
-                    // 줌 컨트롤 추가
-                    const zoomControl = new kakao.maps.ZoomControl();
-                    map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
-
-                    const geocoder = new kakao.maps.services.Geocoder();
-                    geocoder.addressSearch(placeLocation, (result, status) => {
-                        if (status === kakao.maps.services.Status.OK && result.length > 0) {
-                            const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-                            map.setCenter(coords);
-
-                            if (markerRef.current) markerRef.current.setMap(null);
-                            markerRef.current = new kakao.maps.Marker({
-                                position: coords,
-                                map: map,
-                            });
-                        }
-                    });
-                }
+                setLoading(false);
             } catch (error) {
                 console.error("❌ 데이터 불러오기 실패:", error);
+                setLoading(false);
             }
         };
 
         fetchData();
-    }, [festivalId, userId, selectedDate, isMapOpen, placeLocation]);
+    }, [festivalId, userId]);
+
+    // 선택한 날짜에 따른 공연 시간 불러오기
+    useEffect(() => {
+        if (!selectedDate) return;
+
+        const fetchTimeData = async () => {
+            try {
+                const formattedDate = selectedDate
+                    .toLocaleDateString("ko-KR", {
+                        year: "numeric",
+                        month: "2-digit",
+                        day: "2-digit",
+                    })
+                    .replace(/\. /g, "-")
+                    .replace(".", "");
+
+                const timeData = await getFestivalDetailTimeDate(festivalId, formattedDate);
+
+                setFestivalTimeData(
+                    timeData?.timeDTOS?.map((item) => ({
+                        ...item,
+                        time: item.time.slice(0, 5),
+                        dateId: item.id,
+                    })) || []
+                );
+            } catch (error) {
+                console.error("❌ 공연 시간 데이터 불러오기 실패:", error);
+                setFestivalTimeData([]);
+            }
+        };
+
+        fetchTimeData();
+    }, [festivalId, selectedDate]);
+
+    // Kakao 지도 관련 로직을 별도 useEffect로 분리
+    useEffect(() => {
+        if (!isMapOpen || !placeLocation || !kakao || !kakao.maps || !mapRef.current) return;
+
+        const map = new kakao.maps.Map(mapRef.current, {
+            center: new kakao.maps.LatLng(37.5665, 126.978),
+            level: 3,
+        });
+
+        const zoomControl = new kakao.maps.ZoomControl();
+        map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+
+        const geocoder = new kakao.maps.services.Geocoder();
+        geocoder.addressSearch(placeLocation, (result, status) => {
+            if (status === kakao.maps.services.Status.OK && result.length > 0) {
+                const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+                map.setCenter(coords);
+
+                if (markerRef.current) markerRef.current.setMap(null);
+                markerRef.current = new kakao.maps.Marker({
+                    position: coords,
+                    map: map,
+                });
+            }
+        });
+    }, [isMapOpen, placeLocation]);
 
     // 좋아요 버튼 클릭
     const handleLikeClick = async () => {
@@ -286,6 +321,8 @@ const ProductDetailPage = () => {
             console.error("❌ 좋아요 처리 실패:", error);
         }
     };
+
+    if (loading) return <LoadingSpinner />;
 
     return (
         <div className="Information_Container">
@@ -473,26 +510,25 @@ const ProductDetailPage = () => {
                         </div>
                     </div>
 
-                    <DetailFooter
-                        festivalId={festivalId}
-                        festivalDetails={festivalDetails}
-                        totalStar={totalStar}
-                        placeLocation={placeLocation}
-                        festivalName={festivalName}
-                        ranking={ranking}
-                        fromDate={fromDate}
-                        toDate={toDate}
-                        // festivalPrice={festivalPrice}
-                        // salePrice={salePrice}
-                        // postImage={postImage}
-                        runningTime={runningTime}
-                        age={age}
-                        placeDetailName={placeDetailName}
-                        castingList={useSelector((state) => state.detail.castingList)}
-                        imgSrc1={imgSrc1}
-                        imgSrc2={imgSrc2}
-                        imgSrc3={imgSrc3}
-                    />
+                    <Suspense fallback={<LoadingSpinner />}>
+                        <DetailFooter
+                            festivalId={festivalId}
+                            festivalDetails={festivalDetails}
+                            totalStar={totalStar}
+                            placeLocation={placeLocation}
+                            festivalName={festivalName}
+                            ranking={ranking}
+                            fromDate={fromDate}
+                            toDate={toDate}
+                            runningTime={runningTime}
+                            age={age}
+                            placeDetailName={placeDetailName}
+                            castingList={castingList} // ✅ props로 전달
+                            imgSrc1={imgSrc1}
+                            imgSrc2={imgSrc2}
+                            imgSrc3={imgSrc3}
+                        />
+                    </Suspense>
                 </div>
 
                 {/* 캘린더 */}
