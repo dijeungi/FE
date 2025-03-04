@@ -156,7 +156,7 @@ export default function Header() {
                             </div>
                         </form>
                     </nav>
-                    <div className="header_viewportInfo">{viewportWidth}px</div>
+                    {/* <div className="header_viewportInfo">{viewportWidth}px</div> */}
                 </div>
             </div>
         </header>

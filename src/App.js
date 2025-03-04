@@ -127,7 +127,7 @@ function App() {
                 </Routes>
             </Suspense>
 
-            {location.pathname === "/" && <KakaoChannelButton />}
+            <KakaoChannelButton />
             {!isHiddenLayout && <Footer />}
         </div>
     );
