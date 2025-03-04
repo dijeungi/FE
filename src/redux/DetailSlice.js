@@ -60,11 +60,22 @@ const detailSlice = createSlice({
         setIsLiked(state, action) {
             state.isLiked = action.payload;
         },
+        // 초기화를 해줌으로써 이전 작품 흔적을 지움
+        // 화면 깜빡으로 이전 작품이 보이는걸 방지.
+        clearFestivalDetails(state) {
+            state.festivalDetails = null;
+            state.likeCount = 0;
+            state.isLiked = false;
+            state.totalStar = 0;
+            state.placeDetailName = "";
+            state.placeLocation = "";
+            state.castingList = [];
+            state.error = null;
+        },
     },
     extraReducers: (builder) => {
         builder
             .addCase(fetchFestivalDetail.pending, (state) => {
-                state.loading = true;
                 state.error = null;
             })
             .addCase(fetchFestivalDetail.fulfilled, (state, action) => {
@@ -76,14 +87,12 @@ const detailSlice = createSlice({
                 state.placeDetailName = festivalDetails.placeDetailName || "";
                 state.placeLocation = festivalDetails.placeLocation || "";
                 state.castingList = castingList;
-                state.loading = false;
             })
             .addCase(fetchFestivalDetail.rejected, (state, action) => {
-                state.loading = false;
                 state.error = action.payload;
             });
     },
 });
 
-export const { setLikeCount, setIsLiked } = detailSlice.actions;
+export const { setLikeCount, setIsLiked, clearFestivalDetails } = detailSlice.actions;
 export default detailSlice.reducer;

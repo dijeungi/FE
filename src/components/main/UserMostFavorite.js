@@ -16,14 +16,7 @@ const UserMostFavorite = ({ userId }) => {
         fetchUserMostFavorite();
     }, [userId]); // userId가 바뀔 때만 실행됨
 
-    return (
-        <Slide
-            data={userRanking.slice(0, 10)}
-            title="좋아하는 장르 추천 👀"
-            link="/user/favorite/list"
-            isRanking={false}
-        />
-    );
+    return <Slide data={userRanking.slice(0, 10)} title="좋아하는 장르 추천 👀" link="/ranking" isRanking={false} />;
 };
 
 export default UserMostFavorite;

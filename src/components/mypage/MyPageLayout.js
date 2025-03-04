@@ -1,13 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { lazy, Suspense, useEffect, useState } from "react";
 import { useNavigate, Link, Outlet } from "react-router-dom";
 import "../../styles/mypage/MyPageLayout.css";
 import { useSelector } from "react-redux";
 import { getMemberInfo } from "../../api/UserApi";
-import Modify from "./Modify";
+
+import LoadingSpinner from "../LoadingSpinner";
+
+const Modify = lazy(() => import("./Modify"));
+const Booking = lazy(() => import("./Booking"));
 
 export default function MyPageLayout() {
     const [activeMenu, setActiveMenu] = useState("예매내역");
     const [memberInfo, setMemberInfo] = useState(null);
+    const [ticketCount, setTicketCount] = useState(null);
+
     const navigate = useNavigate();
 
     const userId = useSelector((state) => state.loginSlice.id);
@@ -18,6 +24,7 @@ export default function MyPageLayout() {
                 try {
                     const data = await getMemberInfo(userId);
                     setMemberInfo(data);
+                    setTicketCount(data.ticketCount || 0);
                 } catch (error) {
                     console.error("회원 정보를 불러오는 중 오류 발생:", error);
                 }
@@ -26,6 +33,11 @@ export default function MyPageLayout() {
 
         fetchMemberInfo();
     }, [userId]);
+
+    // 예매 개수를 업데이트하는 함수
+    const updateTicketCount = (count) => {
+        setTicketCount(count);
+    };
 
     // 각 메뉴 항목에 대해 표시할 이름과 이동할 URL 경로를 정의합니다.
     const menuRoutes = {
@@ -45,6 +57,11 @@ export default function MyPageLayout() {
         const targetRoute = menuRoutes[menuName];
         navigate(`/mypage/${targetRoute}`);
     };
+
+    // 🚀 데이터가 로드되기 전까지 스피너 유지
+    if (memberInfo === null || ticketCount === null) {
+        return <LoadingSpinner />;
+    }
 
     return (
         <div className="MyPage_Container clearfix">
@@ -67,7 +84,7 @@ export default function MyPageLayout() {
                     </div>
                     <div className="MyPage_Contents">
                         <div className="MyPage_Top_Title">티켓 구매 횟수&nbsp;</div>
-                        <div className="MyPage_Top_Number">0</div>
+                        <div className="MyPage_Top_Number">{ticketCount}</div>
                     </div>
                     <div className="MyPage_Contents">
                         {/*<Link to="/">*/}
@@ -188,8 +205,17 @@ export default function MyPageLayout() {
                 {/* E : 왼쪽 메뉴 영역 */}
                 {/* S : 오른쪽 컨텐츠 영역 */}
                 <div className="MyPageLayout_Wrap_Right">
-                    {activeMenu === "회원정보 수정" ? <Modify userId={userId} /> : <Outlet />}
+                    <Suspense fallback={<LoadingSpinner />}>
+                        {activeMenu === "회원정보 수정" ? (
+                            <Modify userId={userId} />
+                        ) : activeMenu === "예매내역" ? (
+                            <Booking updateTicketCount={updateTicketCount} />
+                        ) : (
+                            <Outlet />
+                        )}
+                    </Suspense>
                 </div>
+
                 {/* E : 오른쪽 메뉴 영역 */}
             </div>
             <div style={{ clear: "both" }}></div>

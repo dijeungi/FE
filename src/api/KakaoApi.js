@@ -17,9 +17,9 @@ const auth_code_path = `https://kauth.kakao.com/oauth/authorize`;
 const access_token_url = `https://kauth.kakao.com/oauth/token`;
 
 // 환경변수에서 값을 제대로 가져오는지 디버깅을 위해 로깅
-console.log("REST API KEY:", rest_api_key);
-console.log("FRONT HOST:", FRONT_HOST);
-console.log("REDIRECT URI:", redirect_uri);
+// console.log("REST API KEY:", rest_api_key);
+// console.log("FRONT HOST:", FRONT_HOST);
+// console.log("REDIRECT URI:", redirect_uri);
 
 // 카카오 로그인 요청 -> 카카오 로그인 페이지(리다이렉트 페이지)로 이동
 export const getKakaoLoginLink = () => {
@@ -28,7 +28,7 @@ export const getKakaoLoginLink = () => {
     kakaoURL.searchParams.append("redirect_uri", redirect_uri);
     kakaoURL.searchParams.append("response_type", "code");
 
-    console.log("getKakaoLoginLink kakaoURL: ", kakaoURL.toString());
+    // console.log("getKakaoLoginLink kakaoURL: ", kakaoURL.toString());
     return kakaoURL.toString();
 };
 
@@ -36,7 +36,7 @@ export const getKakaoLoginLink = () => {
 export const getAccessToken = async (authCode) => {
     try {
         const res = await axios.get(`${API_SERVER_HOST}/api/member/kakao/token?code=${authCode}`);
-        console.log("getAccessToken res: ", res);
+        // console.log("getAccessToken res: ", res);
         return res.data;
     } catch (error) {
         console.error("Error fetching access token:", error);
@@ -51,7 +51,7 @@ export const getMemberWithAccessToken = async (accessToken) => {
     };
     try {
         const res = await axios.get(`${API_SERVER_HOST}/api/member/kakao?accessToken=${accessToken}`, headers);
-        console.log("getMemberWithAccessToken res: ", res);
+        // console.log("getMemberWithAccessToken res: ", res);
         return res.data;
     } catch (error) {
         console.error("Error fetching member data:", error);

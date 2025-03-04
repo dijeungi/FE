@@ -6,8 +6,8 @@ const KakaoChannelButton = () => {
             style={{
                 position: "fixed",
                 bottom: "20px",
-                right: "-57rem",
-                zIndex: "1000"
+                right: "-59rem",
+                zIndex: "1000",
             }}
         >
             <img

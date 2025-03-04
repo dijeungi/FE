@@ -52,7 +52,7 @@ export default function Header() {
     };
     const keywordSearch = (event) => {
         event.preventDefault(); // 폼 제출 시 새로고침 방지
-        console.log("🔍 검색어:", keyword);
+        // console.log("🔍 검색어:", keyword);
         navigate(`/search?keyword=${keyword}`);
         // 여기서 검색어를 API 요청으로 보낼 수 있음
     };
@@ -156,7 +156,7 @@ export default function Header() {
                             </div>
                         </form>
                     </nav>
-                    <div className="header_viewportInfo">{viewportWidth}px</div>
+                    {/* <div className="header_viewportInfo">{viewportWidth}px</div> */}
                 </div>
             </div>
         </header>

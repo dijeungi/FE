@@ -18,7 +18,7 @@ export const getIsLiked = async (userId, festivalId) => {
     try {
         const response = await axiosInstance.get(`/like/one?userId=${userId}&festivalId=${festivalId}`);
 
-        console.log("✅ 좋아요 상태여부 API 응답:", response.data);
+        // console.log("✅ 좋아요 상태여부 API 응답:", response.data);
 
         // 응답이 String이므로 FE에서 설정해주었습니다.
         if (response.data === "좋아요 설정됨") {
